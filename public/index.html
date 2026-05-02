@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trabalho Final | Painel IoT</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <header class="shell hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Sistema IoT distribuído em uma máquina</p>
+        <h1>Painel do Trabalho Final</h1>
+        <p class="lead">
+          Monitoramento de nós ESP32, telemetria, alertas e comandos em um backend único,
+          pronto para evoluir para MQTT e banco relacional.
+        </p>
+        <div class="hero-actions">
+          <button id="btnRefresh" class="primary">Atualizar agora</button>
+          <button id="btnSeed" class="secondary">Gerar amostras</button>
+          <a class="secondary logout-link" href="/logout">Sair</a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="hero-card-top">
+          <span class="hero-dot"></span>
+          <span id="heroModeLabel">Operação ao vivo · modo viewer</span>
+        </div>
+        <div class="hero-card-value" id="heroNodes">5 nós online</div>
+        <div class="hero-card-detail" id="heroActivity">Telemetria e comandos ativos no backend local</div>
+        <div class="hero-card-stats">
+          <div>
+            <span>Latência</span>
+            <strong id="heroLatency">12 ms</strong>
+          </div>
+          <div>
+            <span>Alerts</span>
+            <strong id="heroAlerts">0</strong>
+          </div>
+          <div>
+            <span>Fonte</span>
+            <strong>ESP32</strong>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <main class="shell layout">
+      <section class="status-strip panel">
+        <div class="status-item">
+          <span class="status-label">Backend</span>
+          <strong id="statusBackend">Online</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Usuário</span>
+          <strong id="statusUser">admin</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Gateway</span>
+          <strong id="statusGateway">GW01</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Última atualização</span>
+          <strong id="statusUpdated">-</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Interface</span>
+          <strong id="statusInterface">Realtime · Dark</strong>
+        </div>
+      </section>
+
+      <section class="panel summary-grid" id="summaryGrid"></section>
+
+      <section class="panel chart-panel">
+        <div class="panel-heading panel-heading--tight">
+          <div>
+            <p class="section-kicker">Visão temporal</p>
+            <h2>Telemetria recente</h2>
+            <p id="chartSubtitle">Seleciona automaticamente o nó mais recente</p>
+          </div>
+          <div class="panel-controls">
+            <label class="control-label">
+              Nó
+              <select id="nodeSelect"></select>
+            </label>
+            <div class="legend">
+              <span><i class="legend-line temp"></i>Temperatura</span>
+              <span><i class="legend-line light"></i>Luz</span>
+            </div>
+          </div>
+        </div>
+        <canvas id="chart" width="1100" height="360"></canvas>
+      </section>
+
+      <section class="grid-two">
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Rede</p>
+              <h2>Nós</h2>
+              <p>Status, bateria e RSSI</p>
+            </div>
+          </div>
+          <div id="nodesList" class="stack"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Eventos</p>
+              <h2>Alertas</h2>
+              <p>Eventos recentes e regras ativadas</p>
+            </div>
+          </div>
+          <div id="alertsList" class="stack"></div>
+        </section>
+      </section>
+
+      <section class="grid-two">
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Controle</p>
+              <h2>Enviar comando</h2>
+              <p>Exemplo de controle operacional</p>
+            </div>
+          </div>
+          <form id="commandForm" class="form-grid">
+            <label>
+              Nó alvo
+              <select id="commandNode"></select>
+            </label>
+            <label>
+              Ação
+              <input id="commandAction" name="action" placeholder="set_sampling_interval" value="set_sampling_interval" />
+            </label>
+            <label class="full">
+              Parâmetro JSON
+              <textarea id="commandParams" rows="4">{"seconds":300}</textarea>
+            </label>
+            <div class="full form-actions">
+              <button type="submit" class="primary">Enviar comando</button>
+              <span id="commandFeedback"></span>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Execução</p>
+              <h2>Comandos e ACK</h2>
+              <p>Últimos comandos processados</p>
+            </div>
+          </div>
+          <div id="commandsList" class="stack"></div>
+        </section>
+      </section>
+      <section class="panel admin-panel" id="adminPanel" hidden>
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">Administração</p>
+            <h2>Usuários e permissões</h2>
+            <p>Cadastro de contas, ajuste de papéis e controle de acesso.</p>
+          </div>
+        </div>
+
+        <div class="grid-two admin-layout">
+          <form id="userForm" class="form-grid admin-form">
+            <label>
+              Usuário
+              <input id="newUsername" name="username" placeholder="joao.silva" />
+            </label>
+            <label>
+              Nome exibido
+              <input id="newDisplayName" name="displayName" placeholder="João Silva" />
+            </label>
+            <label>
+              Senha
+              <input id="newPassword" name="password" type="password" placeholder="Senha inicial" />
+            </label>
+            <label>
+              Papel
+              <select id="newRole" name="role">
+                <option value="viewer">viewer</option>
+                <option value="operator">operator</option>
+                <option value="admin">admin</option>
+              </select>
+            </label>
+            <div class="full form-actions">
+              <button type="submit" class="primary">Cadastrar usuário</button>
+              <span id="userFormFeedback"></span>
+            </div>
+          </form>
+
+          <div>
+            <div class="admin-list-header">
+              <strong>Contas cadastradas</strong>
+              <span id="usersCount">0 usuários</span>
+            </div>
+            <div id="usersList" class="stack"></div>
+          </div>
+        </div>
+
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">Inventário</p>
+            <h2>Cadastro de novos ESP</h2>
+            <p>Registro manual de nós ESP32 para organização e operação.</p>
+          </div>
+        </div>
+
+        <div class="grid-two admin-layout">
+          <form id="espForm" class="form-grid admin-form">
+            <label>
+              Node ID
+              <input id="espNodeId" placeholder="NODE11" />
+            </label>
+            <label>
+              Device ID
+              <input id="espDeviceId" placeholder="ESP32-011" />
+            </label>
+            <label>
+              Gateway
+              <input id="espGatewayId" placeholder="GW01" value="GW01" />
+            </label>
+            <label>
+              Nome
+              <input id="espName" placeholder="Laboratorio 2" />
+            </label>
+            <label class="full">
+              Local
+              <input id="espLocation" placeholder="Bloco D" />
+            </label>
+            <div class="full form-actions">
+              <button type="submit" class="primary">Cadastrar ESP</button>
+              <span id="espFormFeedback"></span>
+            </div>
+          </form>
+
+          <div>
+            <div class="admin-list-header">
+              <strong>ESPs cadastrados</strong>
+              <span id="espCount">0 ESPs</span>
+            </div>
+            <div id="espList" class="stack"></div>
+          </div>
+        </div>
+
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">Persistência</p>
+            <h2>Configuração de banco de dados</h2>
+            <p>Defina conexão e estratégia de retenção para o banco do projeto.</p>
+          </div>
+        </div>
+
+        <form id="dbConfigForm" class="form-grid admin-form">
+          <label>
+            Engine
+            <select id="dbEngine">
+              <option value="timescaledb">timescaledb</option>
+              <option value="influxdb">influxdb</option>
+              <option value="sqlite">sqlite</option>
+            </select>
+          </label>
+          <label>
+            Host
+            <input id="dbHost" placeholder="127.0.0.1" />
+          </label>
+          <label>
+            Porta
+            <input id="dbPort" type="number" placeholder="5432" />
+          </label>
+          <label>
+            Database
+            <input id="dbName" placeholder="iot_monitoring" />
+          </label>
+          <label>
+            Usuário
+            <input id="dbUser" placeholder="iot_user" />
+          </label>
+          <label>
+            Senha
+            <input id="dbPassword" type="password" placeholder="Senha do banco" />
+          </label>
+          <label>
+            Retenção (dias)
+            <input id="dbRetention" type="number" placeholder="30" />
+          </label>
+          <label class="meta" style="display:flex;align-items:center;gap:8px;">
+            <input id="dbEnabled" type="checkbox" />
+            banco habilitado
+          </label>
+          <label class="meta" style="display:flex;align-items:center;gap:8px;">
+            <input id="dbSsl" type="checkbox" />
+            usar ssl
+          </label>
+          <div class="full form-actions">
+            <button type="submit" class="primary">Salvar configuração do banco</button>
+            <span id="dbConfigFeedback"></span>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="/public/app.js"></script>
+  </body>
+</html>

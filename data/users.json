@@ -1,0 +1,13 @@
+[
+  {
+    "id": "user-admin",
+    "username": "admin",
+    "displayName": "Administrador",
+    "role": "admin",
+    "active": true,
+    "salt": "522f1b8af90616d538bc7a1a24eaadaa",
+    "passwordHash": "519697f8452656ddb7333d51eee8412509c73b6bb7ae8cd93e99a31530675642",
+    "createdAt": "2026-04-27T19:41:49.366Z",
+    "updatedAt": "2026-04-27T19:41:49.366Z"
+  }
+]

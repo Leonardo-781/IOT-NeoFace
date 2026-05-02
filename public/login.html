@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trabalho Final | Login</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <main class="shell login-shell">
+      <section class="login-card">
+        <div class="login-badge">Acesso ao sistema</div>
+        <h1>Entre para abrir o painel</h1>
+        <p>
+          O acesso foi protegido para evitar uso indevido da interface e dos comandos do sistema.
+        </p>
+
+        <form id="loginForm" class="login-form">
+          <label>
+            Usuário
+            <input id="username" name="username" autocomplete="username" placeholder="admin" value="admin" />
+          </label>
+          <label>
+            Senha
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" value="123456" />
+          </label>
+          <button type="submit" class="primary login-button">Entrar</button>
+          <p id="loginFeedback" class="login-feedback"></p>
+        </form>
+
+        <div class="login-footer">
+          <span>Usuário padrão: admin</span>
+          <span>Senha padrão: 123456</span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById('loginForm');
+      const feedback = document.getElementById('loginFeedback');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        feedback.textContent = 'Autenticando...';
+
+        const payload = {
+          username: document.getElementById('username').value.trim(),
+          password: document.getElementById('password').value
+        };
+
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          feedback.textContent = error.error || 'Falha no login';
+          return;
+        }
+
+        window.location.href = '/';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "trabalho-final-iot",
+  "version": "1.0.0",
+  "description": "Painel IoT para o Trabalho Final com simulacao de telemetria, alertas e comandos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "api": "node api-server.js",
+    "broker": "node broker-server.js",
+    "ingest": "node ingest-service.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "aedes": "^0.51.3",
+    "mqtt": "^5.10.0",
+    "pg": "^8.13.1"
+  }
+}
