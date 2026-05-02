@@ -92,6 +92,4 @@ npm run api
 - `GET /api/db-config` (admin)
 - `PUT /api/db-config` (admin)
 
-## Proximo passo possivel
 
-Se quiser, eu posso evoluir este prototipo para usar MQTT e banco de dados real, mantendo a mesma interface.
