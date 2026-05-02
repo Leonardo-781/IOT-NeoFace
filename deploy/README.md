@@ -13,20 +13,12 @@ O projeto usa PostgreSQL. No Raspberry Pi Zero W, a forma mais estável é rodar
 
 ## Caminho esperado
 
-Os serviços assumem o código em `/opt/iot-neoface`.
+Os serviços assumem o código no diretório informado no instalador.
 
 ## Instalação rápida
 
 ```bash
-sudo bash deploy/setup-pi.sh pi /opt/iot-neoface
+sudo bash deploy/setup-pi.sh leo /home/leo/myapp
 ```
 
-Depois copie os arquivos `.service` para `/etc/systemd/system/`, copie `deploy/system_config.pi.json` para `data/system_config.json` se quiser deixar o banco ativado por padrão, ajuste o usuário se necessário e rode:
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable trabalho-final.service
-sudo systemctl enable api-gateway.service
-sudo systemctl start trabalho-final.service
-sudo systemctl start api-gateway.service
-```
+Se o repositório estiver em outro caminho, troque o segundo argumento. O script escreve os serviços em `/etc/systemd/system/`, copia a configuração do banco e reinicia os serviços.
