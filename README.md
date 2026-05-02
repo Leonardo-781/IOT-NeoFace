@@ -74,6 +74,53 @@ npm run api
 - `operator`: visualiza o painel e envia comandos, mas não gerencia usuarios
 - `viewer`: apenas visualiza dados e alertas
 
+## Deploy em VPS com Docker Compose
+
+Esta e a opcao mais rapida para hospedar tudo em um unico servidor Linux: backend, gateway HTTP, ingest MQTT, Postgres e broker MQTT.
+
+### O que sobe
+
+- `db`: PostgreSQL 16 com volume persistente
+- `mqtt`: Mosquitto para os ESPs publicarem telemetria
+- `backend`: `server.js`, com UI e persistencia
+- `gateway`: `api-server.js`, para manter compatibilidade com `POST /api/ingest`
+- `ingest`: `ingest-service.js`, para receber telemetria direto do MQTT e salvar no banco
+
+### Passo a passo
+
+1. Copie o arquivo de ambiente:
+
+```bash
+cp .env.example .env
+```
+
+2. Ajuste as senhas e portas no `.env` se quiser.
+
+3. Suba a stack:
+
+```bash
+docker compose up -d --build
+```
+
+4. Confira os logs:
+
+```bash
+docker compose logs -f backend gateway ingest db mqtt
+```
+
+5. Acesse:
+
+```text
+http://IP_DO_VPS:3000
+http://IP_DO_VPS:3001/api/health
+```
+
+### Observacoes
+
+- O MQTT fica aberto na porta `1883`. Em VPS publica, use firewall e, se possivel, autenticacao/TLS depois.
+- Se voce quiser usar apenas HTTP, o `gateway` ja resolve o `POST /api/ingest`.
+- Se os ESPs publicarem MQTT, mantenha o servico `ingest` ativo.
+
 ## Endpoints principais
 
 - `GET /api/health`

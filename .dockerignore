@@ -1,0 +1,8 @@
+node_modules
+data
+.git
+.vscode
+.DS_Store
+*.log
+deploy
+docker-compose.override.yml
