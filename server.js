@@ -6,6 +6,12 @@ const crypto = require('crypto');
 const { URL } = require('url');
 const { createSimpleClient } = require('./lib/simple-broker-client');
 const { buildTelemetryTopic, buildCommandTopic } = require('./lib/iot-contract');
+const {
+  getBmp280Sensor,
+  getLightReading,
+  getGasReading,
+  getTemperatureReading
+} = require('./lib/iot-contract');
 
 const PORT = Number(process.env.PORT || 3000);
 const DATA_DIR = path.join(__dirname, 'data');
@@ -591,7 +597,17 @@ function createTelemetryRecord(node) {
   const pressure = toNumber(1013 + (Math.random() - 0.5) * 2.4, 1);
   const lightRaw = Math.max(0, Math.round(lightBase + (Math.random() - 0.5) * 500));
   const lightPct = Math.max(0, Math.min(100, Math.round((lightRaw / 4095) * 100)));
+  const gasRaw = Math.max(0, Math.round(120 + (Math.random() - 0.5) * 35));
+  const gasPpm = toNumber(Math.max(10, gasRaw + (Math.random() - 0.5) * 8), 1);
   const ds18b20 = toNumber(temperature + (Math.random() - 0.5) * 0.6, 1);
+  const profile = {
+    NODE07: { ldr: false, mq7: false },
+    NODE08: { ldr: true, mq7: false },
+    NODE09: { ldr: true, mq7: true },
+    NODE10: { ldr: false, mq7: true }
+  }[node.nodeId] || { ldr: true, mq7: false };
+
+  const rgbMode = ['off', 'green', 'blue', 'red'][node.seq % 4];
 
   node.seq += 1;
   node.rssi = Math.max(-95, Math.min(-35, node.rssi + Math.round((Math.random() - 0.5) * 4)));
@@ -608,17 +624,34 @@ function createTelemetryRecord(node) {
     rssi: node.rssi,
     battery: node.battery,
     sensors: {
-      bme280: {
+      bmp280: {
         temperature_c: temperature,
-        humidity_pct: humidity,
         pressure_hpa: pressure
       },
-      ldr: {
-        light_raw: lightRaw,
-        light_pct: lightPct
-      },
+      ...(profile.ldr
+        ? {
+            ldr: {
+              light_raw: lightRaw,
+              light_pct: lightPct
+            }
+          }
+        : {}),
+      ...(profile.mq7
+        ? {
+            mq7: {
+              gas_raw: gasRaw,
+              co_ppm: gasPpm
+            }
+          }
+        : {}),
       ds18b20: {
         temperature_c: ds18b20
+      }
+    },
+    actuators: {
+      rgb_led: {
+        state: rgbMode === 'off' ? 'off' : 'on',
+        color: rgbMode
       }
     }
   };
@@ -644,7 +677,8 @@ function normalizeTelemetryPayload(payload) {
     seq: Number(payload.seq),
     rssi: Number.isFinite(Number(payload.rssi)) ? Number(payload.rssi) : -60,
     battery: Number.isFinite(Number(payload.battery)) ? toNumber(payload.battery, 2) : 0,
-    sensors: payload.sensors
+    sensors: payload.sensors,
+    ...(payload.actuators && typeof payload.actuators === 'object' ? { actuators: payload.actuators } : {})
   };
 }
 
@@ -703,11 +737,12 @@ function pushTelemetry(record) {
 }
 
 function maybeRaiseAlert(record) {
-  const temp = record.sensors?.bme280?.temperature_c;
-  const light = record.sensors?.ldr?.light_pct;
+  const temp = getTemperatureReading(record);
+  const light = getLightReading(record);
+  const gas = getGasReading(record);
   let alert = null;
 
-  if (temp >= 29.5) {
+  if (Number.isFinite(Number(temp)) && Number(temp) >= 29.5) {
     alert = {
       id: `ALT-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
       ts: isoNow(),
@@ -718,7 +753,7 @@ function maybeRaiseAlert(record) {
       message: `Temperatura acima do limite em ${record.nodeId}: ${temp.toFixed(1)} C`,
       resolved: false
     };
-  } else if (light <= 8) {
+  } else if (Number.isFinite(Number(light)) && Number(light) <= 8) {
     alert = {
       id: `ALT-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
       ts: isoNow(),
@@ -727,6 +762,17 @@ function maybeRaiseAlert(record) {
       severity: 'info',
       rule: 'low_light',
       message: `Luminosidade muito baixa em ${record.nodeId}: ${light}%`,
+      resolved: false
+    };
+  } else if (Number.isFinite(Number(gas)) && Number(gas) >= 60) {
+    alert = {
+      id: `ALT-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
+      ts: isoNow(),
+      nodeId: record.nodeId,
+      gatewayId: record.gatewayId,
+      severity: 'warning',
+      rule: 'gas_high',
+      message: `CO elevado em ${record.nodeId}: ${Number(gas).toFixed(1)} ppm`,
       resolved: false
     };
   }
@@ -760,7 +806,7 @@ function simulateTick() {
 function getSummary() {
   const latest = state.telemetry[state.telemetry.length - 1] || null;
   const temperatures = state.telemetry
-    .map((item) => item.sensors?.bme280?.temperature_c)
+    .map((item) => getTemperatureReading(item))
     .filter((value) => typeof value === 'number');
   const avgTemperature = temperatures.length
     ? toNumber(temperatures.reduce((sum, value) => sum + value, 0) / temperatures.length, 1)
@@ -912,6 +958,13 @@ async function handlePostIngest(req, res) {
     }
     // keep local state in sync for the existing UI
     registerTelemetry(normalized, 'http-ingest');
+    if (DB) {
+      try {
+        await DB.insertTelemetry(normalized, 'http-ingest');
+      } catch (error) {
+        console.error('DB insertTelemetry error', error && error.message);
+      }
+    }
     sendJson(res, 202, { ok: true, receivedAt: isoNow() });
     return;
   }
@@ -926,6 +979,17 @@ async function handlePostIngest(req, res) {
     ok: true,
     receivedAt: isoNow()
   });
+
+  if (DB) {
+    try {
+      const normalizedBody = normalizeTelemetryPayload(body);
+      if (normalizedBody) {
+        await DB.insertTelemetry(normalizedBody, 'http-ingest');
+      }
+    } catch (error) {
+      console.error('DB insertTelemetry error', error && error.message);
+    }
+  }
 }
 
 async function handleRequest(req, res) {
