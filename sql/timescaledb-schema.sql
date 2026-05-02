@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS telemetry (
   humidity_pct NUMERIC(6, 2),
   pressure_hpa NUMERIC(6, 2),
   light_pct NUMERIC(6, 2),
+  gas_ppm NUMERIC(8, 2),
   source TEXT NOT NULL DEFAULT 'mqtt'
 );
 

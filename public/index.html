@@ -85,10 +85,16 @@
               Nó
               <select id="nodeSelect"></select>
             </label>
-            <div class="legend">
-              <span><i class="legend-line temp"></i>Temperatura</span>
-              <span><i class="legend-line light"></i>Luz</span>
-            </div>
+            <label class="control-label">
+              Métrica
+              <select id="chartMetric">
+                <option value="temperature">Temperatura</option>
+                <option value="pressure">Pressão</option>
+                <option value="humidity">Umidade</option>
+                <option value="light">Luz</option>
+                <option value="gas">CO</option>
+              </select>
+            </label>
           </div>
         </div>
         <canvas id="chart" width="1100" height="360"></canvas>

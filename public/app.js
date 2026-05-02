@@ -9,6 +9,7 @@ const commandFeedback = document.getElementById('commandFeedback');
 const commandParams = document.getElementById('commandParams');
 const commandAction = document.getElementById('commandAction');
 const chart = document.getElementById('chart');
+const chartMetric = document.getElementById('chartMetric');
 const chartSubtitle = document.getElementById('chartSubtitle');
 const btnRefresh = document.getElementById('btnRefresh');
 const btnSeed = document.getElementById('btnSeed');
@@ -63,8 +64,17 @@ let latestState = {
 };
 let dbConfig = null;
 let selectedNodeId = null;
+let selectedChartMetric = chartMetric?.value || 'temperature';
 let currentUser = null;
 let activeRoleTheme = null;
+
+const CHART_METRICS = {
+  temperature: { label: 'Temperatura', unit: '°C' },
+  pressure: { label: 'Pressão', unit: 'hPa' },
+  humidity: { label: 'Umidade', unit: '%' },
+  light: { label: 'Luz', unit: '%' },
+  gas: { label: 'CO', unit: 'ppm' }
+};
 
 function formatTime(value) {
   if (!value) {
@@ -74,6 +84,72 @@ function formatTime(value) {
     dateStyle: 'short',
     timeStyle: 'medium'
   });
+}
+
+function getBmp280Sensor(sensors = {}) {
+  return sensors.bmp280 || sensors.bme280 || {};
+}
+
+function getMetricValue(point, metric) {
+  const bmp280 = getBmp280Sensor(point?.sensors || {});
+  switch (metric) {
+    case 'pressure':
+      return bmp280.pressure_hpa ?? point?.sensors?.pressure_hpa ?? null;
+    case 'humidity':
+      return bmp280.humidity_pct ?? point?.sensors?.humidity_pct ?? null;
+    case 'light':
+      return point?.sensors?.ldr?.light_pct ?? point?.sensors?.light_pct ?? null;
+    case 'gas':
+      return point?.sensors?.mq7?.co_ppm ?? point?.sensors?.mq7?.gas_ppm ?? point?.sensors?.co_ppm ?? point?.sensors?.gas_ppm ?? null;
+    case 'temperature':
+    default:
+      return bmp280.temperature_c ?? point?.sensors?.temperature_c ?? null;
+  }
+}
+
+function getMetricLabel(metric) {
+  return CHART_METRICS[metric]?.label || CHART_METRICS.temperature.label;
+}
+
+function getMetricUnit(metric) {
+  return CHART_METRICS[metric]?.unit || '';
+}
+
+function buildSensorTiles(latest) {
+  if (!latest) {
+    return [];
+  }
+
+  const bmp280 = getBmp280Sensor(latest.sensors || {});
+  const tiles = [];
+  const temperature = bmp280.temperature_c ?? latest?.sensors?.temperature_c;
+  const pressure = bmp280.pressure_hpa ?? latest?.sensors?.pressure_hpa;
+  const humidity = bmp280.humidity_pct ?? latest?.sensors?.humidity_pct;
+  const light = latest?.sensors?.ldr?.light_pct ?? latest?.sensors?.light_pct;
+  const gas = latest?.sensors?.mq7?.co_ppm ?? latest?.sensors?.mq7?.gas_ppm ?? latest?.sensors?.co_ppm ?? latest?.sensors?.gas_ppm;
+  const rgb = latest?.actuators?.rgb_led || latest?.outputs?.rgb_led;
+
+  if (Number.isFinite(Number(temperature))) {
+    tiles.push({ label: 'Temperatura', value: `${Number(temperature).toFixed(1)} °C`, accent: 'temp' });
+  }
+  if (Number.isFinite(Number(pressure))) {
+    tiles.push({ label: 'Pressão', value: `${Number(pressure).toFixed(1)} hPa`, accent: 'light' });
+  }
+  if (Number.isFinite(Number(humidity))) {
+    tiles.push({ label: 'Umidade', value: `${Number(humidity).toFixed(1)} %`, accent: 'online' });
+  }
+  if (Number.isFinite(Number(light))) {
+    tiles.push({ label: 'Luz', value: `${Number(light).toFixed(0)} %`, accent: 'warning' });
+  }
+  if (Number.isFinite(Number(gas))) {
+    tiles.push({ label: 'CO', value: `${Number(gas).toFixed(1)} ppm`, accent: 'warning' });
+  }
+  if (rgb) {
+    const rgbLabel = rgb.color || rgb.state || 'indefinido';
+    tiles.push({ label: 'RGB LED', value: String(rgbLabel).toUpperCase(), accent: 'online' });
+  }
+
+  return tiles;
 }
 
 function getLatestReading(node) {
@@ -135,9 +211,7 @@ function renderNodes(nodes) {
     .map((node) => {
       const latest = getLatestReading(node);
       const badgeClass = node.status === 'online' ? 'online' : 'offline';
-      const temperature = latest?.sensors?.bme280?.temperature_c ?? '--';
-      const humidity = latest?.sensors?.bme280?.humidity_pct ?? '--';
-      const light = latest?.sensors?.ldr?.light_pct ?? '--';
+      const sensorTiles = buildSensorTiles(latest);
       return `
         <article class="card node-card" data-status="${node.status}">
           <div class="card-top">
@@ -147,18 +221,18 @@ function renderNodes(nodes) {
           <div class="meta">${node.name} · ${node.location}</div>
           <div class="meta">Gateway: ${node.gatewayId} · Seq: ${node.seq} · RSSI: ${node.rssi} dBm</div>
           <div class="node-metrics">
-            <div class="node-metric">
-              <span>Temperatura</span>
-              <strong>${temperature} °C</strong>
-            </div>
-            <div class="node-metric">
-              <span>Umidade</span>
-              <strong>${humidity} %</strong>
-            </div>
-            <div class="node-metric">
-              <span>Luz</span>
-              <strong>${light} %</strong>
-            </div>
+            ${sensorTiles.length
+              ? sensorTiles
+                  .map(
+                    (item) => `
+                      <div class="node-metric">
+                        <span>${item.label}</span>
+                        <strong>${item.value}</strong>
+                      </div>
+                    `
+                  )
+                  .join('')
+              : '<div class="node-metric"><span>Leituras</span><strong>Sem dados</strong></div>'}
           </div>
           <div class="meta">Bateria: ${node.battery} V · Último visto: ${formatTime(node.lastSeen)}</div>
         </article>
@@ -530,20 +604,31 @@ function drawChart(points) {
     return;
   }
 
-  const temp = points.map((item) => item.sensors.bme280.temperature_c);
-  const light = points.map((item) => item.sensors.ldr.light_pct);
-  const maxValue = Math.max(...temp, ...light, 100);
-  const minValue = Math.min(...temp, ...light, 0);
+  const metric = CHART_METRICS[selectedChartMetric] ? selectedChartMetric : 'temperature';
+  const values = points
+    .map((item) => ({ ts: item.ts, value: getMetricValue(item, metric) }))
+    .filter((item) => Number.isFinite(Number(item.value)));
+
+  if (!values.length) {
+    ctx.fillStyle = '#9db2cf';
+    ctx.font = '20px Space Grotesk, sans-serif';
+    ctx.fillText(`Sem ${getMetricLabel(metric).toLowerCase()} para exibir`, 36, 52);
+    return;
+  }
+
+  const series = values.map((item) => Number(item.value));
+  const maxValue = Math.max(...series);
+  const minValue = Math.min(...series);
   const padding = 42;
   const innerWidth = width - padding * 2;
   const innerHeight = height - padding * 2;
-  const step = innerWidth / Math.max(points.length - 1, 1);
+  const step = innerWidth / Math.max(values.length - 1, 1);
 
-  function plot(values, color, label) {
+  function plot(seriesValues, color, label) {
     ctx.strokeStyle = color;
     ctx.lineWidth = 3;
     ctx.beginPath();
-    values.forEach((value, index) => {
+    seriesValues.forEach((value, index) => {
       const x = padding + index * step;
       const y = padding + innerHeight - ((value - minValue) / (maxValue - minValue || 1)) * innerHeight;
       if (index === 0) {
@@ -577,8 +662,7 @@ function drawChart(points) {
     ctx.stroke();
   }
 
-  plot(temp, '#51d1c7', 'Temperatura');
-  plot(light, '#f9b24b', 'Luz %');
+  plot(series, '#51d1c7', `${getMetricLabel(metric)} ${getMetricUnit(metric)}`.trim());
 
   ctx.fillStyle = '#9db2cf';
   ctx.font = '14px Inter, sans-serif';
@@ -596,7 +680,7 @@ function syncState(data) {
   const points = buildChartData(selectedNodeId || data.nodes[0]?.nodeId);
   const activeNode = data.nodes.find((node) => node.nodeId === selectedNodeId) || data.nodes[0];
   chartSubtitle.textContent = activeNode
-    ? `${activeNode.nodeId} · ${activeNode.name} · ${points.length} pontos recentes`
+    ? `${activeNode.nodeId} · ${activeNode.name} · ${points.length} pontos de ${getMetricLabel(selectedChartMetric).toLowerCase()}`
     : 'Sem nós cadastrados';
   drawChart(points);
 }
@@ -692,10 +776,22 @@ nodeSelect.addEventListener('change', (event) => {
   const points = buildChartData(selectedNodeId);
   const activeNode = latestState.nodes.find((node) => node.nodeId === selectedNodeId);
   chartSubtitle.textContent = activeNode
-    ? `${activeNode.nodeId} · ${activeNode.name} · ${points.length} pontos recentes`
+    ? `${activeNode.nodeId} · ${activeNode.name} · ${points.length} pontos de ${getMetricLabel(selectedChartMetric).toLowerCase()}`
     : 'Sem nós cadastrados';
   drawChart(points);
 });
+
+if (chartMetric) {
+  chartMetric.addEventListener('change', (event) => {
+    selectedChartMetric = event.target.value;
+    const points = buildChartData(selectedNodeId || latestState.nodes[0]?.nodeId);
+    const activeNode = latestState.nodes.find((node) => node.nodeId === selectedNodeId) || latestState.nodes[0];
+    chartSubtitle.textContent = activeNode
+      ? `${activeNode.nodeId} · ${activeNode.name} · ${points.length} pontos de ${getMetricLabel(selectedChartMetric).toLowerCase()}`
+      : 'Sem nós cadastrados';
+    drawChart(points);
+  });
+}
 
 btnRefresh.addEventListener('click', fetchState);
 btnSeed.addEventListener('click', async () => {
