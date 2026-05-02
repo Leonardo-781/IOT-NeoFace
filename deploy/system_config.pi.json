@@ -1,0 +1,13 @@
+{
+  "database": {
+    "enabled": true,
+    "engine": "timescaledb",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "database": "iot_monitoring",
+    "username": "iot_user",
+    "password": "iot_pass123",
+    "ssl": false,
+    "retentionDays": 30
+  }
+}

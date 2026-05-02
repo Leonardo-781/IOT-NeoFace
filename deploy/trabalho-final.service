@@ -1,0 +1,16 @@
+[Unit]
+Description=Trabalho Final IoT - Backend principal
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/iot-neoface
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/node /opt/iot-neoface/server.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

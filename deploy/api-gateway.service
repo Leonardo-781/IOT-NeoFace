@@ -1,0 +1,16 @@
+[Unit]
+Description=Trabalho Final IoT - API Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/iot-neoface
+Environment=PORT=3001
+Environment=BACKEND_URL=http://127.0.0.1:3000
+ExecStart=/usr/bin/node /opt/iot-neoface/api-server.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
