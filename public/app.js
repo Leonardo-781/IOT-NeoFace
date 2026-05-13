@@ -428,7 +428,7 @@ function applyRoleVisualState(role) {
 async function fetchSession() {
   const response = await fetch('/api/me');
   if (response.status === 401) {
-    window.location.href = '/';
+    window.location.href = '/login';
     return null;
   }
   const data = await response.json();
@@ -703,7 +703,7 @@ async function fetchState() {
   ]);
 
   if ([summaryRes, nodesRes, telemetryRes, alertsRes, commandsRes].some((response) => response.status === 401)) {
-    window.location.href = '/';
+    window.location.href = '/login';
     return;
   }
 

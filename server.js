@@ -1001,8 +1001,7 @@ async function handleRequest(req, res) {
   }
 
   if (pathname === '/' || pathname === '/index.html') {
-    const session = getSession(req);
-    serveFile(res, path.join(PUBLIC_DIR, session.user ? 'index.html' : 'login.html'));
+    serveFile(res, path.join(PUBLIC_DIR, 'index.html'));
     return;
   }
 
