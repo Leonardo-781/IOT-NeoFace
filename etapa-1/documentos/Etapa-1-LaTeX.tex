@@ -1,0 +1,651 @@
+\documentclass[12pt,a4paper,oneside]{report}
+\usepackage[utf-8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{framed}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Configuração de cores
+\definecolor{darkblue}{rgb}{0.12,0.28,0.53}
+\definecolor{lightblue}{rgb}{0.92,0.95,0.98}
+\definecolor{accentgreen}{rgb}{0.2,0.6,0.2}
+\definecolor{codebackground}{rgb}{0.95,0.95,0.95}
+
+% Configuração de fonte e espaçamento
+\usepackage{setspace}
+\onehalfspacing
+\renewcommand{\baselinestretch}{1.5}
+
+% Configuração de headers
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{ETAPA 1 - Concepção e Arquitetura}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% Configuração de título
+\title{
+    \vspace{-1.5cm}
+    {\Large \textbf{TRABALHO FINAL - ETAPA 1}}\\
+    \vspace{0.5cm}
+    {\LARGE \textbf{Concepção e Arquitetura Inicial}}\\
+    \vspace{1cm}
+    {\Large Painel IoT Distribuído com Monitoramento em Tempo Real}\\
+    \vspace{1.5cm}
+}
+
+\author{
+    \textbf{Leonardo Cardoso}\\
+    \textit{Matrícula: 32021BSI004}\\
+    \vspace{0.5cm}
+    Disciplina: Sistemas Distribuídos\\
+    Data: \today
+}
+
+\date{}
+
+% Configuração de seções
+\usepackage{sectsty}
+\chapterfont{\color{darkblue}\Large}
+\sectionfont{\color{darkblue}\large}
+\subsectionfont{\color{darkblue}}
+
+% Configuração de código
+\lstset{
+    language=JavaScript,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebackground},
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{darkblue},
+    showstringspaces=false,
+    keywordstyle=\color{darkblue},
+    commentstyle=\color{gray},
+    stringstyle=\color{accentgreen}
+}
+
+% Comando para checkmark
+\newcommand{\checkmark}{\text{\ding{51}}}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================================
+% CAPÍTULO 1
+% ============================================================================
+\chapter{Informações Gerais}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Campo} & \textbf{Valor} \\
+    \hline
+    Nome do Aluno & Leonardo Cardoso \\
+    \hline
+    Matrícula & 32021BSI004 \\
+    \hline
+    Disciplina & Sistemas Distribuídos \\
+    \hline
+    Data de Entrega & 08 de Maio de 2026 \\
+    \hline
+    Data da Apresentação & 11 de Maio de 2026 \\
+    \hline
+\end{tabular}
+\end{center}
+
+% ============================================================================
+% CAPÍTULO 2
+% ============================================================================
+\chapter{Definição do Tema do Micro-Mundo}
+
+\section{Descrição Geral}
+
+Desenvolvimento de um \textbf{sistema de monitoramento IoT distribuído} que simula um cenário real onde múltiplos sensores (dispositivos ESP32) distribuídos geograficamente coletam dados de temperatura, umidade e gás, transmitem para um servidor central através de um broker MQTT, e disponibilizam visualização em tempo real através de uma interface web.
+
+\section{O que o Sistema Faz}
+
+\begin{enumerate}
+    \item \textbf{Coleta de Dados:} Múltiplos dispositivos ESP32 funcionam como \textit{nodes} sensoriais, capturando leituras de BMP280 (temperatura/pressão) e MQ-7 (gás).
+    
+    \item \textbf{Transmissão:} Dados são publicados via MQTT para um broker centralizado.
+    
+    \item \textbf{Processamento:} Backend processa telemetria, aplica filtros, calcula alertas e persiste em banco de dados.
+    
+    \item \textbf{Visualização:} Dashboard web exibe dados em tempo real, históricos, alertas e permite envio de comandos para os devices.
+    
+    \item \textbf{Controle Descentralizado:} Sistema de usuários com papéis (admin, operator, viewer) controla acesso aos recursos.
+\end{enumerate}
+
+\section{Entidades Principais}
+
+\begin{itemize}
+    \item \textbf{ESP32 Nodes:} Sensores distribuídos que medem o ambiente
+    \item \textbf{Gateway IoT:} Dispositivo que recebe dados dos nodes e os envia para o servidor
+    \item \textbf{API Gateway:} Camada de abstração HTTP para o backend
+    \item \textbf{Backend:} Processa telemetria, gerencia BD e lógica de negócio
+    \item \textbf{Broker MQTT:} Coordena comunicação entre devices e backend
+    \item \textbf{PostgreSQL/TimescaleDB:} Armazena séries temporais de dados
+    \item \textbf{Dashboard Web:} Interface de usuário para visualização e controle
+\end{itemize}
+
+\section{Por que é Distribuído}
+
+O sistema é distribuído porque:
+
+\begin{itemize}
+    \item Componentes rodam em máquinas diferentes (Raspberry Pi 3 para BD, Notebook para Web)
+    \item Comunicação via rede (MQTT TCP/IP, HTTP)
+    \item Múltiplos sensores (possibilidade de escala)
+    \item Necessidade de sincronização de estado
+    \item Tolerância a falhas (falha de um sensor não derruba o sistema)
+\end{itemize}
+
+% ============================================================================
+% CAPÍTULO 3
+% ============================================================================
+\chapter{Metas de Sistemas Distribuídos}
+
+\section{Escalabilidade $\checkmark$}
+
+\begin{description}
+    \item[Implementada:] Sistema pode receber múltiplos ESP32 nodes em paralelo
+    \item[Futura:] Replicação de broker MQTT, particionamento de dados por localização geográfica
+    \item[Métrica:] Suporta 100+ sensores simultâneos com latência $<$ 5 segundos
+\end{description}
+
+\section{Disponibilidade $\checkmark$}
+
+\begin{description}
+    \item[Implementada:] Backend redunda entre 2 máquinas, persistência em BD
+    \item[Futura:] Replicação de BD em múltiplas zonas, failover automático
+    \item[Métrica:] RTO (Recovery Time Objective) $<$ 1 minuto
+\end{description}
+
+\section{Tolerância a Falhas $\checkmark$}
+
+\begin{description}
+    \item[Implementada:] Serviços com restart automático, reconexão de clients MQTT
+    \item[Futura:] Circuit breaker, retry com backoff exponencial, dead letter queue
+    \item[Métrica:] Perda de mensagens $<$ 0.1\%
+\end{description}
+
+\section{Compartilhamento de Recursos $\checkmark$}
+
+\begin{description}
+    \item[Implementada:] BD centralizado, fila de comandos, estado compartilhado em memória
+    \item[Futura:] Distributed locking, consensus para decisões críticas
+    \item[Métrica:] Consistência eventual com latência $<$ 500ms
+\end{description}
+
+\section{Segurança (Básico) $\checkmark$}
+
+\begin{description}
+    \item[Implementada:] Autenticação por sessão, papéis de acesso (RBAC)
+    \item[Futura:] TLS para MQTT e HTTP, chaves SSH para acesso remoto, auditoria de logs
+    \item[Métrica:] Zero exposição de credenciais em logs
+\end{description}
+
+% ============================================================================
+% CAPÍTULO 4
+% ============================================================================
+\chapter{Arquitetura Inicial}
+
+\section{Diagrama Textual de Arquitetura}
+
+\begin{framed}
+\scriptsize
+\begin{verbatim}
+┌─────────────────────────────────────────────────────────────────┐
+│                    REDE LOCAL + TAILSCALE                        │
+└─────────────────────────────────────────────────────────────────┘
+                            │
+            ┌───────────────┼───────────────┐
+            │               │               │
+      ┌─────▼────┐    ┌─────▼────┐    ┌────▼──────┐
+      │ ESP32 N1 │    │ ESP32 NN │    │  Gateway  │
+      │ Sensores │    │ Sensores │    │  (ESP32)  │
+      └─────┬────┘    └─────┬────┘    └────┬──────┘
+            │               │               │
+            └───────────────┼───────────────┘
+                      MQTT (TCP 1883)
+                            │
+        ┌────────────────────┼────────────────────┐
+        │                                         │
+   ┌────▼─────────┐                    ┌─────────▼──────┐
+   │  Mosquitto    │                    │  API Gateway   │
+   │  MQTT Broker  │◄──HTTP────────────►│  (Node.js)     │
+   │(Localhost)    │                    │  :3001         │
+   └────┬──────────┘                    └────────┬───────┘
+        │ MQTT                                   │
+        │                                        │
+   ┌────▼──────────────────────────────────────▼──┐
+   │            Backend (Node.js :3000)            │
+   │  - Processa telemetria                        │
+   │  - Gerencia autenticação                      │
+   │  - Dashboard web                              │
+   │                                               │
+   │  Máquina: Notebook (server-sti)               │
+   └────────────────┬───────────────────────────────┘
+                    │
+             TCP :5432 PostgreSQL
+                    │
+        ┌───────────┴───────────┐
+        │                       │
+   ┌────▼──────────────────┐    │
+   │ PostgreSQL/TimescaleDB│    │
+   │ iot_monitoring (BD)   │    │
+   │                       │    │
+   │ Máquina: Raspberry Pi 3
+   └───────────────────────┘
+\end{verbatim}
+\end{framed}
+
+\section{Arquitetura de Componentes}
+
+A arquitetura segue o padrão cliente-servidor com componentes distribuídos:
+
+\begin{itemize}
+    \item \textbf{Camada de Sensores:} ESP32 nodes publicando dados via MQTT
+    \item \textbf{Camada de Integração:} Broker MQTT + API Gateway
+    \item \textbf{Camada de Processamento:} Backend Node.js processando e persistindo dados
+    \item \textbf{Camada de Dados:} PostgreSQL/TimescaleDB para série temporal
+    \item \textbf{Camada de Apresentação:} Dashboard web para visualização e controle
+\end{itemize}
+
+% ============================================================================
+% CAPÍTULO 5
+% ============================================================================
+\chapter{Descrição dos Componentes}
+
+\section{5.1 ESP32 Nodes (Sensores)}
+
+\begin{center}
+\begin{tabular}{|m{3cm}|m{10cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Aspecto} & \textbf{Detalhe} \\
+    \hline
+    Responsabilidade & Capturar leituras de sensores (BMP280: temp/pressão; MQ-7: gás); publicar via MQTT \\
+    \hline
+    Tipo de Comunicação & Publish/Subscribe MQTT (Mosquitto broker) \\
+    \hline
+    Implementação & Processo único (firmware Arduino/PlatformIO no ESP32) \\
+    \hline
+    Protocolo & MQTT TCP :1883 \\
+    \hline
+    Localização & Distribuídos fisicamente (múltiplas localizações) \\
+    \hline
+    Tolerância a Falhas & Reconexão automática ao broker se houver desconexão \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{5.2 Gateway IoT (ESP32 especial)}
+
+\begin{center}
+\begin{tabular}{|m{3cm}|m{10cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Aspecto} & \textbf{Detalhe} \\
+    \hline
+    Responsabilidade & Agregador de comandos; envia telemetria para backend via POST HTTP \\
+    \hline
+    Tipo de Comunicação & HTTP POST para API Gateway :3001/api/ingest \\
+    \hline
+    Implementação & Processo único (firmware Arduino) \\
+    \hline
+    Protocolo & HTTP/TCP :3001 \\
+    \hline
+    Endpoint & POST /api/ingest \\
+    \hline
+    Tolerância a Falhas & Retry com buffer local de comandos não-enviados \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{5.3 MQTT Broker (Mosquitto)}
+
+\begin{center}
+\begin{tabular}{|m{3cm}|m{10cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Aspecto} & \textbf{Detalhe} \\
+    \hline
+    Responsabilidade & Coordenar pub/sub entre ESP32 nodes e backend \\
+    \hline
+    Tipo de Comunicação & MQTT TCP (publish/subscribe) \\
+    \hline
+    Implementação & Serviço de sistema (processo independente) \\
+    \hline
+    Protocolo & TCP :1883 \\
+    \hline
+    Localização & Localhost (Notebook) \\
+    \hline
+    Tópicos Principais & /telemetry/+/+ (dados), /command/+ (comandos) \\
+    \hline
+    Tolerância a Falhas & Fila persistente de mensagens, reconnect automático \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{5.4 API Gateway (Node.js)}
+
+\begin{center}
+\begin{tabular}{|m{3cm}|m{10cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Aspecto} & \textbf{Detalhe} \\
+    \hline
+    Responsabilidade & Receber telemetria do gateway IoT; validar e repassar ao backend \\
+    \hline
+    Tipo de Comunicação & HTTP (entrada), HTTP (saída ao backend) \\
+    \hline
+    Implementação & Process Node.js (api-server.js; Port :3001) \\
+    \hline
+    Protocolo & HTTP/TCP :3001 \\
+    \hline
+    Localização & Notebook + Tunelado via Tailscale \\
+    \hline
+    Endpoints & POST /api/ingest, GET /api/status \\
+    \hline
+    Tolerância a Falhas & Retry ao backend, health-check periódico \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{5.5 Backend (Node.js)}
+
+\begin{center}
+\begin{tabular}{|m{3cm}|m{10cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Aspecto} & \textbf{Detalhe} \\
+    \hline
+    Responsabilidade & Processar telemetria, gerenciar BD, autenticação, lógica de negócio, UI web \\
+    \hline
+    Tipo de Comunicação & MQTT (sub), HTTP (API), PostgreSQL (Query) \\
+    \hline
+    Implementação & Process Node.js (server.js; Port :3000) \\
+    \hline
+    Protocolo & HTTP :3000, MQTT :1883, PostgreSQL :5432 \\
+    \hline
+    Localização & Notebook (192.168.1.X) + Tailscale (100.82.199.70) \\
+    \hline
+    Endpoints & GET /, POST /login, GET /api/telemetry, POST /api/command \\
+    \hline
+    Módulos & postgres-store.js, simple-broker-client.js, iot-contract.js \\
+    \hline
+    Tolerância a Falhas & Reconexão ao broker, fallback para simulação local \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{5.6 PostgreSQL/TimescaleDB (BD)}
+
+\begin{center}
+\begin{tabular}{|m{3cm}|m{10cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Aspecto} & \textbf{Detalhe} \\
+    \hline
+    Responsabilidade & Persistir série temporal de telemetria, config de devices, usuários e alertas \\
+    \hline
+    Tipo de Comunicação & SQL TCP :5432 \\
+    \hline
+    Implementação & Serviço de sistema (PostgreSQL + TimescaleDB extension) \\
+    \hline
+    Protocolo & PostgreSQL TCP :5432 \\
+    \hline
+    Localização & Raspberry Pi 3 (192.168.1.10) + Tailscale (100.82.140.119) \\
+    \hline
+    Banco Principal & iot\_monitoring (user: iot\_user) \\
+    \hline
+    Tabelas & telemetry (hypertable), devices, users, alerts \\
+    \hline
+    Tolerância a Falhas & WAL, backups programados, replicação futura \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{5.7 Frontend Web (Dashboard)}
+
+\begin{center}
+\begin{tabular}{|m{3cm}|m{10cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Aspecto} & \textbf{Detalhe} \\
+    \hline
+    Responsabilidade & Exibir dados em tempo real, históricos, alertas; controlar devices \\
+    \hline
+    Tipo de Comunicação & HTTP (requisições), WebSocket (real-time, futuro) \\
+    \hline
+    Implementação & HTML + JavaScript (SPA simples, public/app.js) \\
+    \hline
+    Localização & Servido pelo backend :3000 \\
+    \hline
+    Funcionalidades & Login, dashboard, gráficos, controle de ESPs, gerenciamento de usuários \\
+    \hline
+    Tolerância a Falhas & Cache local, retry de requisições, feedback visual \\
+    \hline
+\end{tabular}
+\end{center}
+
+% ============================================================================
+% CAPÍTULO 6
+% ============================================================================
+\chapter{Comunicação entre Componentes}
+
+\section{Fluxo de Dados - Telemetria}
+
+\begin{verbatim}
+ESP32 Node 1 ─── MQTT Publish ──→ Mosquitto ─── Subscribe ──→ Backend
+                                        ↓
+                              API Gateway (GET)
+                                    ↓
+                              POST /api/ingest
+                                    ↓
+                              Backend processa
+                                    ↓
+                           PostgreSQL INSERT
+\end{verbatim}
+
+\section{Fluxo de Dados - Comando}
+
+\begin{verbatim}
+Dashboard Web ─── POST /api/command ──→ Backend
+                                          ↓
+                        Publish via MQTT ao tópico de comando
+                                          ↓
+                                    Mosquitto
+                                          ↓
+                        ESP32 subscrito em /command recebe
+\end{verbatim}
+
+\section{Fluxo de Dados - Autenticação}
+
+\begin{verbatim}
+Usuário ─── POST /login ──→ Backend (valida em memória)
+                              ↓
+                         Set sessão (cookie/token)
+                              ↓
+                   Redirecion para dashboard
+\end{verbatim}
+
+% ============================================================================
+% CAPÍTULO 7
+% ============================================================================
+\chapter{Mapeamento de Conceitos de Sistemas Distribuídos}
+
+\begin{center}
+\begin{tabular}{|m{3.5cm}|m{9.5cm}|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Conceito} & \textbf{Implementação} \\
+    \hline
+    Processos/Threads & Node.js (event-loop single-thread, cluster para múltiplas instâncias) \\
+    \hline
+    Sockets TCP/UDP & MQTT (TCP), HTTP (TCP) \\
+    \hline
+    RPC & HTTP REST (futuro: gRPC) \\
+    \hline
+    Message Queue & MQTT broker (Mosquitto) \\
+    \hline
+    Naming Service & DNS + Tailscale MagicDNS (service discovery) \\
+    \hline
+    Sincronização & Shared state em memória + BD (eventual consistency) \\
+    \hline
+    Exclusão Mútua & PostgreSQL locks, transações ACID \\
+    \hline
+    Replicação & Futura: PostgreSQL replication + Mosquitto clustering \\
+    \hline
+    Tolerância a Falhas & Health-checks, auto-restart, reconexão \\
+    \hline
+    Segurança & RBAC (papéis), sessões, Tailscale (VPN) \\
+    \hline
+\end{tabular}
+\end{center}
+
+% ============================================================================
+% CAPÍTULO 8
+% ============================================================================
+\chapter{Tecnologias Utilizadas}
+
+\section{Stack Tecnológico}
+
+\begin{itemize}
+    \item \textbf{Linguagem de Programação:} JavaScript (Node.js v18+)
+    \item \textbf{Banco de Dados:} PostgreSQL 16 + TimescaleDB (série temporal)
+    \item \textbf{Message Broker:} Mosquitto (MQTT v3.1.1)
+    \item \textbf{Firmware Embarcado:} Arduino/PlatformIO (ESP32)
+    \item \textbf{Frontend:} HTML5 + Vanilla JavaScript
+    \item \textbf{Acesso Remoto:} Tailscale (Zero-Trust VPN)
+    \item \textbf{Orquestração:} Docker Compose (futura) / Systemd (atual)
+\end{itemize}
+
+\section{Infraestrutura de Rede}
+
+\begin{itemize}
+    \item \textbf{Rede Local:} WiFi 192.168.1.0/24
+    \item \textbf{Rede Remota:} Tailscale VPN com 100.82.x.x/16
+    \item \textbf{Acesso Público:} Tailscale Funnel (HTTPS)
+\end{itemize}
+
+% ============================================================================
+% CAPÍTULO 9
+% ============================================================================
+\chapter{Próximas Etapas Previstas}
+
+\section{Etapa 2 (Concorrência e Sockets)}
+
+Implementação de:
+
+\begin{itemize}
+    \item Múltiplos workers/threads para processamento paralelo de telemetria
+    \item Pool de conexões TCP/MQTT com timeout e reconnect
+    \item Load balancing entre múltiplos backends (futuro: nginx)
+\end{itemize}
+
+\section{Etapa 3 (Sincronização e RPC)}
+
+\begin{itemize}
+    \item Consensus entre múltiplas instâncias do backend (Raft/Paxos)
+    \item RPC tipado com gRPC
+    \item Transações distribuídas (two-phase commit)
+\end{itemize}
+
+\section{Etapa 4 (Replicação e Cache)}
+
+\begin{itemize}
+    \item Replicação de BD entre Raspberry Pi 3 e máquina backup
+    \item Cache distribuído com Redis
+    \item CDN para assets estáticos
+\end{itemize}
+
+\section{Etapa 5 (Tolerância a Falhas)}
+
+\begin{itemize}
+    \item Circuit breaker, bulkhead, retry patterns
+    \item Health-check automático e failover
+    \item Chaos engineering para testes de resiliência
+\end{itemize}
+
+\section{Etapa 6 (Segurança Avançada)}
+
+\begin{itemize}
+    \item TLS/SSL para MQTT e HTTP
+    \item OAuth2 / OpenID Connect
+    \item Auditoria e logging centralizado
+    \item Rate limiting e DDoS mitigation
+\end{itemize}
+
+% ============================================================================
+\newpage
+\appendix
+
+\chapter{Referências Técnicas}
+
+\begin{itemize}
+    \item \textbf{MQTT Specification:} \url{https://mqtt.org/}
+    \item \textbf{PostgreSQL Documentation:} \url{https://www.postgresql.org/docs/}
+    \item \textbf{TimescaleDB Documentation:} \url{https://docs.timescale.com/}
+    \item \textbf{Node.js API:} \url{https://nodejs.org/api/}
+    \item \textbf{Tailscale Documentation:} \url{https://tailscale.com/kb/}
+    \item \textbf{ESP32 PlatformIO:} \url{https://docs.platformio.org/}
+\end{itemize}
+
+\chapter{Configuração de Infraestrutura}
+
+\section{Máquinas Envolvidas}
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Máquina} & \textbf{IP Local} & \textbf{IP Tailscale} & \textbf{Função} \\
+    \hline
+    Notebook & 192.168.1.X & 100.82.199.70 & Web + Backend \\
+    \hline
+    Raspberry Pi 3 & 192.168.1.10 & 100.82.140.119 & Banco de Dados \\
+    \hline
+    ESP32 Node & 192.168.1.Y & - & Sensores \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{Portas Utilizadas}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+    \hline
+    \rowcolor{lightblue}
+    \textbf{Serviço} & \textbf{Porta} & \textbf{Protocolo} \\
+    \hline
+    Dashboard Web & 3000 & HTTP \\
+    \hline
+    API Gateway & 3001 & HTTP \\
+    \hline
+    MQTT Broker & 1883 & MQTT/TCP \\
+    \hline
+    PostgreSQL & 5432 & PostgreSQL/TCP \\
+    \hline
+\end{tabular}
+\end{center}
+
+\end{document}

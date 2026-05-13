@@ -1,0 +1,14 @@
+[Unit]
+Description=Trabalho Final Node App (pm2)
+After=network.target
+
+[Service]
+Type=simple
+User=leo
+LimitNOFILE=65536
+Restart=on-failure
+Environment=PATH=/usr/bin:/usr/local/bin
+ExecStart=/usr/local/bin/pm2 resurrect
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # Backend + Website (Notebook)
+  # ============================================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trabalho-final-backend
+    environment:
+      # Database (conecta ao Raspberry remoto)
+      DB_HOST: ${DB_HOST:-rasp-local}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB:-iot_monitoring}
+      DB_USER: ${POSTGRES_USER:-iot_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-iot_pass123}
+      
+      # MQTT (conecta ao Raspberry remoto)
+      MQTT_HOST: ${MQTT_HOST:-rasp-local}
+      MQTT_PORT: ${MQTT_PORT:-1883}
+      MQTT_BROKER_URL: mqtt://${MQTT_HOST:-rasp-local}:${MQTT_PORT:-1883}
+      
+      # Server
+      BACKEND_PORT: ${BACKEND_PORT:-3000}
+      BACKEND_HOST: 0.0.0.0
+      NODE_ENV: ${NODE_ENV:-production}
+      
+      # Login
+      LOGIN_USER: ${LOGIN_USER:-admin}
+      LOGIN_PASSWORD: ${LOGIN_PASSWORD:-123456}
+      
+      # Logging
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      DEBUG: ${DEBUG:-false}
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    volumes:
+      - ./public:/app/public
+      - ./lib:/app/lib
+    extra_hosts:
+      - "rasp-local:192.168.1.16"
+      - "server-local:192.168.1.10"
+    depends_on:
+      - api-gateway
+    restart: always
+    networks:
+      - trabalho-final-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ============================================
+  # API Gateway (Notebook)
+  # ============================================
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trabalho-final-gateway
+    environment:
+      GATEWAY_PORT: ${GATEWAY_PORT:-3001}
+      BACKEND_URL: http://backend:3000
+      NODE_ENV: ${NODE_ENV:-production}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - "${GATEWAY_PORT:-3001}:3001"
+    command: node api-server.js
+    volumes:
+      - ./:/app
+    extra_hosts:
+      - "rasp-local:192.168.1.16"
+      - "server-local:192.168.1.10"
+    restart: always
+    networks:
+      - trabalho-final-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ============================================
+  # Ingest Service (Notebook)
+  # ============================================
+  ingest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trabalho-final-ingest
+    environment:
+      # Database
+      DB_HOST: ${DB_HOST:-rasp-local}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB:-iot_monitoring}
+      DB_USER: ${POSTGRES_USER:-iot_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-iot_pass123}
+      
+      # MQTT
+      MQTT_HOST: ${MQTT_HOST:-rasp-local}
+      MQTT_PORT: ${MQTT_PORT:-1883}
+      MQTT_BROKER_URL: mqtt://${MQTT_HOST:-rasp-local}:${MQTT_PORT:-1883}
+      
+      # Service
+      INGEST_PORT: ${INGEST_HTTP_PORT:-3102}
+      INGEST_API_URL: http://backend:3000
+      NODE_ENV: ${NODE_ENV:-production}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - "${INGEST_HTTP_PORT:-3102}:3102"
+    command: node ingest-service.js
+    volumes:
+      - ./:/app
+    extra_hosts:
+      - "rasp-local:192.168.1.16"
+      - "server-local:192.168.1.10"
+    depends_on:
+      - backend
+    restart: always
+    networks:
+      - trabalho-final-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3102/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  trabalho-final-net:
+    driver: bridge

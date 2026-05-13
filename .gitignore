@@ -1,5 +1,70 @@
+# Dependências
 node_modules/
+
+# Editor
 .vscode/
 .DS_Store
+
+# Logs
 npm-debug.log*
 *.log
+logs/
+
+# Variáveis de ambiente (SENSÍVEL - NUNCA COMMITAR)
+.env
+.env.local
+.env.*.local
+
+# Arquivos de configuração com credenciais (SENSÍVEL)
+data/system_config.json
+data/system_config.*.json
+data/users.json
+data/state.json
+
+# Arquivos de segurança
+*.key
+*.pem
+*.crt
+*.p12
+private/
+secrets/
+
+# Diretórios de runtime
+data/
+logs/
+temp/
+tmp/
+
+# Backup
+*.bak
+*.backup
+*~
+*.swp
+*.swo
+
+# Docker
+.dockerignore
+.docker/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# OS
+Thumbs.db
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Geradores/Build
+dist/
+build/
+*.egg-info/

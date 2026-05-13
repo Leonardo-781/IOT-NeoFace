@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # PostgreSQL Database (Raspberry Pi Only)
+  # ============================================
+  db:
+    image: postgres:16-alpine
+    container_name: trabalho-final-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-iot_monitoring}
+      POSTGRES_USER: ${POSTGRES_USER:-iot_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-iot_pass123}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/timescaledb-schema.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iot_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - trabalho-final-net
+
+  # ============================================
+  # MQTT Broker (Raspberry Pi Only)
+  # ============================================
+  mqtt:
+    image: eclipse-mosquitto:2-alpine
+    container_name: trabalho-final-mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./docker/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mqtt-data:/mosquitto/data
+      - mqtt-log:/mosquitto/log
+    restart: always
+    networks:
+      - trabalho-final-net
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$SYS/broker/clients/connected"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pgdata:
+    driver: local
+  mqtt-data:
+    driver: local
+  mqtt-log:
+    driver: local
+
+networks:
+  trabalho-final-net:
+    driver: bridge

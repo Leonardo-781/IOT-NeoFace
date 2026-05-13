@@ -1,6 +1,6 @@
 # Trabalho Final - Painel IoT
 
-Aplicacao web local para o trabalho final de Sistemas Distribuidos, com foco em monitoramento IoT com backend dividido em duas maquinas.
+Aplicacao web distribuida para o trabalho final de Sistemas Distribuidos, com foco em monitoramento IoT com backend dividido em duas maquinas.
 
 ## O que esta incluido
 
@@ -15,48 +15,123 @@ Aplicacao web local para o trabalho final de Sistemas Distribuidos, com foco em 
 - API HTTP local
 - persistencia em arquivo JSON para o prototipo
 - firmware ESP32 para node sensor e gateway em [esp32/](esp32)
-- separacao entre API gateway e backend de tratamento/banco/interface
+- separacao entre API gateway e backend de tratamento/broker/interface
+
+## Arquitetura Distribuida
+
+### Topologia
+
+- **Raspberry Pi 3**: PostgreSQL/TimescaleDB (banco de dados remoto)
+- **Notebook STI**: backend, API gateway, broker MQTT e interface web
+- **Acesso HTTP**: Nginx como reverse proxy para a interface web e a API
+
+```
+┌─────────────────────────────┐
+│  Notebook STI               │
+│  ┌──────────────────────┐   │
+│  │ Backend server.js    │   │
+│  │ :3000 (UI + API)     │   │
+│  ├──────────────────────┤   │
+│  │ API Gateway api.js   │   │
+│  │ :3001 (proxy)        │   │
+│  ├──────────────────────┤   │
+│  │ Broker broker.js     │   │
+│  │ :1883 (MQTT)         │   │
+│  └──────────────────────┘   │
+│           │                 │
+│  ┌────────┴──────────┐      │
+│  │ pm2 (supervisao)  │      │
+│  └───────────────────┘      │
+└──────────┬────────────────────┘
+           │ TCP :5432 (rede local ou IP direto do Raspberry)
+           ▼
+┌─────────────────────────────┐
+│  Raspberry Pi 3             │
+│  ┌──────────────────────┐   │
+│  │ PostgreSQL + TS DB   │   │
+│  │ :5432 (iot_monitoring│   │
+│  └──────────────────────┘   │
+└─────────────────────────────┘
+```
 
 ## Como executar
 
-### Maquina 2: backend, tratamento, banco e interface
+### Inicio Rapido (STI)
 
 1. Instale o Node.js 18 ou superior.
 2. Abra esta pasta no terminal.
-3. Execute:
+4. Certifique-se de que [data/system_config.json](data/system_config.json) aponta para o Raspberry:
+   - `host`: IP do Raspberry na rede local ou endereço acessível a partir do notebook
+   - `port`: `5432`
+4. Instale dependencias e suba todos os servicos:
 
 ```bash
-npm start
+npm install
+npm install -g pm2
+pm2 start deploy/ecosystem.config.js --env production
+pm2 save
+pm2 startup
 ```
 
-4. Acesse:
+5. Acesse:
 
 ```text
 http://localhost:3000
 ```
 
-5. Entre com o login padrao:
+6. Entre com o login padrao:
 
 ```text
 usuario: admin
 senha: 123456
 ```
 
-6. No painel, o usuario admin pode:
-	- cadastrar contas e alterar permissões
-	- cadastrar, editar e remover ESPs
-	- configurar os parametros do banco de dados (engine, host, porta, credenciais, retencao)
-
-### Maquina 1: API gateway
-
-1. Aponte `BACKEND_URL` para o endereco da maquina 2.
-2. Execute:
+7. Visualize logs em tempo real:
 
 ```bash
-npm run api
+pm2 logs
 ```
 
-3. O gateway ESP32 deve postar em `http://IP_DA_MAQUINA_1:3001/api/ingest`.
+### Gerenciar servicos com pm2
+
+```bash
+pm2 status                    # Ver status dos servicos
+pm2 logs tf-server            # Ver logs do backend
+pm2 logs tf-api               # Ver logs do gateway
+pm2 logs tf-broker            # Ver logs do broker
+pm2 restart all               # Reiniciar todos
+pm2 stop all                  # Parar todos
+pm2 delete all                # Remover todos
+```
+
+### Modo Development
+
+Para desenvolvimento sem pm2, suba em terminais separados:
+
+```bash
+# Terminal 1: Backend
+npm start
+
+# Terminal 2: API Gateway
+npm run api
+
+# Terminal 3: Broker MQTT
+npm run broker
+```
+
+### Maquina 1: Raspberry Pi (Banco de Dados)
+
+O banco ja deve estar rodando como servico no Raspberry Pi. Verifique com:
+
+```bash
+ssh leo@IP_DO_RASP sudo systemctl status postgresql
+```
+
+Se nao estiver instalado, rode em um terminal no STI:
+
+```bash
+ssh leo@IP_DO_RASP 'sudo bash -c "apt-get install -y postgresql postgresql-contrib"'
+```
 
 ## Variaveis de ambiente
 
@@ -73,6 +148,27 @@ npm run api
 - `admin`: cadastra usuarios, altera papéis, executa comandos e usa tudo do sistema
 - `operator`: visualiza o painel e envia comandos, mas não gerencia usuarios
 - `viewer`: apenas visualiza dados e alertas
+
+## Acesso com Nginx
+
+O projeto ja inclui configuracao de Nginx em [deploy/nginx/](deploy/nginx). A ideia e usar o Nginx como entrada unica para a interface e para a API.
+
+### No notebook ou servidor que hospeda a aplicacao
+
+1. Instale o Nginx.
+2. Copie [deploy/nginx/server-sti-nginx.conf](deploy/nginx/server-sti-nginx.conf) para `/etc/nginx/sites-available/server-sti`.
+3. Habilite o site e recarregue o Nginx.
+
+```bash
+sudo apt install -y nginx
+sudo cp deploy/nginx/server-sti-nginx.conf /etc/nginx/sites-available/server-sti
+sudo ln -s /etc/nginx/sites-available/server-sti /etc/nginx/sites-enabled/server-sti
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+4. Acesse a aplicacao pelo IP ou dominio configurado em `server_name`.
+   - Exemplo atual: `192.168.1.16`
 
 ## Deploy em VPS com Docker Compose
 

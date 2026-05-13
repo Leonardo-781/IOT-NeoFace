@@ -1,0 +1,438 @@
+\documentclass[12pt,aspectratio=16:9]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{multimedia}
+\usepackage{hyperref}
+
+% Color definitions
+\definecolor{primary}{RGB}{18,56,102}
+\definecolor{secondary}{RGB}{28,120,86}
+\definecolor{accent}{RGB}{220,53,69}
+\definecolor{lightblue}{RGB}{236,242,250}
+\definecolor{lightgreen}{RGB}{235,247,241}
+
+% Beamer theme
+\usetheme{Madrid}
+\usecolortheme[named=primary]{structure}
+\setbeamercolor{title}{fg=white,bg=primary}
+\setbeamercolor{frametitle}{fg=white,bg=primary}
+\setbeamercolor{block title}{fg=white,bg=secondary}
+\setbeamercolor{block body}{bg=lightgreen}
+
+% Title page
+\title{Painel IoT Distribuído com Monitoramento em Tempo Real}
+\subtitle{Infraestrutura Heterogênea: Raspberry Pi, Linux Mint e ESP32/ESP8266}
+\author{Leonardo Cardoso de Moura \\ \textit{Matrícula: 32021BSI004}}
+\date{08 de maio de 2026}
+\institute{Disciplina: Sistemas Distribuídos}
+
+% Code style
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{lightblue},
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{primary},
+    showstringspaces=false,
+    keywordstyle=\color{primary},
+    commentstyle=\color{gray},
+    stringstyle=\color{secondary}
+}
+
+\begin{document}
+
+% Title slide
+\frame{\titlepage}
+
+% Outline
+\begin{frame}{Roteiro}
+    \tableofcontents
+\end{frame}
+
+% ==========================
+\section{Introdução}
+% ==========================
+
+\begin{frame}{O Micro-mundo}
+    \begin{center}
+        \textbf{Sistema IoT Distribuído para Monitoramento Ambiental em Tempo Real}
+    \end{center}
+    
+    \vspace{1cm}
+    
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{Características}
+            \begin{itemize}
+                \item Coleta contínua de dados
+                \item Múltiplos nós geograficamente distribuídos
+                \item Sincronização centralizada
+                \item Dashboard web
+                \item Displays locais OLED
+            \end{itemize}
+        \end{block}
+        
+        \column{0.5\textwidth}
+        \begin{block}{Sensores}
+            \begin{itemize}
+                \item Temperatura
+                \item Umidade
+                \item Pressão
+                \item Força de sinal WiFi (RSSI)
+                \item Qualidade de conexão
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{O que o Sistema Faz}
+    \begin{enumerate}[<+->]
+        \item Coleta contínua de leituras de sensores (temperatura, umidade, pressão)
+        \item Monitoramento de força e qualidade de sinal WiFi para diagnóstico
+        \item Exibição em tempo real em telas OLED com animações responsivas
+        \item Controle interativo via sensor de toque capacitivo
+        \item Sincronização com servidor central através de API HTTP
+        \item Persistência de séries temporais em PostgreSQL
+        \item Dashboard web para visualização e controle remoto
+    \end{enumerate}
+\end{frame}
+
+% ==========================
+\section{Arquitetura do Sistema}
+% ==========================
+
+\begin{frame}{Arquitetura Geral}
+    \centering
+    \begin{tikzpicture}[
+        node distance=2.5cm and 2.5cm,
+        esp/.style={rectangle, rounded corners=3mm, draw=secondary, very thick, 
+                   minimum width=2.8cm, minimum height=0.8cm, align=center, fill=lightgreen!70},
+        server/.style={rectangle, rounded corners=3mm, draw=primary, very thick, 
+                      minimum width=2.8cm, minimum height=0.8cm, align=center, fill=lightblue!70},
+        arrow/.style={-{Latex[length=2.5mm]}, very thick, draw=gray}
+    ]
+
+    \node[esp] (esp1) {ESP32 (Sala)};
+    \node[esp, below right=2cm and 1.5cm of esp1] (esp2) {ESP8266 (Varanda)};
+    
+    \node[server, below=4cm of esp1] (nginx) {Nginx};
+    \node[server, right=2.2cm of nginx] (api) {API Node.js};
+    \node[server, right=2.2cm of api] (db) {PostgreSQL};
+
+    \draw[arrow] (esp1) -- (nginx);
+    \draw[arrow] (esp2) -- (nginx);
+    \draw[arrow] (nginx) -- (api);
+    \draw[arrow] (api) -- (db);
+    
+    \node[font=\small, above left=0.2cm of nginx] {WiFi POST};
+    \node[font=\small, above=0.2cm of api] {HTTP};
+    \node[font=\small, above=0.2cm of db] {TCP};
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Infraestrutura Física}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{\textbf{Raspberry Pi 3B}}
+            \begin{itemize}
+                \item PostgreSQL
+                \item Banco de dados persistente
+                \item IP fixo: 192.168.1.10
+                \item Conectividade: Ethernet
+            \end{itemize}
+        \end{block}
+        
+        \column{0.5\textwidth}
+        \begin{block}{\textbf{Notebook (Linux Mint)}}
+            \begin{itemize}
+                \item Node.js API
+                \item Nginx proxy reverso
+                \item IP fixo: 192.168.1.11
+                \item Conectividade: WiFi
+            \end{itemize}
+        \end{block}
+    \end{columns}
+    
+    \vspace{0.5cm}
+    
+    \begin{block}{\textbf{ESP32/ESP8266 (Distribuídos)}}
+        \begin{itemize}
+            \item Múltiplos nós em diferentes locais
+            \item Coleta de dados via sensores
+            \item WiFi para comunicação
+            \item Displays OLED locais
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Fluxo de Comunicação}
+    \begin{center}
+        ESP32/ESP8266 $\rightarrow$ \textbf{[WiFi]} $\rightarrow$ Nginx $\rightarrow$ API Node.js $\rightarrow$ PostgreSQL
+    \end{center}
+    
+    \vspace{1cm}
+    
+    \begin{block}{Protocolo de Dados}
+        \textbf{HTTP POST com payload JSON}
+    \end{block}
+    
+    \vspace{0.5cm}
+    
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{itemize}
+            \item Frequência: 30-60s
+            \item Buffer local: 10 leituras
+            \item Auto-recover WiFi
+            \item Backoff exponencial
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \begin{itemize}
+            \item Rate limiting
+            \item Compressão gzip
+            \item Logging de requisições
+            \item CORS habilitado
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+% ==========================
+\section{Sensores e Dispositivos}
+% ==========================
+
+\begin{frame}{Sensores Instalados}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{\textbf{BMP280}}
+            \begin{itemize}
+                \item Temperatura: -40 a +85°C
+                \item Pressão: 300-1100 hPa
+                \item Protocolo: I2C/SPI
+                \item Precisão: ±1°C
+            \end{itemize}
+        \end{block}
+        
+        \column{0.5\textwidth}
+        \begin{block}{\textbf{DHT11}}
+            \begin{itemize}
+                \item Temperatura: 0-50°C
+                \item Umidade: 20-80\%
+                \item Protocolo: Single-wire
+                \item Precisão: ±2°C, ±5\%
+            \end{itemize}
+        \end{block}
+    \end{columns}
+    
+    \vspace{0.8cm}
+    
+    \begin{block}{\textbf{RSSI (Received Signal Strength Indicator)}}
+        Monitoramento de qualidade de sinal WiFi:
+        \begin{itemize}
+            \item Diagnóstico real de cobertura
+            \item Detecção de interferência
+            \item Planejamento de repetidores
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Displays e Interatividade}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \begin{block}{\textbf{Display OLED SSD1306}}
+            \begin{itemize}
+                \item 128×64 pixels
+                \item Protocolo I2C
+                \item Taxa: 1-2 Hz
+                \item Conteúdo:
+                \begin{itemize}
+                    \item Temperatura em tempo real
+                    \item Força de sinal WiFi
+                    \item Animações de rosto
+                    \item Status do sistema
+                \end{itemize}
+            \end{itemize}
+        \end{block}
+        
+        \column{0.4\textwidth}
+        \begin{block}{\textbf{Sensor Toque TTP223}}
+            \begin{itemize}
+                \item Controle capacitivo
+                \item 5 expressões
+                \item Debounce 300ms
+                \item Ciclagem ao tocar
+            \end{itemize}
+            
+            \vspace{0.5cm}
+            
+            \centering
+            \small
+            😊 😢 😲 🤔 ❤️
+        \end{block}
+    \end{columns}
+\end{frame}
+
+% ==========================
+\section{Banco de Dados}
+% ==========================
+
+\begin{frame}{Schema PostgreSQL}
+    \begin{block}{\textbf{Tabela: telemetry} (TimescaleDB)}
+        \begin{itemize}
+            \item \texttt{time} (TIMESTAMP com timezone)
+            \item \texttt{device\_id} (chave de particionamento)
+            \item \texttt{temperature\_c, humidity\_percent, pressure\_hpa}
+            \item \texttt{rssi\_dbm, battery\_voltage}
+            \item Retenção: 90 dias
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{\textbf{Tabela: devices}}
+        \begin{itemize}
+            \item ID, nome, localização, status
+            \item Last seen, firmware version
+            \item IP address (último visto)
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{\textbf{Tabela: alerts}}
+        Tipo, severidade, timestamp criação/resolução
+    \end{block}
+\end{frame}
+
+\begin{frame}{Payload JSON Exemplo}
+    \lstset{language=JSON, basicstyle=\ttfamily\tiny}
+    \begin{lstlisting}
+{
+  "device_id": "ESP32_SALA_001",
+  "timestamp": 1715179200,
+  "sensor_data": {
+    "temperature_c": 24.5,
+    "humidity_percent": 65.2,
+    "pressure_hpa": 1013.5,
+    "rssi_dbm": -45,
+    "battery_voltage": 3.3
+  },
+  "display_state": {
+    "current_expression": "happy",
+    "screen_active": true
+  },
+  "system_health": {
+    "wifi_reconnects": 2,
+    "api_failures": 0
+  }
+}
+    \end{lstlisting}
+\end{frame}
+
+% ==========================
+\section{Conceitos de Sistemas Distribuídos}
+% ==========================
+
+\begin{frame}{Objetivos de Sistemas Distribuídos}
+    \begin{block}{1. \textbf{Escalabilidade}}
+        Novos nós podem ser adicionados sem redesenho. Nginx permite escalabilidade horizontal.
+    \end{block}
+    
+    \begin{block}{2. \textbf{Disponibilidade}}
+        Buffer local em ESP, Nginx e API redundantes, PostgreSQL com snapshots automáticos.
+    \end{block}
+    
+    \begin{block}{3. \textbf{Tolerância a Falhas}}
+        Reconexão automática, retry com backoff, health check, fila de mensagens locais.
+    \end{block}
+    
+    \begin{block}{4. \textbf{Compartilhamento de Recursos}}
+        Nginx como ponto centralizado, PostgreSQL como estado único, transações ACID.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Desafios Reais do Sistema}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{\textbf{Infraestrutura}}
+            \begin{itemize}
+                \item IP dinâmico do provedor
+                \item Falhas WiFi frequentes
+                \item Latência variável
+                \item Nós geograficamente dispersos
+            \end{itemize}
+        \end{block}
+        
+        \column{0.5\textwidth}
+        \begin{block}{\textbf{Soluções}}
+            \begin{itemize}
+                \item DHCP estático no roteador
+                \item Buffer local nos nós
+                \item Backoff exponencial
+                \item Sincronização periódica
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+% ==========================
+\section{Roadmap Futuro}
+% ==========================
+
+\begin{frame}{Próximas Etapas de Desenvolvimento}
+    \begin{itemize}[<+->]
+        \item \textbf{Etapa 2}: Threads em Node.js, processamento paralelo
+        \item \textbf{Etapa 3}: UDP para comunicação de baixa latência
+        \item \textbf{Etapa 4}: RPC entre servidores
+        \item \textbf{Etapa 5}: Message Bus (RabbitMQ/MQTT)
+        \item \textbf{Etapa 6}: Service Discovery (mDNS/Consul)
+        \item \textbf{Etapa 7}: Mutual exclusion, eleição de líder
+        \item \textbf{Etapa 8}: Replicação com consistência eventual
+        \item \textbf{Etapa 9}: Circuit breaker, resiliência
+        \item \textbf{Etapa 10}: TLS, autenticação mútua, JWT
+    \end{itemize}
+\end{frame}
+
+% ==========================
+\section{Conclusão}
+% ==========================
+
+\begin{frame}{Conclusão}
+    \begin{block}{\textbf{Um Sistema Distribuído Real}}
+        \begin{itemize}
+            \item Infraestrutura genuinamente prática e doméstica
+            \item Múltiplos nós heterogêneos (Raspberry, Notebook, ESP32/ESP8266)
+            \item Rede WiFi com falhas esperadas
+            \item Persistência centralizada
+            \item Desafios reais de sincronização e resiliência
+        \end{itemize}
+    \end{block}
+    
+    \vspace{1cm}
+    
+    \begin{center}
+        \Large \textbf{Fundação Sólida para Conceitos Avançados}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \centering
+    \vspace{2cm}
+    {\huge \textbf{Obrigado!}}
+    
+    \vspace{1cm}
+    
+    {\Large Leonardo Cardoso de Moura}\\
+    {\small Matrícula: 32021BSI004}\\
+    {\small Disciplina: Sistemas Distribuídos}
+    
+    \vspace{2cm}
+    
+    {\small 08 de maio de 2026}
+\end{frame}
+
+\end{document}

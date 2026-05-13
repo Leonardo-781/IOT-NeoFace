@@ -58,7 +58,7 @@ const server = http.createServer((req, res) => {
   }
 
   if (pathname.startsWith('/api/')) {
-    forwardRequest(req, res);
+    forwardRequest(req, res);   
     return;
   }
 

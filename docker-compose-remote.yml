@@ -1,0 +1,161 @@
+version: '3.8'
+
+# Docker Compose para Backend com BD Remoto no Raspberry
+# 
+# Uso:
+#   docker-compose -f docker-compose-remote.yml up -d
+#   docker-compose -f docker-compose-remote.yml logs -f backend
+
+services:
+  # MQTT Broker local
+  mqtt:
+    image: eclipse-mosquitto:2-alpine
+    restart: unless-stopped
+    container_name: tf-mqtt
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+    volumes:
+      - ./docker/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mqtt-data:/mosquitto/data
+      - mqtt-logs:/mosquitto/log
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-p", "1883", "-t", "$$SYS/#", "-C", "1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - tf-network
+
+  # Backend Node.js (conecta ao BD remoto no Raspberry)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: tf-backend
+    depends_on:
+      mqtt:
+        condition: service_healthy
+    environment:
+      # App config
+      NODE_ENV: production
+      PORT: 3000
+      LOGIN_USER: ${LOGIN_USER:-admin}
+      LOGIN_PASSWORD: ${LOGIN_PASSWORD:-123456}
+      
+      # Database (REMOTO no Raspberry)
+      DB_HOST: ${POSTGRES_HOST:-rasp-local}
+      DB_PORT: ${POSTGRES_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB:-iot_monitoring}
+      DB_USER: ${POSTGRES_USER:-iot_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-iot_pass123}
+      DB_SSL: "false"
+      DB_RETENTION_DAYS: ${DB_RETENTION_DAYS:-30}
+      
+      # MQTT local
+      BROKER_URL: tcp://mqtt:1883
+      MQTT_HOST: mqtt
+      MQTT_PORT: 1883
+      
+      # Features
+      GENERATE_SYSTEM_CONFIG: "1"
+      SIMULATION_INTERVAL_MS: 5000
+      COMMAND_ACK_DELAY_MS: 1200
+      MAX_TELEMETRY_POINTS: 120
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    volumes:
+      - ./data:/app/data
+      - backend-logs:/app/logs
+    extra_hosts:
+      - "rasp-local:192.168.1.16"
+      - "server-local:192.168.1.10"
+    networks:
+      - tf-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # API Gateway / Reverse Proxy (porta 3001)
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: tf-gateway
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      BACKEND_URL: http://backend:3000
+      PORT: 3001
+    ports:
+      - "${GATEWAY_PORT:-3001}:3001"
+    volumes:
+      - gateway-logs:/app/logs
+    networks:
+      - tf-network
+    command: node api-server.js
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ingest Service (opcional - recebe telemetria HTTP)
+  ingest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: tf-ingest
+    depends_on:
+      mqtt:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      INGEST_HTTP_PORT: 3102
+      BROKER_URL: tcp://mqtt:1883
+      
+      # Database (REMOTO no Raspberry)
+      DB_HOST: ${POSTGRES_HOST:-rasp-local}
+      DB_PORT: ${POSTGRES_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB:-iot_monitoring}
+      DB_USER: ${POSTGRES_USER:-iot_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-iot_pass123}
+      DB_SSL: "false"
+    ports:
+      - "${INGEST_HTTP_PORT:-3102}:3102"
+    volumes:
+      - ingest-logs:/app/logs
+    extra_hosts:
+      - "rasp-local:192.168.1.16"
+      - "server-local:192.168.1.10"
+    networks:
+      - tf-network
+    command: node ingest-service.js
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3102/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mqtt-data:
+    driver: local
+  mqtt-logs:
+    driver: local
+  backend-logs:
+    driver: local
+  gateway-logs:
+    driver: local
+  ingest-logs:
+    driver: local
+
+networks:
+  tf-network:
+    driver: bridge

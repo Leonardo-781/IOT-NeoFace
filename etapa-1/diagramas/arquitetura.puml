@@ -1,0 +1,58 @@
+@startuml Arquitetura-IoT
+!define BGCOLOR #f5f5f5
+skinparam backgroundColor BGCOLOR
+skinparam component {
+    BackgroundColor #667eea
+    BorderColor #333
+    FontColor #fff
+}
+
+package "REDE LOCAL (192.168.1.x)" {
+    [ESP32 Node 1] as esp1
+    [ESP32 Node 2] as esp2
+    [ESP32 Node N] as espn
+    [Gateway IoT] as gw
+}
+
+package "BROKER" {
+    [Mosquitto\nMQTT :1883] as mqtt
+}
+
+package "BACKEND (Notebook)" {
+    [API Gateway\n:3001] as apigw
+    [Backend\n:3000] as backend
+    [Dashboard\nWeb UI] as dashboard
+}
+
+package "BANCO DE DADOS (Raspberry Pi 3)" {
+    [PostgreSQL\nTimescaleDB\n:5432] as db
+}
+
+esp1 --> mqtt : MQTT Publish
+esp2 --> mqtt : MQTT Publish
+espn --> mqtt : MQTT Publish
+gw --> apigw : HTTP POST /ingest
+
+mqtt --> backend : MQTT Subscribe
+apigw --> backend : HTTP API
+backend --> dashboard : Serve
+backend --> db : Query (TCP :5432)
+
+note right of mqtt
+    Broker Central
+    Port: 1883
+end note
+
+note right of backend
+    Processa telemetria
+    Autenticação RBAC
+    Alertas
+end note
+
+note right of db
+    Série temporal
+    Usuários
+    Configuração
+end note
+
+@enduml

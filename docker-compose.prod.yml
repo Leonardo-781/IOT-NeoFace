@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  mqtt:
+    image: eclipse-mosquitto:2-alpine
+    restart: unless-stopped
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+    volumes:
+      - ./docker/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mqtt-data:/mosquitto/data
+      - mqtt-logs:/mosquitto/log
+
+  backend:
+    image: ${IMAGE}:${TAG}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: ${BACKEND_PORT:-3000}
+      DB_HOST: ${POSTGRES_HOST:-db}
+      DB_PORT: ${POSTGRES_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB:-iot_monitoring}
+      DB_USER: ${POSTGRES_USER:-iot_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-iot_pass123}
+      BROKER_URL: tcp://mqtt:1883
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    volumes:
+      - backend-data:/app/data
+
+  gateway:
+    image: ${IMAGE}:${TAG}
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: http://backend:3000
+      PORT: ${GATEWAY_PORT:-3001}
+    ports:
+      - "${GATEWAY_PORT:-3001}:3001"
+    command: node api-server.js
+
+  ingest:
+    image: ${IMAGE}:${TAG}
+    restart: unless-stopped
+    environment:
+      BROKER_URL: tcp://mqtt:1883
+      DB_HOST: ${POSTGRES_HOST:-db}
+      DB_PORT: ${POSTGRES_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB:-iot_monitoring}
+      DB_USER: ${POSTGRES_USER:-iot_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-iot_pass123}
+    ports:
+      - "${INGEST_HTTP_PORT:-3102}:3102"
+    command: node ingest-service.js
+
+volumes:
+  mqtt-data:
+  mqtt-logs:
+  backend-data:

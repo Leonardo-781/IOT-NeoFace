@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel IoT Distribuído - Etapa 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1c3866 0%, #1c784f 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .presentation {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px 80px;
+            min-height: 600px;
+            background: white;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Title Slide */
+        .slide.title {
+            background: linear-gradient(135deg, #123866 0%, #1c784f 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .slide.title h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide.title h2 {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .slide.title .author {
+            font-size: 1.2em;
+            margin-top: 60px;
+            opacity: 0.9;
+        }
+
+        /* Content Slides */
+        .slide h2 {
+            color: #123866;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            border-bottom: 4px solid #1c784f;
+            padding-bottom: 20px;
+        }
+
+        .slide h3 {
+            color: #1c784f;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .block {
+            background: #ecf2fa;
+            border-left: 5px solid #1c784f;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .block.secondary {
+            background: #ebf7f1;
+        }
+
+        .block h4 {
+            color: #123866;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .block ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .block li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+        }
+
+        .block li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #1c784f;
+            font-weight: bold;
+        }
+
+        ol {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        ol li {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        .diagram {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+
+        .diagram-box {
+            display: inline-block;
+            background: #ecf2fa;
+            border: 2px solid #123866;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #123866;
+        }
+
+        .diagram-arrow {
+            display: inline-block;
+            color: #1c784f;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            color: #333;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 80px;
+            background: #f8f8f8;
+            border-top: 1px solid #ddd;
+        }
+
+        button {
+            background: #1c784f;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #123866;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            color: #666;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .emoji-bar {
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+            letter-spacing: 10px;
+        }
+
+        .highlight {
+            background: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th {
+            background: #123866;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide title active">
+            <h1>Painel IoT Distribuído com Monitoramento em Tempo Real</h1>
+            <h2>Infraestrutura Heterogênea: Raspberry Pi, Linux Mint e ESP32/ESP8266</h2>
+            <div class="author">
+                <p><strong>Leonardo Cardoso de Moura</strong></p>
+                <p>Matrícula: 32021BSI004</p>
+                <p style="margin-top: 20px; opacity: 0.8;">Disciplina: Sistemas Distribuídos</p>
+                <p style="opacity: 0.8;">08 de maio de 2026</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: O Micro-mundo -->
+        <div class="slide">
+            <h2>O Micro-mundo</h2>
+            <p style="color: #666; margin-bottom: 30px;"><strong>Sistema IoT Distribuído para Monitoramento Ambiental em Tempo Real</strong></p>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="block">
+                        <h4>Características</h4>
+                        <ul>
+                            <li>Coleta contínua de dados</li>
+                            <li>Múltiplos nós geograficamente distribuídos</li>
+                            <li>Sincronização centralizada</li>
+                            <li>Dashboard web</li>
+                            <li>Displays locais OLED</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="block secondary">
+                        <h4>Sensores</h4>
+                        <ul>
+                            <li>Temperatura</li>
+                            <li>Umidade</li>
+                            <li>Pressão</li>
+                            <li>Força de sinal WiFi (RSSI)</li>
+                            <li>Qualidade de conexão</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: O que o Sistema Faz -->
+        <div class="slide">
+            <h2>O que o Sistema Faz</h2>
+            <ol>
+                <li>Coleta contínua de leituras de sensores (temperatura, umidade, pressão)</li>
+                <li>Monitoramento de força e qualidade de sinal WiFi para diagnóstico</li>
+                <li>Exibição em tempo real em telas OLED com animações responsivas</li>
+                <li>Controle interativo via sensor de toque capacitivo</li>
+                <li>Sincronização com servidor central através de API HTTP</li>
+                <li>Persistência de séries temporais em PostgreSQL</li>
+                <li>Dashboard web para visualização e controle remoto</li>
+            </ol>
+        </div>
+
+        <!-- Slide 4: Arquitetura Geral -->
+        <div class="slide">
+            <h2>Arquitetura Geral</h2>
+            <div class="diagram">
+                <div class="diagram-box">ESP32 (Sala)</div>
+                <div class="diagram-arrow">WiFi POST</div>
+                <div class="diagram-box" style="background: #ecf2fa;">Nginx</div>
+                <br style="line-height: 2;">
+                <div class="diagram-box">ESP8266 (Varanda)</div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box" style="background: #ecf2fa;">→ API Node.js</div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-box" style="background: #ecf2fa;">PostgreSQL</div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Infraestrutura Física -->
+        <div class="slide">
+            <h2>Infraestrutura Física</h2>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="block">
+                        <h4>Raspberry Pi 3B</h4>
+                        <ul>
+                            <li>PostgreSQL</li>
+                            <li>Banco de dados persistente</li>
+                            <li>IP fixo: 192.168.1.10</li>
+                            <li>Conectividade: Ethernet</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="block secondary">
+                        <h4>Notebook (Linux Mint)</h4>
+                        <ul>
+                            <li>Node.js API</li>
+                            <li>Nginx proxy reverso</li>
+                            <li>IP fixo: 192.168.1.11</li>
+                            <li>Conectividade: WiFi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block mt-20">
+                <h4>ESP32/ESP8266 (Distribuídos)</h4>
+                <ul>
+                    <li>Múltiplos nós em diferentes locais</li>
+                    <li>Coleta de dados via sensores</li>
+                    <li>WiFi para comunicação</li>
+                    <li>Displays OLED locais</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Fluxo de Comunicação -->
+        <div class="slide">
+            <h2>Fluxo de Comunicação</h2>
+            
+            <div class="diagram" style="margin-top: 40px; margin-bottom: 40px;">
+                ESP32/ESP8266 <span class="diagram-arrow">→ [WiFi] →</span> Nginx <span class="diagram-arrow">→</span> API Node.js <span class="diagram-arrow">→</span> PostgreSQL
+            </div>
+
+            <div class="block">
+                <h4>Protocolo de Dados</h4>
+                <p style="font-weight: bold;">HTTP POST com payload JSON</p>
+            </div>
+
+            <div class="columns mt-20">
+                <div class="column">
+                    <div class="block secondary">
+                        <ul>
+                            <li>Frequência: 30-60s</li>
+                            <li>Buffer local: 10 leituras</li>
+                            <li>Auto-recover WiFi</li>
+                            <li>Backoff exponencial</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="block secondary">
+                        <ul>
+                            <li>Rate limiting</li>
+                            <li>Compressão gzip</li>
+                            <li>Logging de requisições</li>
+                            <li>CORS habilitado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Sensores Instalados -->
+        <div class="slide">
+            <h2>Sensores Instalados</h2>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="block">
+                        <h4>BMP280</h4>
+                        <ul>
+                            <li>Temperatura: -40 a +85°C</li>
+                            <li>Pressão: 300-1100 hPa</li>
+                            <li>Protocolo: I2C/SPI</li>
+                            <li>Precisão: ±1°C</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="block secondary">
+                        <h4>DHT11</h4>
+                        <ul>
+                            <li>Temperatura: 0-50°C</li>
+                            <li>Umidade: 20-80%</li>
+                            <li>Protocolo: Single-wire</li>
+                            <li>Precisão: ±2°C, ±5%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block mt-20">
+                <h4>RSSI (Received Signal Strength Indicator)</h4>
+                <p style="margin-bottom: 12px;">Monitoramento de qualidade de sinal WiFi:</p>
+                <ul>
+                    <li>Diagnóstico real de cobertura</li>
+                    <li>Detecção de interferência</li>
+                    <li>Planejamento de repetidores</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 8: Displays e Interatividade -->
+        <div class="slide">
+            <h2>Displays e Interatividade</h2>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="block">
+                        <h4>Display OLED SSD1306</h4>
+                        <ul>
+                            <li>128×64 pixels</li>
+                            <li>Protocolo I2C</li>
+                            <li>Taxa: 1-2 Hz</li>
+                            <li>Conteúdo:
+                                <ul style="margin-top: 8px; margin-left: 10px;">
+                                    <li>Temperatura em tempo real</li>
+                                    <li>Força de sinal WiFi</li>
+                                    <li>Animações de rosto</li>
+                                    <li>Status do sistema</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="block secondary">
+                        <h4>Sensor Toque TTP223</h4>
+                        <ul>
+                            <li>Controle capacitivo</li>
+                            <li>5 expressões</li>
+                            <li>Debounce 300ms</li>
+                            <li>Ciclagem ao tocar</li>
+                        </ul>
+                        <div class="emoji-bar">😊 😢 😲 🤔 ❤️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Schema PostgreSQL -->
+        <div class="slide">
+            <h2>Schema PostgreSQL</h2>
+            
+            <div class="block">
+                <h4>Tabela: telemetry (TimescaleDB)</h4>
+                <ul>
+                    <li><code>time</code> (TIMESTAMP com timezone)</li>
+                    <li><code>device_id</code> (chave de particionamento)</li>
+                    <li><code>temperature_c, humidity_percent, pressure_hpa</code></li>
+                    <li><code>rssi_dbm, battery_voltage</code></li>
+                    <li>Retenção: 90 dias</li>
+                </ul>
+            </div>
+
+            <div class="block secondary mt-20">
+                <h4>Tabela: devices</h4>
+                <ul>
+                    <li>ID, nome, localização, status</li>
+                    <li>Last seen, firmware version</li>
+                    <li>IP address (último visto)</li>
+                </ul>
+            </div>
+
+            <div class="block mt-20">
+                <h4>Tabela: alerts</h4>
+                <p>Tipo, severidade, timestamp criação/resolução</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Payload JSON -->
+        <div class="slide">
+            <h2>Payload JSON - Exemplo</h2>
+            <div class="code-block">{
+  "device_id": "ESP32_SALA_001",
+  "timestamp": 1715179200,
+  "sensor_data": {
+    "temperature_c": 24.5,
+    "humidity_percent": 65.2,
+    "pressure_hpa": 1013.5,
+    "rssi_dbm": -45,
+    "battery_voltage": 3.3
+  },
+  "display_state": {
+    "current_expression": "happy",
+    "screen_active": true
+  },
+  "system_health": {
+    "wifi_reconnects": 2,
+    "api_failures": 0
+  }
+}</div>
+        </div>
+
+        <!-- Slide 11: Objetivos de Sistemas Distribuídos -->
+        <div class="slide">
+            <h2>Objetivos de Sistemas Distribuídos</h2>
+            
+            <div class="block">
+                <h4>1. Escalabilidade</h4>
+                <p>Novos nós podem ser adicionados sem redesenho. Nginx permite escalabilidade horizontal.</p>
+            </div>
+
+            <div class="block secondary mt-20">
+                <h4>2. Disponibilidade</h4>
+                <p>Buffer local em ESP, Nginx e API redundantes, PostgreSQL com snapshots automáticos.</p>
+            </div>
+
+            <div class="block mt-20">
+                <h4>3. Tolerância a Falhas</h4>
+                <p>Reconexão automática, retry com backoff, health check, fila de mensagens locais.</p>
+            </div>
+
+            <div class="block secondary mt-20">
+                <h4>4. Compartilhamento de Recursos</h4>
+                <p>Nginx como ponto centralizado, PostgreSQL como estado único, transações ACID.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Desafios Reais -->
+        <div class="slide">
+            <h2>Desafios Reais do Sistema</h2>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="block">
+                        <h4>Infraestrutura</h4>
+                        <ul>
+                            <li>IP dinâmico do provedor</li>
+                            <li>Falhas WiFi frequentes</li>
+                            <li>Latência variável</li>
+                            <li>Nós geograficamente dispersos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="block secondary">
+                        <h4>Soluções</h4>
+                        <ul>
+                            <li>DHCP estático no roteador</li>
+                            <li>Buffer local nos nós</li>
+                            <li>Backoff exponencial</li>
+                            <li>Sincronização periódica</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Próximas Etapas -->
+        <div class="slide">
+            <h2>Próximas Etapas de Desenvolvimento</h2>
+            <ol style="columns: 2; font-size: 0.95em;">
+                <li><strong>Etapa 2:</strong> Threads em Node.js, processamento paralelo</li>
+                <li><strong>Etapa 3:</strong> UDP para comunicação de baixa latência</li>
+                <li><strong>Etapa 4:</strong> RPC entre servidores</li>
+                <li><strong>Etapa 5:</strong> Message Bus (RabbitMQ/MQTT)</li>
+                <li><strong>Etapa 6:</strong> Service Discovery (mDNS/Consul)</li>
+                <li><strong>Etapa 7:</strong> Mutual exclusion, eleição de líder</li>
+                <li><strong>Etapa 8:</strong> Replicação com consistência eventual</li>
+                <li><strong>Etapa 9:</strong> Circuit breaker, resiliência</li>
+                <li><strong>Etapa 10:</strong> TLS, autenticação mútua, JWT</li>
+            </ol>
+        </div>
+
+        <!-- Slide 14: Conclusão -->
+        <div class="slide">
+            <h2>Conclusão</h2>
+            
+            <div class="block">
+                <h4>Um Sistema Distribuído Real</h4>
+                <ul>
+                    <li>Infraestrutura genuinamente prática e doméstica</li>
+                    <li>Múltiplos nós heterogêneos (Raspberry, Notebook, ESP32/ESP8266)</li>
+                    <li>Rede WiFi com falhas esperadas</li>
+                    <li>Persistência centralizada</li>
+                    <li>Desafios reais de sincronização e resiliência</li>
+                </ul>
+            </div>
+
+            <div class="center mt-20" style="font-size: 1.3em; color: #1c784f; font-weight: bold;">
+                Fundação Sólida para Conceitos Avançados
+            </div>
+        </div>
+
+        <!-- Slide 15: Thank You -->
+        <div class="slide title">
+            <h1 style="font-size: 2.5em;">Obrigado!</h1>
+            <div style="margin-top: 60px;">
+                <p style="font-size: 1.3em;"><strong>Leonardo Cardoso de Moura</strong></p>
+                <p>Matrícula: 32021BSI004</p>
+                <p style="margin-top: 40px; opacity: 0.8;">Disciplina: Sistemas Distribuídos</p>
+                <p style="opacity: 0.8;">08 de maio de 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+        <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">15</span></span>
+        <button id="nextBtn" onclick="changeSlide(1)">Próximo →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) changeSlide(-1);
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
