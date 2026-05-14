@@ -82,7 +82,10 @@
         }
 
         const data = await response.json();
-        window.location.href = data.user && data.user.canManageAccounts ? '/gestao' : '/';
+        const target = data.user && data.user.canManageAccounts ? '/gestao' : '/';
+        setTimeout(() => {
+          window.location.href = target;
+        }, 150);
       });
     </script>
   </body>

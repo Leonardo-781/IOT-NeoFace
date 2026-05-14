@@ -493,7 +493,7 @@ function isPublicRoute(pathname, method) {
   if (pathname === '/api/health' || pathname === '/api/login' || pathname === '/api/me' || pathname === '/api/ingest') {
     return true;
   }
-  if (pathname === '/logout' || pathname === '/login') {
+  if (pathname === '/logout' || pathname === '/login' || pathname === '/gestao') {
     return true;
   }
   if (pathname.startsWith('/public/')) {
