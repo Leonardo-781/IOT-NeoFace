@@ -1,0 +1,519 @@
+\documentclass[12pt,a4paper,oneside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{listings}
+
+\definecolor{primary}{RGB}{18,56,102}
+\definecolor{secondary}{RGB}{28,120,86}
+\definecolor{lightblue}{RGB}{236,242,250}
+\definecolor{lightgreen}{RGB}{235,247,241}
+\definecolor{graytext}{RGB}{80,80,80}
+\definecolor{linecolor}{RGB}{80,110,150}
+\definecolor{codebackground}{RGB}{245,245,245}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    urlcolor=secondary,
+    pdftitle={Projeto de Sistemas Distribuídos - Etapa 1},
+    pdfauthor={Leonardo Cardoso de Moura}
+}
+
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{Etapa 1 - Concepção e Arquitetura Inicial}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebackground},
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{primary},
+    showstringspaces=false,
+    keywordstyle=\color{primary},
+    commentstyle=\color{gray},
+    stringstyle=\color{secondary}
+}
+
+\title{
+    \vspace{-1.5cm}
+    {\Large \textbf{TRABALHO FINAL - ETAPA 1}}\\
+    \vspace{0.4cm}
+    {\LARGE \textbf{Concepção e Arquitetura Inicial}}\\
+    \vspace{0.8cm}
+    {\Large \textbf{Painel IoT Distribuído com Monitoramento em Tempo Real}}\\
+    \vspace{0.8cm}
+    {\large Infraestrutura Heterogênea: Raspberry Pi, Linux Mint e ESP32/ESP8266}\\
+    \vspace{1.2cm}
+}
+
+\author{
+    \textbf{Leonardo Cardoso de Moura}\\
+    \textit{Matrícula: 32021BSI004}\\
+    \vspace{0.3cm}
+    Disciplina: Sistemas Distribuídos\\
+    Data de entrega: 08 de maio de 2026\\
+    Apresentação: 11 de maio de 2026
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{Informações Gerais}
+
+\begin{center}
+\rowcolors{2}{lightblue}{white}
+\begin{tabular}{|p{5cm}|p{9cm}|}
+\hline
+\rowcolor{primary}
+\color{white}\textbf{Campo} & \color{white}\textbf{Valor} \\
+\hline
+Nome completo & Leonardo Cardoso de Moura \\
+\hline
+Matrícula & 32021BSI004 \\
+\hline
+Curso & Sistemas de Informação \\
+\hline
+Disciplina & Sistemas Distribuídos \\
+\hline
+Título do projeto & Painel IoT Distribuído com Monitoramento em Tempo Real \\
+\hline
+\end{tabular}
+\end{center}
+
+\chapter{Tema do Micro-Mundo}
+
+\section{Descrição geral}
+O micro-mundo proposto é um \textbf{painel IoT distribuído heterogêneo} para monitoramento em tempo real de ambiente, implementado com uma infraestrutura real composta por: Raspberry Pi 3 Model B em Linux Debian CLI funcionando como servidor de banco de dados, um notebook com Linux Mint hospedando a API e o sistema completo com gateway HTTP, múltiplos nós ESP32 e ESP8266 para aquisição de dados via sensores, e comunicação intermediária através de Nginx.
+
+Os nós sensores (ESP32/ESP8266) não estarão concentrados em uma única residência; serão distribuídos em diferentes locais da cidade ou em quaisquer locais com conexão à Internet. O sistema simula um cenário genuinamente distribuído onde dispositivos geograficamente dispersos coletam dados, enfrentam qualidade de conexão variável, exibem informações localmente e sincronizam estado com o servidor central.
+
+\section{O que o sistema faz}
+\begin{enumerate}[leftmargin=1.2cm]
+    \item Coleta contínua de leituras de sensores (temperatura, umidade, pressão).
+    \item Monitoramento de força e qualidade de sinal WiFi em cada nó para diagnóstico de cobertura.
+    \item Exibição em tempo real em telas OLED com animações responsivas.
+    \item Controle interativo via sensor de toque capacitivo (mudança de expressão).
+    \item Sincronização com servidor central através de API HTTP via Nginx.
+    \item Persistência de séries temporais em banco de dados PostgreSQL no Raspberry Pi.
+    \item Dashboard web para visualização, alertas e controle remoto.
+\end{enumerate}
+
+\section{Entidades do micro-mundo}
+As entidades principais são:
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Raspberry Pi 3 Model B}: servidor de banco de dados persistente.
+    \item \textbf{Notebook Linux Mint}: servidor API e gateway HTTP/Nginx.
+    \item \textbf{Múltiplos ESP32/ESP8266}: nós sensores distribuídos geograficamente (cidades, locais com conexão à Internet).
+    \item \textbf{Sensores}: BMP280 (temperatura, pressão) em alguns nós e DHT11 (temperatura, umidade) em outros; não há redundância de sensores planejada.
+    \item \textbf{Displays OLED}: exibição local de informações.
+    \item \textbf{Sensor Toque TTP223}: entrada interativa para animação de rosto.
+    \item \textbf{Nginx}: proxy reverso e balanceador de carga na rede local.
+    \item \textbf{PostgreSQL}: banco de dados de séries temporais no Raspberry Pi.
+\end{itemize}
+
+\section{Interação central}
+A interação principal do sistema é:
+\begin{quote}
+ESP32/ESP8266 $\rightarrow$ [WiFi] $\rightarrow$ Nginx (Notebook) $\rightarrow$ API (Node.js) $\rightarrow$ PostgreSQL (Raspberry Pi)
+\end{quote}
+
+Esse fluxo é interessante porque introduz desafios reais de sistemas distribuídos: latência de rede doméstica, falhas de conectividade WiFi, sincronização entre nós com qualidade de sinal variável, e consistência de estado compartilhado em um banco de dados remoto.
+
+\chapter{Infraestrutura Detalhada}
+
+\section{Servidores}
+
+\subsection{Raspberry Pi 3 Model B - Servidor de Banco de Dados}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Sistema Operacional}: Linux Debian CLI (sem interface gráfica)
+    \item \textbf{Função Principal}: PostgreSQL, armazenamento persistente, histórico de dados
+    \item \textbf{Conectividade}: Ethernet cabeada para estabilidade máxima
+    \item \textbf{IP Estático}: Fixado no roteador via DHCP com MAC binding (ex: 192.168.1.10)
+    \item \textbf{Porta de Banco}: 5432 (PostgreSQL, acessível apenas do Notebook)
+    \item \textbf{Benéfício Distribuído}: separação de responsabilidade, persistência centralizada, escalabilidade horizontal futura
+    \item \textbf{Uptime}: 99,5\% (manutenção preventiva semanal)
+\end{itemize}
+
+\subsection{Notebook - Servidor de API e Gateway}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Sistema Operacional}: Linux Mint
+    \item \textbf{Função Principal}: Node.js API, processamento de telemetria, dashboard web, gerenciamento de sessão
+    \item \textbf{Conectividade}: WiFi doméstica
+    \item \textbf{IP Estático}: Fixado no roteador via DHCP com MAC binding (ex: 192.168.1.11)
+    \item \textbf{Portas de Serviço}:
+    \begin{itemize}
+        \item 3000: Node.js API backend
+        \item 3001: Gateway de ingestão de telemetria
+        \item 8080: Nginx proxy reverso
+    \end{itemize}
+    \item \textbf{Benéfício Distribuído}: separação entre ingestão de dados e armazenamento, ponto centralizado de lógica de negócio
+    \item \textbf{Papel Futuro}: load balancing para múltiplos servidores API em fases posteriores
+\end{itemize}
+
+\section{Configuração de Rede Doméstica}
+
+\subsection{DHCP Estático e IP Fixo}
+Para garantir acesso remoto confiável e comunicação consistente entre nós, foi implementada estratégia de IP estático no roteador:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Problema}: internet residencial com IP dinâmico do provedor muda periodicamente, causando interrupção no acesso remoto
+    \item \textbf{Solução}: fixação de endereços MAC dos servidores no roteador, atribuição de IPs privados permanentes via DHCP binding
+    \item \textbf{Raspberry Pi}: \texttt{192.168.1.10} (fixo via MAC binding)
+    \item \textbf{Notebook}: \texttt{192.168.1.11} (fixo via MAC binding)
+    \item \textbf{ESP32/ESP8266}: IPs dinâmicos com prefixo reservado no roteador (DHCP range contíguo entre .100-.110)
+    \item \textbf{Benefício}: eliminação de necessidade de DNS dinâmico ou discovery automático dentro da rede local
+\end{itemize}
+
+\subsection{Nginx como Proxy Reverso e Gateway}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Localização}: Notebook (Linux Mint)
+    \item \textbf{Portas Públicas}: 8080 (HTTP local), 80 (futuro HTTPS)
+    \item \textbf{Responsabilidades}:
+    \begin{itemize}
+        \item Roteamento de requisições HTTP POST dos ESP's para API (porta 3000)
+        \item Compressão gzip de respostas para reduzir uso de largura de banda
+        \item Balanceamento de carga para requisições futuras (múltiplas instâncias de API)
+        \item Tratamento de CORS para acesso de clientes JavaScript nos ESP's
+        \item Rate limiting para proteção contra abuso ou erros de firmware
+        \item Logging de todas as requisições para auditoria
+    \end{itemize}
+    \item \textbf{Arquitetura}: single point of entry para todos os ESP's, evita comunicação direta com API
+\end{itemize}
+
+\subsection{Acesso Remoto Seguro}
+Embora ainda em planejamento para futuras etapas:
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Tailscale}: VPN pessoal para acesso de fora da rede local sem exposição de portas
+    \item \textbf{Funnel (futuro)}: exposição temporária de endpoints para demonstrações
+    \item \textbf{SSH}: acesso administrativo remoto do Raspberry Pi com chave pública
+    \item \textbf{Firewall}: apenas portas 8080 e SSH expostas (futura regulação)
+\end{itemize}
+
+\chapter{Nós Sensores - ESP32 e ESP8266}
+
+\section{Características Gerais}
+
+Os nós sensores distribuídos são baseados em microcontroladores WiFi de baixo custo:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Quantidade}: múltiplos nós (3-5) espalhados pela cidade ou em diferentes locais com conexão à Internet
+    \item \textbf{Modelos}: 
+    \begin{itemize}
+        \item ESP32: mais potente, dual-core, 4MB SPIFFS, maior consumo
+        \item ESP8266: mais simples e econômico, single-core, 4MB SPIFFS
+    \end{itemize}
+    \item \textbf{Comunicação}: WiFi 802.11b/g/n para servidor API via Nginx
+    \item \textbf{Protocolo de Dados}: HTTP POST com payloads JSON
+    \item \textbf{Frequência de Amostragem}: 30-60 segundos (configurável via EEPROM)
+    \item \textbf{Buffer Local}: retenção de últimas 10 leituras em caso de desconexão WiFi
+    \item \textbf{Auto-recover}: reconexão automática com backoff exponencial
+\end{itemize}
+
+\section{Sensores Instalados}
+
+\subsection{BMP280 - Sensor de Temperatura e Pressão}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Medidas Fornecidas}: 
+    \begin{itemize}
+        \item Temperatura: -40 a +85°C
+        \item Pressão atmosférica: 300 a 1100 hPa
+    \end{itemize}
+    \item \textbf{Protocolo de Comunicação}: I2C (endereço 0x76 ou 0x77) ou SPI
+    \item \textbf{Precisão}: $\pm 1.0°C$ (temperatura), $\pm 1 \text{ hPa}$ (pressão)
+    \item \textbf{Tempo de Resposta}: < 1 segundo
+    \item \textbf{Uso}: aquisição de temperatura e pressão ambiental em diversos nós
+    \item \textbf{Nós}: alguns ESP utilizarão BMP280; outros utilizarão DHT11 conforme custo/disponibilidade
+    \item \textbf{Vantagem Distribuída}: boa precisão para temperatura e pressão, baixo custo e fácil integração
+\end{itemize}
+
+\subsection{DHT11 - Sensor Temperatura/Umidade}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Medidas Fornecidas}:
+    \begin{itemize}
+        \item Temperatura: 0 a 50°C
+        \item Umidade relativa: 20 a 80\%
+    \end{itemize}
+    \item \textbf{Protocolo de Comunicação}: DHT (single-wire digital proprietário)
+    \item \textbf{Precisão}: $\pm 2°C$ (temperatura), $\pm 5\%$ (umidade)
+    \item \textbf{Frequência de Amostragem}: máximo uma leitura a cada 1 segundo
+    \item \textbf{Uso}: medição de temperatura e umidade em alguns nós; alguns dispositivos usarão DHT11 por custo ou disponibilidade
+    \item \textbf{Nós}: alguns ESP (não todos, para economia de pinos e energia)
+    \item \textbf{Benefício Distribuído}: baixo custo e simplicidade em locais onde apenas temperatura/umidade são necessárias
+\end{itemize}
+
+\section{Monitoramento de Qualidade de Sinal WiFi - RSSI}
+
+\subsection{Received Signal Strength Indicator (RSSI)}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{O que mede}: força do sinal WiFi em dBm (valores negativos)
+    \item \textbf{Faixa típica}:
+    \begin{itemize}
+        \item -30 dBm ou melhor: excelente, máxima taxa de transferência
+        \item -45 dBm: muito bom, confiável
+        \item -60 dBm: aceitável, algumas quedas esperadas
+        \item -80 dBm: fraco, desconexões frequentes
+        \item -90 dBm ou pior: praticamente inutilizável
+    \end{itemize}
+    \item \textbf{Coleta}: a cada ciclo de amostragem, junto com temperatura/umidade
+    \item \textbf{Propósito Distribuído}: 
+    \begin{itemize}
+        \item Diagnóstico real de cobertura WiFi em cada cômodo
+        \item Detecção automática de interferência de frequência (outras redes, micro-ondas, Bluetooth)
+        \item Planejamento futuro de repetidores ou mudança de canal
+        \item Trigger de alertas se cobertura fica crítica
+    \end{itemize}
+    \item \textbf{Persistência}: armazenado no banco de dados para análise histórica e gráficos
+    \item \textbf{Correlação}: possibilidade de correlacionar RSSI com taxa de erro de transmissão
+\end{itemize}
+
+\section{Telas OLED e Exibição Local}
+
+\subsection{Displays OLED 128x64 - SSD1306}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Localização}: alguns ESP32 (não todos, aqueles em áreas visíveis)
+    \item \textbf{Protocolo de Comunicação}: I2C (endereço 0x3C ou 0x3D)
+    \item \textbf{Resolução}: 128 pixels (horizontal) × 64 pixels (vertical)
+    \item \textbf{Cores}: monocromático (branco/preto)
+    \item \textbf{Conteúdo Exibido}:
+    \begin{itemize}
+        \item Temperatura e umidade em tempo real (atualizados a cada amostragem)
+        \item Força de sinal WiFi em barras ou valor em dBm
+        \item Animação de rosto com expressões (animação em pixel art)
+        \item Informação de status (``CONECTADO'', ``ENVIANDO'', ``ERRO'')
+        \item Horário sincronizado via NTP
+    \end{itemize}
+    \item \textbf{Taxa de Atualização}: 1-2 Hz (suficiente para animação suave)
+    \item \textbf{Consumo de Energia}: mínimo, não afeta bateria
+\end{itemize}
+
+\subsection{Sensor de Toque TTP223 - Interatividade Local}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Função}: controle por toque capacitivo sem mecânica física
+    \item \textbf{Entrada}: GPIO digital (nível HIGH quando tocado, LOW quando solto)
+    \item \textbf{Sensibilidade}: ajustável via solder jumper
+    \item \textbf{Integração com OLED}: botão tátil para mudar expressão do rosto em tempo real
+    \item \textbf{Expressões Implementadas}:
+    \begin{itemize}
+        \item Feliz: :) com olhos abertos
+        \item Triste: :( com lágrimas
+        \item Surpreso: o\_o com boca aberta
+        \item Pensativo: :| com olho fechado (piscada)
+        \item Apaixonado: <3 com corações ao redor
+    \end{itemize}
+    \item \textbf{Ciclo de Mudança}: cada toque avança para a próxima expressão (ciclagem)
+    \item \textbf{Debounce}: software debouncing de 300ms para evitar múltiplos triggers
+    \item \textbf{Benefício Distribuído}: interface local totalmente independente da API, demonstração de interação homem-máquina em sistema distribuído
+    \item \textbf{Futuro}: enviar estado de interação para servidor para logging e análise de comportamento do usuário
+\end{itemize}
+
+\chapter{Arquitetura de Dados e Comunicação}
+
+\section{Fluxo Completo de Telemetria}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=2cm and 2.5cm,
+    esp/.style={rectangle, rounded corners=3mm, draw=secondary, very thick, minimum width=3cm, minimum height=0.9cm, align=center, fill=lightgreen!70},
+    server/.style={rectangle, rounded corners=3mm, draw=primary, very thick, minimum width=3cm, minimum height=0.9cm, align=center, fill=lightblue!70},
+    arrow/.style={-{Latex[length=2.5mm]}, very thick, draw=graytext}
+]
+
+\node[esp] (esp1) {ESP32 (Sala)};
+\node[esp, below=2.5cm of esp1] (esp2) {ESP32 (Quarto)};
+\node[esp, right=3cm of esp1] (esp3) {ESP8266 (Varanda)};
+
+\node[server, below=3.5cm of esp2] (nginx) {Nginx};
+\node[server, right=2.5cm of nginx] (api) {API Node.js};
+\node[server, right=2.5cm of api] (db) {PostgreSQL};
+
+\draw[arrow] (esp1) -- (nginx) node[midway, above left, font=\small]{WiFi POST};
+\draw[arrow] (esp2) -- (nginx) node[midway, left, font=\small]{WiFi POST};
+\draw[arrow] (esp3) -- (nginx) node[midway, above right, font=\small]{WiFi POST};
+\draw[arrow] (nginx) -- (api) node[midway, above, font=\small]{HTTP};
+\draw[arrow] (api) -- (db) node[midway, above, font=\small]{TCP};
+
+\end{tikzpicture}
+\caption{Fluxo de comunicação do sistema IoT distribuído.}
+\end{figure}
+
+\section{Payload JSON - Exemplo Real}
+
+\lstset{language=Pascal}
+\begin{lstlisting}
+{
+  "device_id": "ESP32_SALA_001",
+  "device_name": "Sensor Sala Principal",
+  "location": "Sala",
+  "timestamp": 1715179200,
+  "sensor_data": {
+    "temperature_c": 24.5,
+    "humidity_percent": 65.2,
+    "pressure_hpa": 1013.5,
+    "dht11_temperature": 24.3,
+    "dht11_humidity": 64.8,
+    "rssi_dbm": -45,
+    "battery_voltage": 3.3,
+    "uptime_seconds": 864000
+  },
+  "display_state": {
+    "current_expression": "happy",
+    "screen_active": true,
+    "brightness": 255
+  },
+  "system_health": {
+    "wifi_reconnects": 2,
+    "api_failures": 0,
+    "buffer_size": 3
+  }
+}
+\end{lstlisting}
+
+\section{Banco de Dados PostgreSQL - Schema}
+
+A tabela no PostgreSQL (Raspberry Pi) armazena:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{telemetry} table (séries temporais com TimescaleDB):
+    \begin{itemize}
+        \item \texttt{time} (TIMESTAMP com timezone)
+        \item \texttt{device\_id} (VARCHAR, chave de particionamento)
+        \item \texttt{temperature\_c}, \texttt{humidity\_percent}, \texttt{pressure\_hpa} (FLOAT)
+        \item \texttt{rssi\_dbm} (INTEGER)
+        \item \texttt{battery\_voltage} (FLOAT)
+        \item índices por device\_id e time para query rápida
+        \item retenção automática de 90 dias (configurável)
+    \end{itemize}
+    \item \textbf{devices} table:
+    \begin{itemize}
+        \item \texttt{id} (UUID PRIMARY KEY)
+        \item \texttt{device\_id}, \texttt{name}, \texttt{location}, \texttt{status}
+        \item \texttt{last\_seen} (TIMESTAMP)
+        \item \texttt{firmware\_version}
+        \item \texttt{ip\_address} (último IP visto)
+    \end{itemize}
+    \item \textbf{alerts} table:
+    \begin{itemize}
+        \item \texttt{id} (UUID PRIMARY KEY)
+        \item \texttt{device\_id}, \texttt{alert\_type}, \texttt{severity}
+        \item \texttt{created\_at}, \texttt{resolved\_at}
+    \end{itemize}
+\end{itemize}
+
+\chapter{Metas de Sistemas Distribuídos}
+
+\section{Escalabilidade}
+\textbf{Objetivo}: Adicionar mais nós (novos ESP) sem redesenhar a infraestrutura. Nginx facilita escalabilidade horizontal.
+
+\textbf{Implementação Atual}: Novos ESP podem ser adicionados e configurados com WiFi automaticamente. Nginx permanece como ponto único de entrada. Futuro: replicação de BD ou sharding por localização.
+
+\section{Disponibilidade}
+\textbf{Objetivo}: Manter o sistema funcional mesmo com falha de um ou mais componentes.
+
+\textbf{Implementação Atual}: Buffer local em ESP permite coleta offline. Nginx e API em servidor redundante. PostgreSQL com snapshots automáticos. Futuro: replicação de BD, failover automático, standby Raspberry Pi.
+
+\section{Tolerância a Falhas}
+\textbf{Objetivo}: Reduzir impacto de desconexões WiFi, falhas de sensor, queda de serviço.
+
+\textbf{Implementação Atual}: Reconexão automática em ESP. Retry com backoff exponencial. Health check periodicamente. Fila local de mensagens não entregues. Redundância de sensores (BME280 + DHT11).
+
+\section{Compartilhamento de Recursos}
+\textbf{Objetivo}: Coordenar acesso a sensores e dados compartilhados.
+
+\textbf{Implementação Atual}: Nginx como ponto centralizado de roteamento. PostgreSQL como estado compartilhado único. APIs com transações ACID. Locking no banco de dados para modificações críticas.
+
+\section{Segurança Básica}
+\textbf{Objetivo}: Evitar acesso indevido a dados e controle do sistema.
+
+\textbf{Implementação Atual}: Autenticação simples (token em sessão na web). Validação de entrada no Nginx e API. Firewalling de porta 5432 apenas para Notebook. TLS e autenticação mútua como futuro.
+
+\chapter{Topologia Física e Geográfica}
+
+\section{Localização dos Nós na Casa}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85]
+  % Rooms
+  \draw[thick, black] (0,0) rectangle (5,4);
+  \draw[thick, black] (5,0) rectangle (10,4);
+  \draw[thick, black] (0,4) rectangle (5,8);
+  
+  % Room labels
+  \node[font=\large\bfseries, black] at (2.5, 2) {Sala};
+  \node[font=\large\bfseries, black] at (7.5, 2) {Cozinha};
+  \node[font=\large\bfseries, black] at (2.5, 6) {Quarto};
+  
+  % ESP nodes
+  \filldraw[fill=green!40, draw=green!80, line width=2] (1.5, 1.5) circle (0.5) node[font=\small\bfseries, black] {ESP1};
+  \filldraw[fill=green!40, draw=green!80, line width=2] (8, 3) circle (0.5) node[font=\small\bfseries, black] {ESP3};
+  \filldraw[fill=green!40, draw=green!80, line width=2] (1, 6.5) circle (0.5) node[font=\small\bfseries, black] {ESP2};
+  
+  % Central servers (notebook)
+  \filldraw[fill=blue!30, draw=blue!80, line width=2] (5, 6) circle (0.6) node[font=\small\bfseries, black] {NB};
+  
+  % Raspberry
+  \filldraw[fill=blue!30, draw=blue!80, line width=2] (9, 6) circle (0.6) node[font=\small\bfseries, black] {RPI};
+  
+  % Router
+  \filldraw[fill=orange!50, draw=orange!90, line width=2] (5, 0.5) circle (0.4) node[font=\tiny\bfseries, black] {RTR};
+  
+  % Antenna indicators
+  \draw[dashed, gray] (5, 0.5) circle (3.5);
+\end{tikzpicture}
+\caption{Layout físico da infraestrutura doméstica. ESP1-3: sensores com WiFi; NB: Notebook; RPI: Raspberry Pi; RTR: Roteador WiFi (linha pontilhada mostra aproximado alcance WiFi).}
+\end{figure}
+
+\chapter{Próximas Etapas}
+
+\section{Roadmap de Desenvolvimento}
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{Etapa 2 (Concorrência)}: Threads em Node.js, processamento paralelo de telemetria
+    \item \textbf{Etapa 3 (Sockets)}: UDP para comunicação de baixa latência entre ESP's
+    \item \textbf{Etapa 4 (RPC)}: Chamadas remotas entre servidores para operações críticas
+    \item \textbf{Etapa 5 (Message Bus)}: RabbitMQ ou MQTT entre servidores para desacoplamento
+    \item \textbf{Etapa 6 (Service Discovery)}: mDNS ou Consul para localização dinâmica de serviços
+    \item \textbf{Etapa 7 (Sincronização)}: Mutual exclusion, eleição de líder para operações críticas
+    \item \textbf{Etapa 8 (Replicação)}: Espelhos de BD com consistência eventual
+    \item \textbf{Etapa 9 (Resiliência)}: Circuit breaker, retry policies, graceful degradation
+    \item \textbf{Etapa 10 (Segurança)}: TLS, autenticação mútua, autorização com JWT
+\end{enumerate}
+
+\chapter{Conclusão}
+
+Este projeto demonstra um sistema distribuído genuinamente prático, rodando em infraestrutura real doméstica, com múltiplos nós heterogêneos, rede WiFi com falhas esperadas, e persistência centralizada. A infraestrutura foi cuidadosamente projetada para evitar problemas comuns (IP dinâmico, perda de WiFi) através de fixação de IPs no roteador e buffer local nos nós. Cada etapa subsequente incorporará conceitos clássicos de sistemas distribuídos de forma natural, construindo sobre essa base sólida e realista.
+
+\end{document}

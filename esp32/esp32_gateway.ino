@@ -3,11 +3,19 @@
 #include <HTTPClient.h>
 
 // Gateway ESP32: recebe pacotes via ESP-NOW e encaminha para o backend via HTTP.
-// Ajuste SSID, senha e IP do backend antes de usar.
+// Ajuste SSID, senha e IP do servidor antes de usar.
 
 #define WIFI_SSID "SEU_WIFI"
 #define WIFI_PASSWORD "SUA_SENHA"
-#define API_URL "http://192.168.0.10:3001/api/ingest"
+
+// ⚠️ IMPORTANTE: Mude para o IP do server-sti
+// Padrão: 192.168.1.10 (ajuste conforme sua rede)
+#define API_URL "http://192.168.1.10:3001/api/ingest"
+
+// Para descobrir IP do server-sti:
+// No servidor: hostname -I
+// Não use 127.0.0.1 ou localhost - ESP32 precisa do IP real na rede!
+
 #define GATEWAY_ID "GW01"
 
 typedef struct __attribute__((packed)) {

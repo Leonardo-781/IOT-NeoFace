@@ -30,7 +30,7 @@ ssh pi@192.168.1.10
 ### 2️⃣ Clonar projeto
 ```bash
 cd ~
-git clone <seu-repo-url> trabalho-final
+git clone <https://github.com/Leonardo-781/IOT-NeoFace> trabalho-final
 cd trabalho-final
 ```
 

@@ -1,13 +1,16 @@
 {
   "database": {
-    "enabled": false,
+    "enabled": true,
     "engine": "timescaledb",
-    "host": "127.0.0.1",
+    "host": "COLOQUE_IP_DO_SERVIDOR_AQUI",
     "port": 5432,
     "database": "iot_monitoring",
     "username": "iot_user",
-    "password": "",
+    "password": "COLOQUE_SENHA_AQUI",
     "ssl": false,
     "retentionDays": 30
-  }
+  },
+  "mode": "production",
+  "server": "server-sti",
+  "description": "Sistema IoT em servidor remoto (server-sti)"
 }
