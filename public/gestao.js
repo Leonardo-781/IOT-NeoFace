@@ -16,6 +16,10 @@ const newRole = document.getElementById('newRole');
 let currentUser = null;
 let cachedUsers = [];
 
+function getRoleLabel(role) {
+  return role === 'admin' ? 'gestor' : role;
+}
+
 function safeText(value) {
   return String(value || '').replace(/[&<>"']/g, (match) => ({
     '&': '&amp;',
@@ -31,10 +35,10 @@ function updateHeader() {
     return;
   }
   managementUser.textContent = currentUser.displayName || currentUser.username;
-  managementRole.textContent = currentUser.role;
+  managementRole.textContent = getRoleLabel(currentUser.role);
   managementAccess.textContent = currentUser.canManageAccounts ? 'Liberado' : 'Bloqueado';
   managementIntro.textContent = currentUser.canManageAccounts
-    ? 'Aqui você administra as contas autorizadas para o sistema.'
+    ? 'Aqui você gerencia as contas autorizadas para o sistema.'
     : 'Seu usuário foi autenticado, mas não possui permissão para esta área.';
 }
 
@@ -54,7 +58,7 @@ function renderUsers(users) {
           <div class="user-card-top">
             <strong>${safeText(user.displayName || user.username)}</strong>
             <div class="user-roles">
-              <span class="pill ${safeText(user.role)}">${safeText(user.role)}</span>
+              <span class="pill ${safeText(user.role)}">${safeText(getRoleLabel(user.role))}</span>
               <span class="pill ${user.active ? 'active' : 'inactive'}">${user.active ? 'ativo' : 'inativo'}</span>
             </div>
           </div>
@@ -64,7 +68,7 @@ function renderUsers(users) {
             <select class="user-role">
               <option value="viewer" ${user.role === 'viewer' ? 'selected' : ''}>viewer</option>
               <option value="operator" ${user.role === 'operator' ? 'selected' : ''}>operator</option>
-              <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>admin</option>
+              <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>gestor</option>
             </select>
             <input class="user-password" type="password" placeholder="Nova senha" />
             <label class="meta" style="display:flex;align-items:center;gap:8px;">

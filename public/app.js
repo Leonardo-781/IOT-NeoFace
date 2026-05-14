@@ -69,6 +69,10 @@ let selectedChartMetric = chartMetric?.value || 'temperature';
 let currentUser = null;
 let activeRoleTheme = null;
 
+function getRoleLabel(role) {
+  return role === 'admin' ? 'gestor' : role;
+}
+
 const CHART_METRICS = {
   temperature: { label: 'Temperatura', unit: '°C' },
   pressure: { label: 'Pressão', unit: 'hPa' },
@@ -179,7 +183,7 @@ function getLatestReading(node) {
 function renderSummary(summary) {
   const onlineNodes = summary?.nodesOnline ?? 0;
   const totalNodes = summary?.nodesTotal ?? 0;
-  const userLabel = currentUser ? `${currentUser.displayName || currentUser.username} (${currentUser.role})` : 'convidado';
+  const userLabel = currentUser ? `${currentUser.displayName || currentUser.username} (${getRoleLabel(currentUser.role)})` : 'convidado';
   heroNodes.textContent = totalNodes > 0 ? `${onlineNodes}/${totalNodes} dispositivos ativos` : 'Sem ESPs cadastrados';
   heroActivity.textContent = summary?.latestTimestamp
     ? `Última leitura recebida em ${formatTime(summary.latestTimestamp)}`
@@ -339,7 +343,7 @@ function renderUsers(users) {
           <div class="user-card-top">
             <strong>${user.displayName || user.username}</strong>
             <div class="user-roles">
-              <span class="pill ${user.role}">${user.role}</span>
+              <span class="pill ${user.role}">${getRoleLabel(user.role)}</span>
               <span class="pill ${user.active ? 'active' : 'inactive'}">${user.active ? 'ativo' : 'inativo'}</span>
             </div>
           </div>
@@ -349,7 +353,7 @@ function renderUsers(users) {
             <select class="user-role">
               <option value="viewer" ${user.role === 'viewer' ? 'selected' : ''}>viewer</option>
               <option value="operator" ${user.role === 'operator' ? 'selected' : ''}>operator</option>
-              <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>admin</option>
+              <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>gestor</option>
             </select>
             <input class="user-password" type="password" placeholder="Nova senha" />
             <label class="meta" style="display:flex;align-items:center;gap:8px;">
