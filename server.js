@@ -50,7 +50,7 @@ const defaultState = () => ({
       gatewayId: 'GW01',
       name: 'Laboratorio 1',
       location: 'Bloco A',
-      status: 'online',
+      status: 'offline',
       seq: 1800,
       rssi: -60,
       battery: 3.94,
@@ -63,7 +63,7 @@ const defaultState = () => ({
       gatewayId: 'GW01',
       name: 'Corredor',
       location: 'Bloco B',
-      status: 'online',
+      status: 'offline',
       seq: 1421,
       rssi: -67,
       battery: 3.88,
@@ -76,7 +76,7 @@ const defaultState = () => ({
       gatewayId: 'GW01',
       name: 'Sala de Servidores',
       location: 'Bloco C',
-      status: 'online',
+      status: 'offline',
       seq: 2045,
       rssi: -55,
       battery: 3.77,
@@ -89,7 +89,7 @@ const defaultState = () => ({
       gatewayId: 'GW01',
       name: 'Area Externa',
       location: 'Pátio',
-      status: 'online',
+      status: 'offline',
       seq: 990,
       rssi: -72,
       battery: 3.83,
@@ -563,7 +563,14 @@ function getLatestByNode() {
 }
 
 function countOnlineNodes() {
-  return state.nodes.filter((node) => node.status === 'online').length;
+  const cutoff = Date.now() - 20 * 60 * 1000;
+  return state.nodes.filter((node) => {
+    if (node.status !== 'online') {
+      return false;
+    }
+    const lastSeen = new Date(node.lastSeen).getTime();
+    return Number.isFinite(lastSeen) && lastSeen >= cutoff;
+  }).length;
 }
 
 function toNumber(value, digits = 2) {
@@ -1543,6 +1550,7 @@ async function boot() {
   readStateFromDisk();
   readUsersFromDisk();
   readSystemConfigFromDisk();
+  markNodeOfflineIfStale();
 
   if (systemConfig && systemConfig.database && systemConfig.database.enabled) {
     try {

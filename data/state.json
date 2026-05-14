@@ -46,11 +46,11 @@
       "gatewayId": "GW01",
       "name": "Area Externa",
       "location": "Pátio",
-      "status": "online",
-      "seq": 10908,
-      "rssi": -90,
+      "status": "offline",
+      "seq": 18184,
+      "rssi": -78,
       "battery": 3.83,
-      "lastSeen": "2026-04-30T22:38:33.735Z",
+      "lastSeen": "2026-05-13T08:37:59.792Z",
       "samplingIntervalSec": 300
     },
     {
@@ -111,45 +111,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:02.485Z",
-      "seq": 10789,
-      "rssi": -68,
+      "ts": "2026-05-13T08:28:04.040Z",
+      "seq": 18065,
+      "rssi": -89,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 28.2,
-          "humidity_pct": 64.1,
-          "pressure_hpa": 1013.7
+          "pressure_hpa": 1013.9
         },
-        "ldr": {
-          "light_raw": 3429,
-          "light_pct": 84
+        "mq7": {
+          "gas_raw": 107,
+          "co_ppm": 107.4
         },
         "ds18b20": {
           "temperature_c": 28.1
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:07.490Z",
-      "seq": 10790,
-      "rssi": -67,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 64.3,
-          "pressure_hpa": 1012.2
-        },
-        "ldr": {
-          "light_raw": 3437,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 28.2
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
         }
       }
     },
@@ -157,114 +139,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:12.490Z",
-      "seq": 10791,
-      "rssi": -69,
+      "ts": "2026-05-13T08:28:09.054Z",
+      "seq": 18066,
+      "rssi": -91,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 27.4,
-          "humidity_pct": 62.6,
-          "pressure_hpa": 1012.1
-        },
-        "ldr": {
-          "light_raw": 3405,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 27.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:17.490Z",
-      "seq": 10792,
-      "rssi": -67,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 65.5,
-          "pressure_hpa": 1012.1
-        },
-        "ldr": {
-          "light_raw": 3060,
-          "light_pct": 75
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:22.490Z",
-      "seq": 10793,
-      "rssi": -68,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 62.8,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3037,
-          "light_pct": 74
-        },
-        "ds18b20": {
-          "temperature_c": 28.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:27.496Z",
-      "seq": 10794,
-      "rssi": -68,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.5,
-          "humidity_pct": 63.8,
-          "pressure_hpa": 1012.6
-        },
-        "ldr": {
-          "light_raw": 3065,
-          "light_pct": 75
-        },
-        "ds18b20": {
-          "temperature_c": 27.3
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:32.496Z",
-      "seq": 10795,
-      "rssi": -70,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.5,
-          "humidity_pct": 64.7,
           "pressure_hpa": 1013.8
         },
-        "ldr": {
-          "light_raw": 3194,
-          "light_pct": 78
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 110.7
         },
         "ds18b20": {
-          "temperature_c": 28.3
+          "temperature_c": 27.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
         }
       }
     },
@@ -272,229 +167,587 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:37.496Z",
-      "seq": 10796,
-      "rssi": -69,
+      "ts": "2026-05-13T08:28:14.054Z",
+      "seq": 18067,
+      "rssi": -90,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 28,
-          "humidity_pct": 64.3,
-          "pressure_hpa": 1012.8
+          "pressure_hpa": 1013.7
         },
-        "ldr": {
-          "light_raw": 3180,
-          "light_pct": 78
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:42.496Z",
-      "seq": 10797,
-      "rssi": -68,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 65.5,
-          "pressure_hpa": 1013.4
-        },
-        "ldr": {
-          "light_raw": 3224,
-          "light_pct": 79
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:47.504Z",
-      "seq": 10798,
-      "rssi": -68,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.4,
-          "humidity_pct": 64,
-          "pressure_hpa": 1012
-        },
-        "ldr": {
-          "light_raw": 3387,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 27.2
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:52.510Z",
-      "seq": 10799,
-      "rssi": -67,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.7,
-          "humidity_pct": 66.2,
-          "pressure_hpa": 1012.6
-        },
-        "ldr": {
-          "light_raw": 3246,
-          "light_pct": 79
-        },
-        "ds18b20": {
-          "temperature_c": 28
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:22:57.516Z",
-      "seq": 10800,
-      "rssi": -69,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.9,
-          "humidity_pct": 66.1,
-          "pressure_hpa": 1012.4
-        },
-        "ldr": {
-          "light_raw": 3408,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 28.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:02.516Z",
-      "seq": 10801,
-      "rssi": -69,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.6,
-          "humidity_pct": 66.8,
-          "pressure_hpa": 1012.5
-        },
-        "ldr": {
-          "light_raw": 3362,
-          "light_pct": 82
-        },
-        "ds18b20": {
-          "temperature_c": 28.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:07.519Z",
-      "seq": 10802,
-      "rssi": -68,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 66,
-          "pressure_hpa": 1011.8
-        },
-        "ldr": {
-          "light_raw": 3008,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:12.523Z",
-      "seq": 10803,
-      "rssi": -69,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 66.4,
-          "pressure_hpa": 1012.3
-        },
-        "ldr": {
-          "light_raw": 3335,
-          "light_pct": 81
+        "mq7": {
+          "gas_raw": 120,
+          "co_ppm": 117.4
         },
         "ds18b20": {
           "temperature_c": 27.9
         }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
       }
     },
     {
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:17.524Z",
-      "seq": 10804,
-      "rssi": -67,
+      "ts": "2026-05-13T08:28:19.062Z",
+      "seq": 18068,
+      "rssi": -91,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
+          "temperature_c": 28.2,
+          "pressure_hpa": 1012.2
+        },
+        "mq7": {
+          "gas_raw": 117,
+          "co_ppm": 120.4
+        },
+        "ds18b20": {
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:24.077Z",
+      "seq": 18069,
+      "rssi": -91,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.2,
+          "pressure_hpa": 1012
+        },
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 137
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:29.079Z",
+      "seq": 18070,
+      "rssi": -93,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.4,
+          "pressure_hpa": 1012.8
+        },
+        "mq7": {
+          "gas_raw": 130,
+          "co_ppm": 126.6
+        },
+        "ds18b20": {
+          "temperature_c": 27.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:34.084Z",
+      "seq": 18071,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.5,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 127,
+          "co_ppm": 128.1
+        },
+        "ds18b20": {
+          "temperature_c": 27.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:39.088Z",
+      "seq": 18072,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 120,
+          "co_ppm": 116.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:44.093Z",
+      "seq": 18073,
+      "rssi": -94,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.8,
+          "pressure_hpa": 1013.7
+        },
+        "mq7": {
+          "gas_raw": 114,
+          "co_ppm": 114.1
+        },
+        "ds18b20": {
+          "temperature_c": 28.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:49.099Z",
+      "seq": 18074,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1013.6
+        },
+        "mq7": {
+          "gas_raw": 132,
+          "co_ppm": 134.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:54.108Z",
+      "seq": 18075,
+      "rssi": -94,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28,
+          "pressure_hpa": 1013.5
+        },
+        "mq7": {
+          "gas_raw": 129,
+          "co_ppm": 131.4
+        },
+        "ds18b20": {
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:28:59.122Z",
+      "seq": 18076,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1012.6
+        },
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 132.9
+        },
+        "ds18b20": {
+          "temperature_c": 27
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:04.137Z",
+      "seq": 18077,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.3,
+          "pressure_hpa": 1012.9
+        },
+        "mq7": {
+          "gas_raw": 123,
+          "co_ppm": 126.2
+        },
+        "ds18b20": {
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:09.139Z",
+      "seq": 18078,
+      "rssi": -93,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.7,
+          "pressure_hpa": 1012
+        },
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 110.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:14.141Z",
+      "seq": 18079,
+      "rssi": -94,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.7,
+          "pressure_hpa": 1013
+        },
+        "mq7": {
+          "gas_raw": 128,
+          "co_ppm": 128.1
+        },
+        "ds18b20": {
+          "temperature_c": 28.5
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:19.145Z",
+      "seq": 18080,
+      "rssi": -92,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.8,
+          "pressure_hpa": 1013.6
+        },
+        "mq7": {
+          "gas_raw": 131,
+          "co_ppm": 129.2
+        },
+        "ds18b20": {
+          "temperature_c": 29
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:24.149Z",
+      "seq": 18081,
+      "rssi": -91,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.9,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 116,
+          "co_ppm": 118
+        },
+        "ds18b20": {
+          "temperature_c": 28.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:29.155Z",
+      "seq": 18082,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
           "temperature_c": 29,
-          "humidity_pct": 62.6,
           "pressure_hpa": 1011.9
         },
-        "ldr": {
-          "light_raw": 3134,
-          "light_pct": 77
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 136.5
+        },
+        "ds18b20": {
+          "temperature_c": 29
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:34.168Z",
+      "seq": 18083,
+      "rssi": -92,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.8,
+          "pressure_hpa": 1012.4
+        },
+        "mq7": {
+          "gas_raw": 109,
+          "co_ppm": 109.8
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:39.169Z",
+      "seq": 18084,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1012.6
+        },
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 136.6
+        },
+        "ds18b20": {
+          "temperature_c": 27.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:44.172Z",
+      "seq": 18085,
+      "rssi": -92,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.9,
+          "pressure_hpa": 1012.9
+        },
+        "mq7": {
+          "gas_raw": 105,
+          "co_ppm": 104.8
+        },
+        "ds18b20": {
+          "temperature_c": 29
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:49.176Z",
+      "seq": 18086,
+      "rssi": -94,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1013.5
+        },
+        "mq7": {
+          "gas_raw": 108,
+          "co_ppm": 110.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:29:54.191Z",
+      "seq": 18087,
+      "rssi": -93,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 29,
+          "pressure_hpa": 1013.3
+        },
+        "mq7": {
+          "gas_raw": 124,
+          "co_ppm": 126.1
         },
         "ds18b20": {
           "temperature_c": 29.2
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:22.530Z",
-      "seq": 10805,
-      "rssi": -67,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 64.5,
-          "pressure_hpa": 1012.5
-        },
-        "ldr": {
-          "light_raw": 3160,
-          "light_pct": 77
-        },
-        "ds18b20": {
-          "temperature_c": 28.8
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
         }
       }
     },
@@ -502,137 +755,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:27.530Z",
-      "seq": 10806,
-      "rssi": -69,
+      "ts": "2026-05-13T08:29:59.206Z",
+      "seq": 18088,
+      "rssi": -93,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 67.2,
+        "bmp280": {
+          "temperature_c": 27.4,
           "pressure_hpa": 1013.4
         },
-        "ldr": {
-          "light_raw": 3368,
-          "light_pct": 82
-        },
-        "ds18b20": {
-          "temperature_c": 28.2
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:32.530Z",
-      "seq": 10807,
-      "rssi": -71,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.6,
-          "humidity_pct": 64.2,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 3305,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:37.536Z",
-      "seq": 10808,
-      "rssi": -72,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.9,
-          "humidity_pct": 62.5,
-          "pressure_hpa": 1013.7
-        },
-        "ldr": {
-          "light_raw": 2982,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:42.536Z",
-      "seq": 10809,
-      "rssi": -73,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.3,
-          "humidity_pct": 65.4,
-          "pressure_hpa": 1011.9
-        },
-        "ldr": {
-          "light_raw": 3429,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 27.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:47.543Z",
-      "seq": 10810,
-      "rssi": -74,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.2,
-          "humidity_pct": 66.7,
-          "pressure_hpa": 1013.1
-        },
-        "ldr": {
-          "light_raw": 3099,
-          "light_pct": 76
+        "mq7": {
+          "gas_raw": 117,
+          "co_ppm": 117.1
         },
         "ds18b20": {
           "temperature_c": 27.4
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:52.549Z",
-      "seq": 10811,
-      "rssi": -75,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.1,
-          "humidity_pct": 67.1,
-          "pressure_hpa": 1014.2
-        },
-        "ldr": {
-          "light_raw": 3003,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.2
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
         }
       }
     },
@@ -640,183 +783,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:23:57.550Z",
-      "seq": 10812,
-      "rssi": -77,
+      "ts": "2026-05-13T08:30:04.212Z",
+      "seq": 18089,
+      "rssi": -91,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 68,
-          "pressure_hpa": 1012.4
+        "bmp280": {
+          "temperature_c": 29,
+          "pressure_hpa": 1013.3
         },
-        "ldr": {
-          "light_raw": 3394,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:02.556Z",
-      "seq": 10813,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.5,
-          "humidity_pct": 62.9,
-          "pressure_hpa": 1012.7
-        },
-        "ldr": {
-          "light_raw": 3312,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 27.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:07.557Z",
-      "seq": 10814,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.6,
-          "humidity_pct": 62.4,
-          "pressure_hpa": 1012.4
-        },
-        "ldr": {
-          "light_raw": 3090,
-          "light_pct": 75
-        },
-        "ds18b20": {
-          "temperature_c": 27.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:12.563Z",
-      "seq": 10815,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.9,
-          "humidity_pct": 65.9,
-          "pressure_hpa": 1013.6
-        },
-        "ldr": {
-          "light_raw": 3409,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 28.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:17.563Z",
-      "seq": 10816,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.4,
-          "humidity_pct": 64.8,
-          "pressure_hpa": 1012.4
-        },
-        "ldr": {
-          "light_raw": 3210,
-          "light_pct": 78
-        },
-        "ds18b20": {
-          "temperature_c": 27.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:22.563Z",
-      "seq": 10817,
-      "rssi": -75,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.5,
-          "humidity_pct": 62.1,
-          "pressure_hpa": 1014.2
-        },
-        "ldr": {
-          "light_raw": 3446,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:27.563Z",
-      "seq": 10818,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.9,
-          "humidity_pct": 64.7,
-          "pressure_hpa": 1012.4
-        },
-        "ldr": {
-          "light_raw": 3274,
-          "light_pct": 80
+        "mq7": {
+          "gas_raw": 129,
+          "co_ppm": 127.5
         },
         "ds18b20": {
           "temperature_c": 29
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:32.563Z",
-      "seq": 10819,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.9,
-          "humidity_pct": 66.4,
-          "pressure_hpa": 1012.2
-        },
-        "ldr": {
-          "light_raw": 3155,
-          "light_pct": 77
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
         }
       }
     },
@@ -824,137 +811,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:37.577Z",
-      "seq": 10820,
-      "rssi": -76,
+      "ts": "2026-05-13T08:30:09.222Z",
+      "seq": 18090,
+      "rssi": -92,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 27.8,
-          "humidity_pct": 65.4,
-          "pressure_hpa": 1013.7
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1012.8
         },
-        "ldr": {
-          "light_raw": 3299,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 27.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:42.596Z",
-      "seq": 10821,
-      "rssi": -76,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 67.4,
-          "pressure_hpa": 1014.1
-        },
-        "ldr": {
-          "light_raw": 2988,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:47.597Z",
-      "seq": 10822,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.9,
-          "humidity_pct": 62.7,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 3232,
-          "light_pct": 79
-        },
-        "ds18b20": {
-          "temperature_c": 27.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:52.597Z",
-      "seq": 10823,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.7,
-          "humidity_pct": 66.4,
-          "pressure_hpa": 1012.9
-        },
-        "ldr": {
-          "light_raw": 3449,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 27.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:24:57.597Z",
-      "seq": 10824,
-      "rssi": -81,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.2,
-          "humidity_pct": 64.1,
-          "pressure_hpa": 1013.6
-        },
-        "ldr": {
-          "light_raw": 3175,
-          "light_pct": 78
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 111.1
         },
         "ds18b20": {
           "temperature_c": 28.2
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:02.597Z",
-      "seq": 10825,
-      "rssi": -81,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.7,
-          "humidity_pct": 67.5,
-          "pressure_hpa": 1012.6
-        },
-        "ldr": {
-          "light_raw": 3113,
-          "light_pct": 76
-        },
-        "ds18b20": {
-          "temperature_c": 27.7
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
         }
       }
     },
@@ -962,252 +839,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:07.607Z",
-      "seq": 10826,
-      "rssi": -79,
+      "ts": "2026-05-13T08:30:14.236Z",
+      "seq": 18091,
+      "rssi": -92,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 28.3,
-          "humidity_pct": 66.5,
-          "pressure_hpa": 1012.7
+          "pressure_hpa": 1013.2
         },
-        "ldr": {
-          "light_raw": 2958,
-          "light_pct": 72
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:12.610Z",
-      "seq": 10827,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 29,
-          "humidity_pct": 64.5,
-          "pressure_hpa": 1014.1
-        },
-        "ldr": {
-          "light_raw": 3176,
-          "light_pct": 78
-        },
-        "ds18b20": {
-          "temperature_c": 28.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:17.610Z",
-      "seq": 10828,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.2,
-          "humidity_pct": 63.9,
-          "pressure_hpa": 1012.2
-        },
-        "ldr": {
-          "light_raw": 3302,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:22.610Z",
-      "seq": 10829,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.4,
-          "humidity_pct": 67.6,
-          "pressure_hpa": 1012.6
-        },
-        "ldr": {
-          "light_raw": 3156,
-          "light_pct": 77
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:27.622Z",
-      "seq": 10830,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.4,
-          "humidity_pct": 63.6,
-          "pressure_hpa": 1012.6
-        },
-        "ldr": {
-          "light_raw": 2964,
-          "light_pct": 72
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:32.624Z",
-      "seq": 10831,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.9,
-          "humidity_pct": 66.6,
-          "pressure_hpa": 1012.7
-        },
-        "ldr": {
-          "light_raw": 2963,
-          "light_pct": 72
-        },
-        "ds18b20": {
-          "temperature_c": 28.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:37.639Z",
-      "seq": 10832,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 63.2,
-          "pressure_hpa": 1013.4
-        },
-        "ldr": {
-          "light_raw": 3192,
-          "light_pct": 78
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:42.653Z",
-      "seq": 10833,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.7,
-          "humidity_pct": 67.6,
-          "pressure_hpa": 1012
-        },
-        "ldr": {
-          "light_raw": 3104,
-          "light_pct": 76
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:47.668Z",
-      "seq": 10834,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.2,
-          "humidity_pct": 62.9,
-          "pressure_hpa": 1012.7
-        },
-        "ldr": {
-          "light_raw": 3009,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:52.672Z",
-      "seq": 10835,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.9,
-          "humidity_pct": 63.7,
-          "pressure_hpa": 1011.8
-        },
-        "ldr": {
-          "light_raw": 3005,
-          "light_pct": 73
+        "mq7": {
+          "gas_raw": 118,
+          "co_ppm": 119.8
         },
         "ds18b20": {
           "temperature_c": 28.1
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:25:57.685Z",
-      "seq": 10836,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.1,
-          "humidity_pct": 66.3,
-          "pressure_hpa": 1013.1
-        },
-        "ldr": {
-          "light_raw": 2971,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.3
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
         }
       }
     },
@@ -1215,183 +867,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:02.685Z",
-      "seq": 10837,
-      "rssi": -78,
+      "ts": "2026-05-13T08:30:19.250Z",
+      "seq": 18092,
+      "rssi": -92,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.5,
-          "humidity_pct": 64.8,
-          "pressure_hpa": 1011.9
-        },
-        "ldr": {
-          "light_raw": 3309,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:07.685Z",
-      "seq": 10838,
-      "rssi": -76,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.3,
-          "humidity_pct": 62.6,
-          "pressure_hpa": 1012.4
-        },
-        "ldr": {
-          "light_raw": 3106,
-          "light_pct": 76
-        },
-        "ds18b20": {
-          "temperature_c": 28.2
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:12.687Z",
-      "seq": 10839,
-      "rssi": -75,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.6,
-          "humidity_pct": 64.5,
+        "bmp280": {
+          "temperature_c": 27.3,
           "pressure_hpa": 1014.2
         },
-        "ldr": {
-          "light_raw": 3142,
-          "light_pct": 77
-        },
-        "ds18b20": {
-          "temperature_c": 28.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:17.691Z",
-      "seq": 10840,
-      "rssi": -73,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.8,
-          "humidity_pct": 67.6,
-          "pressure_hpa": 1014
-        },
-        "ldr": {
-          "light_raw": 3351,
-          "light_pct": 82
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:22.691Z",
-      "seq": 10841,
-      "rssi": -71,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.2,
-          "humidity_pct": 67.4,
-          "pressure_hpa": 1011.9
-        },
-        "ldr": {
-          "light_raw": 3225,
-          "light_pct": 79
-        },
-        "ds18b20": {
-          "temperature_c": 27.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:27.699Z",
-      "seq": 10842,
-      "rssi": -71,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.9,
-          "humidity_pct": 64.1,
-          "pressure_hpa": 1013.6
-        },
-        "ldr": {
-          "light_raw": 3001,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:32.705Z",
-      "seq": 10843,
-      "rssi": -73,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.7,
-          "humidity_pct": 63.8,
-          "pressure_hpa": 1013.5
-        },
-        "ldr": {
-          "light_raw": 3172,
-          "light_pct": 77
+        "mq7": {
+          "gas_raw": 118,
+          "co_ppm": 115.9
         },
         "ds18b20": {
           "temperature_c": 27.5
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:37.712Z",
-      "seq": 10844,
-      "rssi": -75,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.3,
-          "humidity_pct": 66.1,
-          "pressure_hpa": 1012.7
-        },
-        "ldr": {
-          "light_raw": 3101,
-          "light_pct": 76
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
         }
       }
     },
@@ -1399,114 +895,83 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:42.719Z",
-      "seq": 10845,
-      "rssi": -74,
+      "ts": "2026-05-13T08:30:24.264Z",
+      "seq": 18093,
+      "rssi": -91,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.6,
-          "humidity_pct": 62.2,
-          "pressure_hpa": 1012.1
-        },
-        "ldr": {
-          "light_raw": 3194,
-          "light_pct": 78
-        },
-        "ds18b20": {
-          "temperature_c": 28.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:47.726Z",
-      "seq": 10846,
-      "rssi": -73,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.6,
-          "humidity_pct": 65.2,
-          "pressure_hpa": 1014.1
-        },
-        "ldr": {
-          "light_raw": 3238,
-          "light_pct": 79
-        },
-        "ds18b20": {
-          "temperature_c": 27.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:52.733Z",
-      "seq": 10847,
-      "rssi": -71,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.5,
-          "humidity_pct": 62.6,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3353,
-          "light_pct": 82
-        },
-        "ds18b20": {
-          "temperature_c": 27.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:26:57.746Z",
-      "seq": 10848,
-      "rssi": -73,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.9,
-          "humidity_pct": 66.1,
+        "bmp280": {
+          "temperature_c": 28.4,
           "pressure_hpa": 1013.5
         },
-        "ldr": {
-          "light_raw": 3365,
-          "light_pct": 82
+        "mq7": {
+          "gas_raw": 105,
+          "co_ppm": 108.4
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:30:29.272Z",
+      "seq": 18094,
+      "rssi": -91,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.7,
+          "pressure_hpa": 1012.1
+        },
+        "mq7": {
+          "gas_raw": 128,
+          "co_ppm": 128.6
+        },
+        "ds18b20": {
+          "temperature_c": 27.5
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:30:34.272Z",
+      "seq": 18095,
+      "rssi": -92,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1011.9
+        },
+        "mq7": {
+          "gas_raw": 128,
+          "co_ppm": 128.9
         },
         "ds18b20": {
           "temperature_c": 28.2
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:02.746Z",
-      "seq": 10849,
-      "rssi": -72,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.5,
-          "humidity_pct": 64,
-          "pressure_hpa": 1012
-        },
-        "ldr": {
-          "light_raw": 3168,
-          "light_pct": 77
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
         }
       }
     },
@@ -1514,68 +979,699 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:07.746Z",
-      "seq": 10850,
-      "rssi": -73,
+      "ts": "2026-05-13T08:30:39.277Z",
+      "seq": 18096,
+      "rssi": -93,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.4,
-          "humidity_pct": 63.6,
+        "bmp280": {
+          "temperature_c": 27.6,
+          "pressure_hpa": 1012.2
+        },
+        "mq7": {
+          "gas_raw": 108,
+          "co_ppm": 111.7
+        },
+        "ds18b20": {
+          "temperature_c": 27.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:30:44.284Z",
+      "seq": 18097,
+      "rssi": -94,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
           "pressure_hpa": 1014.1
         },
-        "ldr": {
-          "light_raw": 3069,
-          "light_pct": 75
+        "mq7": {
+          "gas_raw": 128,
+          "co_ppm": 129
+        },
+        "ds18b20": {
+          "temperature_c": 27.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:30:49.284Z",
+      "seq": 18098,
+      "rssi": -94,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1013.8
+        },
+        "mq7": {
+          "gas_raw": 112,
+          "co_ppm": 108.8
         },
         "ds18b20": {
           "temperature_c": 28.3
         }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
       }
     },
     {
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:12.746Z",
-      "seq": 10851,
-      "rssi": -71,
+      "ts": "2026-05-13T08:30:54.286Z",
+      "seq": 18099,
+      "rssi": -95,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 27.5,
-          "humidity_pct": 63,
-          "pressure_hpa": 1014
+        "bmp280": {
+          "temperature_c": 28.3,
+          "pressure_hpa": 1012.4
         },
-        "ldr": {
-          "light_raw": 3383,
-          "light_pct": 83
+        "mq7": {
+          "gas_raw": 129,
+          "co_ppm": 128.2
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:30:59.291Z",
+      "seq": 18100,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.7,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 104,
+          "co_ppm": 104.6
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:04.301Z",
+      "seq": 18101,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.2,
+          "pressure_hpa": 1012.6
+        },
+        "mq7": {
+          "gas_raw": 114,
+          "co_ppm": 115.5
+        },
+        "ds18b20": {
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:09.302Z",
+      "seq": 18102,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.1,
+          "pressure_hpa": 1013.3
+        },
+        "mq7": {
+          "gas_raw": 121,
+          "co_ppm": 124.9
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:14.312Z",
+      "seq": 18103,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1012
+        },
+        "mq7": {
+          "gas_raw": 118,
+          "co_ppm": 120
+        },
+        "ds18b20": {
+          "temperature_c": 28.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:19.322Z",
+      "seq": 18104,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.6,
+          "pressure_hpa": 1012.2
+        },
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 115
+        },
+        "ds18b20": {
+          "temperature_c": 28.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:24.327Z",
+      "seq": 18105,
+      "rssi": -93,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.6,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 105,
+          "co_ppm": 105
+        },
+        "ds18b20": {
+          "temperature_c": 27.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:29.327Z",
+      "seq": 18106,
+      "rssi": -94,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.3,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 135,
+          "co_ppm": 131.5
+        },
+        "ds18b20": {
+          "temperature_c": 28.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:34.340Z",
+      "seq": 18107,
+      "rssi": -95,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.8,
+          "pressure_hpa": 1012.6
+        },
+        "mq7": {
+          "gas_raw": 136,
+          "co_ppm": 136.1
+        },
+        "ds18b20": {
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:39.347Z",
+      "seq": 18108,
+      "rssi": -93,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.6,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 125,
+          "co_ppm": 121.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:44.353Z",
+      "seq": 18109,
+      "rssi": -91,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.5,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 112,
+          "co_ppm": 109.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:49.356Z",
+      "seq": 18110,
+      "rssi": -92,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.6,
+          "pressure_hpa": 1012.5
+        },
+        "mq7": {
+          "gas_raw": 132,
+          "co_ppm": 132.3
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:54.368Z",
+      "seq": 18111,
+      "rssi": -91,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.4,
+          "pressure_hpa": 1012.8
+        },
+        "mq7": {
+          "gas_raw": 108,
+          "co_ppm": 109.1
+        },
+        "ds18b20": {
+          "temperature_c": 27.5
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:31:59.378Z",
+      "seq": 18112,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.5,
+          "pressure_hpa": 1012.4
+        },
+        "mq7": {
+          "gas_raw": 121,
+          "co_ppm": 119.9
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:04.386Z",
+      "seq": 18113,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.3,
+          "pressure_hpa": 1013.6
+        },
+        "mq7": {
+          "gas_raw": 107,
+          "co_ppm": 103.6
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:09.391Z",
+      "seq": 18114,
+      "rssi": -89,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 119,
+          "co_ppm": 117.3
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:14.396Z",
+      "seq": 18115,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.1,
+          "pressure_hpa": 1012.9
+        },
+        "mq7": {
+          "gas_raw": 104,
+          "co_ppm": 107.8
+        },
+        "ds18b20": {
+          "temperature_c": 27.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:19.403Z",
+      "seq": 18116,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28,
+          "pressure_hpa": 1012.7
+        },
+        "mq7": {
+          "gas_raw": 129,
+          "co_ppm": 131.3
+        },
+        "ds18b20": {
+          "temperature_c": 28.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:24.412Z",
+      "seq": 18117,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.8,
+          "pressure_hpa": 1012.6
+        },
+        "mq7": {
+          "gas_raw": 105,
+          "co_ppm": 108.2
+        },
+        "ds18b20": {
+          "temperature_c": 27.5
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:29.414Z",
+      "seq": 18118,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1013
+        },
+        "mq7": {
+          "gas_raw": 123,
+          "co_ppm": 126.7
+        },
+        "ds18b20": {
+          "temperature_c": 27.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:34.420Z",
+      "seq": 18119,
+      "rssi": -91,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.1,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 129,
+          "co_ppm": 131.3
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:32:39.435Z",
+      "seq": 18120,
+      "rssi": -89,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.6,
+          "pressure_hpa": 1013.9
+        },
+        "mq7": {
+          "gas_raw": 115,
+          "co_ppm": 112.5
         },
         "ds18b20": {
           "temperature_c": 27.3
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:17.746Z",
-      "seq": 10852,
-      "rssi": -69,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 64.7,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3303,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 29
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
         }
       }
     },
@@ -1583,22 +1679,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:22.746Z",
-      "seq": 10853,
-      "rssi": -69,
+      "ts": "2026-05-13T08:32:44.444Z",
+      "seq": 18121,
+      "rssi": -90,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 66.1,
-          "pressure_hpa": 1013.1
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1011.9
         },
-        "ldr": {
-          "light_raw": 3200,
-          "light_pct": 78
+        "mq7": {
+          "gas_raw": 130,
+          "co_ppm": 129.3
         },
         "ds18b20": {
-          "temperature_c": 29
+          "temperature_c": 28.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
         }
       }
     },
@@ -1606,45 +1707,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:27.752Z",
-      "seq": 10854,
-      "rssi": -71,
+      "ts": "2026-05-13T08:32:49.459Z",
+      "seq": 18122,
+      "rssi": -91,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 63.6,
-          "pressure_hpa": 1014
+        "bmp280": {
+          "temperature_c": 27.7,
+          "pressure_hpa": 1013.2
         },
-        "ldr": {
-          "light_raw": 3308,
-          "light_pct": 81
+        "mq7": {
+          "gas_raw": 111,
+          "co_ppm": 110.1
         },
         "ds18b20": {
           "temperature_c": 27.9
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:32.752Z",
-      "seq": 10855,
-      "rssi": -72,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.3,
-          "humidity_pct": 66.5,
-          "pressure_hpa": 1013.7
-        },
-        "ldr": {
-          "light_raw": 3383,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 27.2
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
         }
       }
     },
@@ -1652,22 +1735,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:37.765Z",
-      "seq": 10856,
-      "rssi": -72,
+      "ts": "2026-05-13T08:32:54.461Z",
+      "seq": 18123,
+      "rssi": -89,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 67.3,
-          "pressure_hpa": 1012.9
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1011.9
         },
-        "ldr": {
-          "light_raw": 3280,
-          "light_pct": 80
+        "mq7": {
+          "gas_raw": 106,
+          "co_ppm": 108.3
         },
         "ds18b20": {
-          "temperature_c": 28.6
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
         }
       }
     },
@@ -1675,22 +1763,111 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:42.779Z",
-      "seq": 10857,
-      "rssi": -73,
+      "ts": "2026-05-13T08:32:59.475Z",
+      "seq": 18124,
+      "rssi": -90,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 27.3,
-          "humidity_pct": 67.6,
+          "pressure_hpa": 1013.6
+        },
+        "mq7": {
+          "gas_raw": 136,
+          "co_ppm": 133.4
+        },
+        "ds18b20": {
+          "temperature_c": 27
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:33:04.490Z",
+      "seq": 18125,
+      "rssi": -89,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.2,
+          "pressure_hpa": 1013.9
+        },
+        "mq7": {
+          "gas_raw": 103,
+          "co_ppm": 100.8
+        },
+        "ds18b20": {
+          "temperature_c": 27
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:33:09.498Z",
+      "seq": 18126,
+      "rssi": -88,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1012.8
+        },
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 129.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:33:14.509Z",
+      "seq": 18127,
+      "rssi": -90,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.5,
           "pressure_hpa": 1013.8
         },
-        "ldr": {
-          "light_raw": 3013,
-          "light_pct": 74
+        "mq7": {
+          "gas_raw": 135,
+          "co_ppm": 131.3
         },
         "ds18b20": {
-          "temperature_c": 27.4
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
         }
       }
     },
@@ -1698,160 +1875,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:47.788Z",
-      "seq": 10858,
-      "rssi": -72,
+      "ts": "2026-05-13T08:33:19.512Z",
+      "seq": 18128,
+      "rssi": -88,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 27.5,
-          "humidity_pct": 63.8,
-          "pressure_hpa": 1012.5
-        },
-        "ldr": {
-          "light_raw": 3409,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 27.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:52.793Z",
-      "seq": 10859,
-      "rssi": -73,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.5,
-          "humidity_pct": 66.3,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3414,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 28.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:27:57.793Z",
-      "seq": 10860,
-      "rssi": -72,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.4,
-          "humidity_pct": 63,
-          "pressure_hpa": 1012.8
-        },
-        "ldr": {
-          "light_raw": 3227,
-          "light_pct": 79
-        },
-        "ds18b20": {
-          "temperature_c": 28.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:02.793Z",
-      "seq": 10861,
-      "rssi": -74,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 63,
-          "pressure_hpa": 1012.8
-        },
-        "ldr": {
-          "light_raw": 2952,
-          "light_pct": 72
-        },
-        "ds18b20": {
-          "temperature_c": 28.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:07.793Z",
-      "seq": 10862,
-      "rssi": -74,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.4,
-          "humidity_pct": 63.3,
-          "pressure_hpa": 1014.2
-        },
-        "ldr": {
-          "light_raw": 3185,
-          "light_pct": 78
-        },
-        "ds18b20": {
-          "temperature_c": 27.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:12.793Z",
-      "seq": 10863,
-      "rssi": -73,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.6,
-          "humidity_pct": 66.4,
-          "pressure_hpa": 1012.9
-        },
-        "ldr": {
-          "light_raw": 3244,
-          "light_pct": 79
-        },
-        "ds18b20": {
-          "temperature_c": 27.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:17.806Z",
-      "seq": 10864,
-      "rssi": -74,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.6,
-          "humidity_pct": 66.1,
           "pressure_hpa": 1014
         },
-        "ldr": {
-          "light_raw": 3236,
-          "light_pct": 79
+        "mq7": {
+          "gas_raw": 131,
+          "co_ppm": 130.1
         },
         "ds18b20": {
-          "temperature_c": 27.7
+          "temperature_c": 27.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
         }
       }
     },
@@ -1859,620 +1903,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:22.807Z",
-      "seq": 10865,
-      "rssi": -74,
+      "ts": "2026-05-13T08:33:24.527Z",
+      "seq": 18129,
+      "rssi": -88,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 67.7,
-          "pressure_hpa": 1013.6
-        },
-        "ldr": {
-          "light_raw": 3304,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:27.813Z",
-      "seq": 10866,
-      "rssi": -75,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.6,
-          "humidity_pct": 63.8,
-          "pressure_hpa": 1014.2
-        },
-        "ldr": {
-          "light_raw": 3069,
-          "light_pct": 75
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:32.813Z",
-      "seq": 10867,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.6,
-          "humidity_pct": 62.4,
-          "pressure_hpa": 1013.4
-        },
-        "ldr": {
-          "light_raw": 3433,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:37.813Z",
-      "seq": 10868,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.4,
-          "humidity_pct": 63.9,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 3085,
-          "light_pct": 75
-        },
-        "ds18b20": {
-          "temperature_c": 27.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:42.820Z",
-      "seq": 10869,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.9,
-          "humidity_pct": 65,
-          "pressure_hpa": 1014.2
-        },
-        "ldr": {
-          "light_raw": 3330,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:47.827Z",
-      "seq": 10870,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 64.1,
-          "pressure_hpa": 1011.9
-        },
-        "ldr": {
-          "light_raw": 3319,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 29.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:52.827Z",
-      "seq": 10871,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.5,
-          "humidity_pct": 67.3,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3004,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:28:57.827Z",
-      "seq": 10872,
-      "rssi": -81,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.6,
-          "humidity_pct": 66.6,
-          "pressure_hpa": 1012.8
-        },
-        "ldr": {
-          "light_raw": 3177,
-          "light_pct": 78
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:02.833Z",
-      "seq": 10873,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.4,
-          "humidity_pct": 62.2,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 3031,
-          "light_pct": 74
-        },
-        "ds18b20": {
-          "temperature_c": 27.2
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:07.833Z",
-      "seq": 10874,
-      "rssi": -81,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 65.1,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 3153,
-          "light_pct": 77
-        },
-        "ds18b20": {
-          "temperature_c": 28.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:12.833Z",
-      "seq": 10875,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.4,
-          "humidity_pct": 63.3,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3288,
-          "light_pct": 80
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:17.840Z",
-      "seq": 10876,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 62.2,
-          "pressure_hpa": 1012.8
-        },
-        "ldr": {
-          "light_raw": 3302,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:22.841Z",
-      "seq": 10877,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 64.6,
-          "pressure_hpa": 1013.2
-        },
-        "ldr": {
-          "light_raw": 3306,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:27.843Z",
-      "seq": 10878,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.6,
-          "humidity_pct": 62.7,
-          "pressure_hpa": 1013.2
-        },
-        "ldr": {
-          "light_raw": 3089,
-          "light_pct": 75
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:32.845Z",
-      "seq": 10879,
-      "rssi": -79,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 63.5,
-          "pressure_hpa": 1013.6
-        },
-        "ldr": {
-          "light_raw": 3442,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T21:29:37.851Z",
-      "seq": 10880,
-      "rssi": -77,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.4,
-          "humidity_pct": 62.4,
-          "pressure_hpa": 1013.2
-        },
-        "ldr": {
-          "light_raw": 3447,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:18.686Z",
-      "seq": 10881,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.8,
-          "humidity_pct": 63.7,
-          "pressure_hpa": 1014.2
-        },
-        "ldr": {
-          "light_raw": 3264,
-          "light_pct": 80
-        },
-        "ds18b20": {
-          "temperature_c": 27.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:23.693Z",
-      "seq": 10882,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.5,
-          "humidity_pct": 66.5,
-          "pressure_hpa": 1012.8
-        },
-        "ldr": {
-          "light_raw": 3371,
-          "light_pct": 82
-        },
-        "ds18b20": {
-          "temperature_c": 27.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:28.696Z",
-      "seq": 10883,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.6,
-          "humidity_pct": 62.4,
+        "bmp280": {
+          "temperature_c": 28.9,
           "pressure_hpa": 1013.3
         },
-        "ldr": {
-          "light_raw": 3310,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.7
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:33.696Z",
-      "seq": 10884,
-      "rssi": -82,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 29,
-          "humidity_pct": 67.1,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3449,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 28.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:38.696Z",
-      "seq": 10885,
-      "rssi": -82,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.1,
-          "humidity_pct": 64,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3412,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 28.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:43.696Z",
-      "seq": 10886,
-      "rssi": -82,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.4,
-          "humidity_pct": 67.3,
-          "pressure_hpa": 1013.2
-        },
-        "ldr": {
-          "light_raw": 3413,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 28.5
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:48.702Z",
-      "seq": 10887,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.8,
-          "humidity_pct": 66.5,
-          "pressure_hpa": 1012.9
-        },
-        "ldr": {
-          "light_raw": 3349,
-          "light_pct": 82
-        },
-        "ds18b20": {
-          "temperature_c": 27.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:53.702Z",
-      "seq": 10888,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.7,
-          "humidity_pct": 67.4,
-          "pressure_hpa": 1012.1
-        },
-        "ldr": {
-          "light_raw": 3278,
-          "light_pct": 80
-        },
-        "ds18b20": {
-          "temperature_c": 27.8
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:36:58.704Z",
-      "seq": 10889,
-      "rssi": -78,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.8,
-          "humidity_pct": 64.7,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 2965,
-          "light_pct": 72
-        },
-        "ds18b20": {
-          "temperature_c": 27.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:03.709Z",
-      "seq": 10890,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 64.7,
-          "pressure_hpa": 1013
-        },
-        "ldr": {
-          "light_raw": 3172,
-          "light_pct": 77
+        "mq7": {
+          "gas_raw": 110,
+          "co_ppm": 108.8
         },
         "ds18b20": {
           "temperature_c": 28.8
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:08.709Z",
-      "seq": 10891,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.9,
-          "humidity_pct": 64.4,
-          "pressure_hpa": 1013.3
-        },
-        "ldr": {
-          "light_raw": 3028,
-          "light_pct": 74
-        },
-        "ds18b20": {
-          "temperature_c": 27.7
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
         }
       }
     },
@@ -2480,206 +1931,111 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:13.709Z",
-      "seq": 10892,
-      "rssi": -80,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 66.3,
-          "pressure_hpa": 1012.9
-        },
-        "ldr": {
-          "light_raw": 3312,
-          "light_pct": 81
-        },
-        "ds18b20": {
-          "temperature_c": 28.9
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:18.710Z",
-      "seq": 10893,
-      "rssi": -81,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 66.5,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 2982,
-          "light_pct": 73
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:23.710Z",
-      "seq": 10894,
-      "rssi": -82,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.3,
-          "humidity_pct": 62.9,
-          "pressure_hpa": 1013.9
-        },
-        "ldr": {
-          "light_raw": 3163,
-          "light_pct": 77
-        },
-        "ds18b20": {
-          "temperature_c": 27.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:28.709Z",
-      "seq": 10895,
-      "rssi": -83,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.2,
-          "humidity_pct": 65.1,
-          "pressure_hpa": 1012.1
-        },
-        "ldr": {
-          "light_raw": 3294,
-          "light_pct": 80
-        },
-        "ds18b20": {
-          "temperature_c": 28.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:33.709Z",
-      "seq": 10896,
-      "rssi": -84,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 63.5,
-          "pressure_hpa": 1012.9
-        },
-        "ldr": {
-          "light_raw": 3424,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:38.716Z",
-      "seq": 10897,
-      "rssi": -83,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28,
-          "humidity_pct": 64.1,
-          "pressure_hpa": 1013.6
-        },
-        "ldr": {
-          "light_raw": 3446,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 28
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:43.716Z",
-      "seq": 10898,
-      "rssi": -83,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.9,
-          "humidity_pct": 62.1,
-          "pressure_hpa": 1012.4
-        },
-        "ldr": {
-          "light_raw": 3120,
-          "light_pct": 76
-        },
-        "ds18b20": {
-          "temperature_c": 28.6
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:48.716Z",
-      "seq": 10899,
-      "rssi": -85,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 27.3,
-          "humidity_pct": 62.5,
-          "pressure_hpa": 1011.9
-        },
-        "ldr": {
-          "light_raw": 3445,
-          "light_pct": 84
-        },
-        "ds18b20": {
-          "temperature_c": 27.4
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:53.716Z",
-      "seq": 10900,
+      "ts": "2026-05-13T08:33:29.542Z",
+      "seq": 18130,
       "rssi": -86,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
+          "temperature_c": 27.8,
+          "pressure_hpa": 1012.6
+        },
+        "mq7": {
+          "gas_raw": 111,
+          "co_ppm": 109.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:33:34.547Z",
+      "seq": 18131,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.6,
+          "pressure_hpa": 1013.9
+        },
+        "mq7": {
+          "gas_raw": 107,
+          "co_ppm": 109.8
+        },
+        "ds18b20": {
+          "temperature_c": 28.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:33:39.547Z",
+      "seq": 18132,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.5,
+          "pressure_hpa": 1012.1
+        },
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 113.6
+        },
+        "ds18b20": {
+          "temperature_c": 27.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:33:44.549Z",
+      "seq": 18133,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
           "temperature_c": 28.5,
-          "humidity_pct": 63.9,
-          "pressure_hpa": 1013.6
+          "pressure_hpa": 1011.9
         },
-        "ldr": {
-          "light_raw": 3151,
-          "light_pct": 77
+        "mq7": {
+          "gas_raw": 116,
+          "co_ppm": 114.2
         },
         "ds18b20": {
-          "temperature_c": 28.3
+          "temperature_c": 28.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
         }
       }
     },
@@ -2687,22 +2043,27 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T22:37:58.715Z",
-      "seq": 10901,
-      "rssi": -88,
+      "ts": "2026-05-13T08:33:49.549Z",
+      "seq": 18134,
+      "rssi": -85,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 28.4,
-          "humidity_pct": 64,
-          "pressure_hpa": 1012.5
+          "pressure_hpa": 1014.1
         },
-        "ldr": {
-          "light_raw": 3168,
-          "light_pct": 77
+        "mq7": {
+          "gas_raw": 109,
+          "co_ppm": 107.2
         },
         "ds18b20": {
-          "temperature_c": 28.4
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
         }
       }
     },
@@ -2710,91 +2071,727 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T22:38:03.723Z",
-      "seq": 10902,
-      "rssi": -88,
+      "ts": "2026-05-13T08:33:54.560Z",
+      "seq": 18135,
+      "rssi": -86,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.3,
-          "humidity_pct": 65,
-          "pressure_hpa": 1012.4
+        "bmp280": {
+          "temperature_c": 27.6,
+          "pressure_hpa": 1014
         },
-        "ldr": {
-          "light_raw": 3241,
-          "light_pct": 79
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 137
+        },
+        "ds18b20": {
+          "temperature_c": 27.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:33:59.573Z",
+      "seq": 18136,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1013
+        },
+        "mq7": {
+          "gas_raw": 119,
+          "co_ppm": 116.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:04.575Z",
+      "seq": 18137,
+      "rssi": -83,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.8,
+          "pressure_hpa": 1013.5
+        },
+        "mq7": {
+          "gas_raw": 131,
+          "co_ppm": 130.3
+        },
+        "ds18b20": {
+          "temperature_c": 28.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:09.581Z",
+      "seq": 18138,
+      "rssi": -83,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.6,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 123,
+          "co_ppm": 124.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:14.593Z",
+      "seq": 18139,
+      "rssi": -83,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.5,
+          "pressure_hpa": 1013.2
+        },
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 135.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:19.596Z",
+      "seq": 18140,
+      "rssi": -83,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.6,
+          "pressure_hpa": 1014.2
+        },
+        "mq7": {
+          "gas_raw": 115,
+          "co_ppm": 115.2
+        },
+        "ds18b20": {
+          "temperature_c": 27.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:24.602Z",
+      "seq": 18141,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.2,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 114.7
+        },
+        "ds18b20": {
+          "temperature_c": 27.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:29.603Z",
+      "seq": 18142,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.3,
+          "pressure_hpa": 1013.5
+        },
+        "mq7": {
+          "gas_raw": 115,
+          "co_ppm": 114.4
         },
         "ds18b20": {
           "temperature_c": 28.2
         }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
       }
     },
     {
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T22:38:08.726Z",
-      "seq": 10903,
+      "ts": "2026-05-13T08:34:34.610Z",
+      "seq": 18143,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.5,
+          "pressure_hpa": 1012.5
+        },
+        "mq7": {
+          "gas_raw": 137,
+          "co_ppm": 138.1
+        },
+        "ds18b20": {
+          "temperature_c": 27.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:39.616Z",
+      "seq": 18144,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.7,
+          "pressure_hpa": 1012
+        },
+        "mq7": {
+          "gas_raw": 124,
+          "co_ppm": 126.6
+        },
+        "ds18b20": {
+          "temperature_c": 27.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:44.623Z",
+      "seq": 18145,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1013
+        },
+        "mq7": {
+          "gas_raw": 124,
+          "co_ppm": 120.1
+        },
+        "ds18b20": {
+          "temperature_c": 27.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:49.625Z",
+      "seq": 18146,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.8,
+          "pressure_hpa": 1012.5
+        },
+        "mq7": {
+          "gas_raw": 133,
+          "co_ppm": 131.5
+        },
+        "ds18b20": {
+          "temperature_c": 27.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:54.632Z",
+      "seq": 18147,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.2,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 116,
+          "co_ppm": 115.2
+        },
+        "ds18b20": {
+          "temperature_c": 28.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:34:59.636Z",
+      "seq": 18148,
       "rssi": -86,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 27.7,
-          "humidity_pct": 62.2,
-          "pressure_hpa": 1012.5
+        "bmp280": {
+          "temperature_c": 28.7,
+          "pressure_hpa": 1012.7
         },
-        "ldr": {
-          "light_raw": 2984,
-          "light_pct": 73
+        "mq7": {
+          "gas_raw": 137,
+          "co_ppm": 133.5
+        },
+        "ds18b20": {
+          "temperature_c": 28.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:04.645Z",
+      "seq": 18149,
+      "rssi": -86,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.6,
+          "pressure_hpa": 1014.2
+        },
+        "mq7": {
+          "gas_raw": 120,
+          "co_ppm": 122.6
         },
         "ds18b20": {
           "temperature_c": 27.5
         }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
       }
     },
     {
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T22:38:13.729Z",
-      "seq": 10904,
+      "ts": "2026-05-13T08:35:09.651Z",
+      "seq": 18150,
+      "rssi": -86,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28,
+          "pressure_hpa": 1012
+        },
+        "mq7": {
+          "gas_raw": 110,
+          "co_ppm": 112.5
+        },
+        "ds18b20": {
+          "temperature_c": 27.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:14.657Z",
+      "seq": 18151,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.7,
+          "pressure_hpa": 1012.2
+        },
+        "mq7": {
+          "gas_raw": 128,
+          "co_ppm": 130.5
+        },
+        "ds18b20": {
+          "temperature_c": 27.7
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:19.664Z",
+      "seq": 18152,
+      "rssi": -87,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 112,
+          "co_ppm": 115.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:24.664Z",
+      "seq": 18153,
+      "rssi": -86,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.4,
+          "pressure_hpa": 1012.5
+        },
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 112.1
+        },
+        "ds18b20": {
+          "temperature_c": 27.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:29.671Z",
+      "seq": 18154,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 123,
+          "co_ppm": 123.2
+        },
+        "ds18b20": {
+          "temperature_c": 27.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:34.682Z",
+      "seq": 18155,
+      "rssi": -86,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1013.4
+        },
+        "mq7": {
+          "gas_raw": 109,
+          "co_ppm": 111.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:39.684Z",
+      "seq": 18156,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.1,
+          "pressure_hpa": 1013.2
+        },
+        "mq7": {
+          "gas_raw": 121,
+          "co_ppm": 119.2
+        },
+        "ds18b20": {
+          "temperature_c": 27.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:44.691Z",
+      "seq": 18157,
+      "rssi": -83,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1014
+        },
+        "mq7": {
+          "gas_raw": 112,
+          "co_ppm": 115.7
+        },
+        "ds18b20": {
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:49.691Z",
+      "seq": 18158,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.4,
+          "pressure_hpa": 1012.8
+        },
+        "mq7": {
+          "gas_raw": 125,
+          "co_ppm": 122.9
+        },
+        "ds18b20": {
+          "temperature_c": 27.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:54.691Z",
+      "seq": 18159,
+      "rssi": -86,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1013.3
+        },
+        "mq7": {
+          "gas_raw": 130,
+          "co_ppm": 132.5
+        },
+        "ds18b20": {
+          "temperature_c": 28
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:35:59.698Z",
+      "seq": 18160,
       "rssi": -88,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.7,
-          "humidity_pct": 65.1,
-          "pressure_hpa": 1013.8
+        "bmp280": {
+          "temperature_c": 28.6,
+          "pressure_hpa": 1012.6
         },
-        "ldr": {
-          "light_raw": 3070,
-          "light_pct": 75
+        "mq7": {
+          "gas_raw": 104,
+          "co_ppm": 102.1
         },
         "ds18b20": {
           "temperature_c": 28.8
         }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:38:18.729Z",
-      "seq": 10905,
-      "rssi": -87,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 65.8,
-          "pressure_hpa": 1012.8
-        },
-        "ldr": {
-          "light_raw": 3401,
-          "light_pct": 83
-        },
-        "ds18b20": {
-          "temperature_c": 28.7
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
         }
       }
     },
@@ -2802,141 +2799,1174 @@
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T22:38:23.729Z",
-      "seq": 10906,
-      "rssi": -88,
+      "ts": "2026-05-13T08:36:04.704Z",
+      "seq": 18161,
+      "rssi": -89,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
-          "temperature_c": 28.3,
-          "humidity_pct": 63.6,
-          "pressure_hpa": 1013.4
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1013.2
         },
-        "ldr": {
-          "light_raw": 3346,
-          "light_pct": 82
-        },
-        "ds18b20": {
-          "temperature_c": 28.1
-        }
-      }
-    },
-    {
-      "deviceId": "ESP32-004",
-      "nodeId": "NODE10",
-      "gatewayId": "GW01",
-      "ts": "2026-04-30T22:38:28.729Z",
-      "seq": 10907,
-      "rssi": -90,
-      "battery": 3.83,
-      "sensors": {
-        "bme280": {
-          "temperature_c": 28.8,
-          "humidity_pct": 64.9,
-          "pressure_hpa": 1013.6
-        },
-        "ldr": {
-          "light_raw": 3212,
-          "light_pct": 78
+        "mq7": {
+          "gas_raw": 103,
+          "co_ppm": 105.5
         },
         "ds18b20": {
           "temperature_c": 28.5
         }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
       }
     },
     {
       "deviceId": "ESP32-004",
       "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "ts": "2026-04-30T22:38:33.735Z",
-      "seq": 10908,
-      "rssi": -90,
+      "ts": "2026-05-13T08:36:09.713Z",
+      "seq": 18162,
+      "rssi": -89,
       "battery": 3.83,
       "sensors": {
-        "bme280": {
+        "bmp280": {
           "temperature_c": 27.6,
-          "humidity_pct": 64.3,
+          "pressure_hpa": 1011.8
+        },
+        "mq7": {
+          "gas_raw": 113,
+          "co_ppm": 112.4
+        },
+        "ds18b20": {
+          "temperature_c": 27.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:14.721Z",
+      "seq": 18163,
+      "rssi": -87,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1013
+        },
+        "mq7": {
+          "gas_raw": 103,
+          "co_ppm": 104.5
+        },
+        "ds18b20": {
+          "temperature_c": 27.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:19.725Z",
+      "seq": 18164,
+      "rssi": -87,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1013.2
+        },
+        "mq7": {
+          "gas_raw": 118,
+          "co_ppm": 119.1
+        },
+        "ds18b20": {
+          "temperature_c": 28.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:24.732Z",
+      "seq": 18165,
+      "rssi": -87,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1013.7
+        },
+        "mq7": {
+          "gas_raw": 115,
+          "co_ppm": 118.7
+        },
+        "ds18b20": {
+          "temperature_c": 27.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:29.732Z",
+      "seq": 18166,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.9,
+          "pressure_hpa": 1013
+        },
+        "mq7": {
+          "gas_raw": 121,
+          "co_ppm": 119.9
+        },
+        "ds18b20": {
+          "temperature_c": 29.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:34.732Z",
+      "seq": 18167,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1012
+        },
+        "mq7": {
+          "gas_raw": 130,
+          "co_ppm": 127.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:39.736Z",
+      "seq": 18168,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.7,
+          "pressure_hpa": 1013.3
+        },
+        "mq7": {
+          "gas_raw": 106,
+          "co_ppm": 107.4
+        },
+        "ds18b20": {
+          "temperature_c": 28.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:44.738Z",
+      "seq": 18169,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1012.5
+        },
+        "mq7": {
+          "gas_raw": 122,
+          "co_ppm": 124.5
+        },
+        "ds18b20": {
+          "temperature_c": 27.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:49.738Z",
+      "seq": 18170,
+      "rssi": -87,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.9,
           "pressure_hpa": 1013.5
         },
-        "ldr": {
-          "light_raw": 2960,
-          "light_pct": 72
+        "mq7": {
+          "gas_raw": 121,
+          "co_ppm": 118.3
+        },
+        "ds18b20": {
+          "temperature_c": 29.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:54.738Z",
+      "seq": 18171,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1013.8
+        },
+        "mq7": {
+          "gas_raw": 114,
+          "co_ppm": 118
+        },
+        "ds18b20": {
+          "temperature_c": 27.6
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:36:59.738Z",
+      "seq": 18172,
+      "rssi": -84,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.8,
+          "pressure_hpa": 1013.4
+        },
+        "mq7": {
+          "gas_raw": 127,
+          "co_ppm": 130.3
+        },
+        "ds18b20": {
+          "temperature_c": 27.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:04.744Z",
+      "seq": 18173,
+      "rssi": -85,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.7,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 114,
+          "co_ppm": 116
+        },
+        "ds18b20": {
+          "temperature_c": 28.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:09.745Z",
+      "seq": 18174,
+      "rssi": -83,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1013.3
+        },
+        "mq7": {
+          "gas_raw": 137,
+          "co_ppm": 138.2
+        },
+        "ds18b20": {
+          "temperature_c": 28.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:14.751Z",
+      "seq": 18175,
+      "rssi": -83,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.6,
+          "pressure_hpa": 1014.1
+        },
+        "mq7": {
+          "gas_raw": 103,
+          "co_ppm": 100
         },
         "ds18b20": {
           "temperature_c": 27.8
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:19.751Z",
+      "seq": 18176,
+      "rssi": -81,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.4,
+          "pressure_hpa": 1012.1
+        },
+        "mq7": {
+          "gas_raw": 122,
+          "co_ppm": 121.7
+        },
+        "ds18b20": {
+          "temperature_c": 28.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:24.758Z",
+      "seq": 18177,
+      "rssi": -80,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1012.5
+        },
+        "mq7": {
+          "gas_raw": 127,
+          "co_ppm": 129.4
+        },
+        "ds18b20": {
+          "temperature_c": 27.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:29.773Z",
+      "seq": 18178,
+      "rssi": -80,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.3,
+          "pressure_hpa": 1013.3
+        },
+        "mq7": {
+          "gas_raw": 109,
+          "co_ppm": 109.8
+        },
+        "ds18b20": {
+          "temperature_c": 27.2
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:34.778Z",
+      "seq": 18179,
+      "rssi": -79,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.4,
+          "pressure_hpa": 1012.3
+        },
+        "mq7": {
+          "gas_raw": 112,
+          "co_ppm": 108.4
+        },
+        "ds18b20": {
+          "temperature_c": 27.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:39.785Z",
+      "seq": 18180,
+      "rssi": -81,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.5,
+          "pressure_hpa": 1012.8
+        },
+        "mq7": {
+          "gas_raw": 136,
+          "co_ppm": 137.6
+        },
+        "ds18b20": {
+          "temperature_c": 27.3
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:44.785Z",
+      "seq": 18181,
+      "rssi": -81,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28,
+          "pressure_hpa": 1012.1
+        },
+        "mq7": {
+          "gas_raw": 136,
+          "co_ppm": 136.1
+        },
+        "ds18b20": {
+          "temperature_c": 27.9
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "off",
+          "color": "off"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:49.785Z",
+      "seq": 18182,
+      "rssi": -80,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1013.2
+        },
+        "mq7": {
+          "gas_raw": 127,
+          "co_ppm": 124.9
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "green"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:54.785Z",
+      "seq": 18183,
+      "rssi": -78,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 27.9,
+          "pressure_hpa": 1013.3
+        },
+        "mq7": {
+          "gas_raw": 108,
+          "co_ppm": 106.9
+        },
+        "ds18b20": {
+          "temperature_c": 28.1
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "blue"
+        }
+      }
+    },
+    {
+      "deviceId": "ESP32-004",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "ts": "2026-05-13T08:37:59.792Z",
+      "seq": 18184,
+      "rssi": -78,
+      "battery": 3.83,
+      "sensors": {
+        "bmp280": {
+          "temperature_c": 28.6,
+          "pressure_hpa": 1013.6
+        },
+        "mq7": {
+          "gas_raw": 108,
+          "co_ppm": 109.2
+        },
+        "ds18b20": {
+          "temperature_c": 28.4
+        }
+      },
+      "actuators": {
+        "rgb_led": {
+          "state": "on",
+          "color": "red"
         }
       }
     }
   ],
   "alerts": [
     {
-      "id": "ALT-1777395813724-ea74",
-      "ts": "2026-04-28T17:03:33.724Z",
-      "nodeId": "NODE_TEST4",
+      "id": "ALT-1778661479792-6036",
+      "ts": "2026-05-13T08:37:59.792Z",
+      "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "severity": "critical",
-      "rule": "node_offline",
-      "message": "NODE_TEST4 ficou offline",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
       "resolved": false
     },
     {
-      "id": "ALT-1777395813724-4bc8",
-      "ts": "2026-04-28T17:03:33.724Z",
-      "nodeId": "NODE_TEST2",
+      "id": "ALT-1778661474785-48ae",
+      "ts": "2026-05-13T08:37:54.785Z",
+      "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "severity": "critical",
-      "rule": "node_offline",
-      "message": "NODE_TEST2 ficou offline",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
       "resolved": false
     },
     {
-      "id": "ALT-1777395813724-c013",
-      "ts": "2026-04-28T17:03:33.724Z",
-      "nodeId": "NODE_TEST",
+      "id": "ALT-1778661469785-0ea1",
+      "ts": "2026-05-13T08:37:49.785Z",
+      "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "severity": "critical",
-      "rule": "node_offline",
-      "message": "NODE_TEST ficou offline",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
       "resolved": false
     },
     {
-      "id": "ALT-1777328991973-555a",
-      "ts": "2026-04-27T22:29:51.973Z",
-      "nodeId": "NODE99",
+      "id": "ALT-1778661464785-14bf",
+      "ts": "2026-05-13T08:37:44.785Z",
+      "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "severity": "critical",
-      "rule": "node_offline",
-      "message": "NODE99 ficou offline",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
       "resolved": false
     },
     {
-      "id": "ALT-1777328991973-28cb",
-      "ts": "2026-04-27T22:29:51.973Z",
-      "nodeId": "NODE09",
+      "id": "ALT-1778661459785-fcd3",
+      "ts": "2026-05-13T08:37:39.785Z",
+      "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "severity": "critical",
-      "rule": "node_offline",
-      "message": "NODE09 ficou offline",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
       "resolved": false
     },
     {
-      "id": "ALT-1777328991973-0c1d",
-      "ts": "2026-04-27T22:29:51.973Z",
-      "nodeId": "NODE08",
+      "id": "ALT-1778661454779-f56c",
+      "ts": "2026-05-13T08:37:34.779Z",
+      "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "severity": "critical",
-      "rule": "node_offline",
-      "message": "NODE08 ficou offline",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
       "resolved": false
     },
     {
-      "id": "ALT-1777328991972-6b1c",
-      "ts": "2026-04-27T22:29:51.972Z",
-      "nodeId": "NODE07",
+      "id": "ALT-1778661449773-7e7d",
+      "ts": "2026-05-13T08:37:29.773Z",
+      "nodeId": "NODE10",
       "gatewayId": "GW01",
-      "severity": "critical",
-      "rule": "node_offline",
-      "message": "NODE07 ficou offline",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661444758-cf54",
+      "ts": "2026-05-13T08:37:24.758Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661439751-2eb2",
+      "ts": "2026-05-13T08:37:19.752Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661434751-89b3",
+      "ts": "2026-05-13T08:37:14.751Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661429745-5fa6",
+      "ts": "2026-05-13T08:37:09.745Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661424744-0e69",
+      "ts": "2026-05-13T08:37:04.744Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661419738-09f0",
+      "ts": "2026-05-13T08:36:59.738Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661414738-29c1",
+      "ts": "2026-05-13T08:36:54.738Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661409738-368e",
+      "ts": "2026-05-13T08:36:49.738Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661404738-7edb",
+      "ts": "2026-05-13T08:36:44.738Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661399736-4b4e",
+      "ts": "2026-05-13T08:36:39.736Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661394732-76bc",
+      "ts": "2026-05-13T08:36:34.732Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661389732-0e32",
+      "ts": "2026-05-13T08:36:29.732Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661384732-91d3",
+      "ts": "2026-05-13T08:36:24.732Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661379725-9b78",
+      "ts": "2026-05-13T08:36:19.725Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661374721-838f",
+      "ts": "2026-05-13T08:36:14.721Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661369713-ccab",
+      "ts": "2026-05-13T08:36:09.713Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661364704-799e",
+      "ts": "2026-05-13T08:36:04.704Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661359698-6251",
+      "ts": "2026-05-13T08:35:59.698Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661354691-6505",
+      "ts": "2026-05-13T08:35:54.691Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661349691-2395",
+      "ts": "2026-05-13T08:35:49.691Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661344691-de3d",
+      "ts": "2026-05-13T08:35:44.691Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661339684-934e",
+      "ts": "2026-05-13T08:35:39.684Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661334682-c29c",
+      "ts": "2026-05-13T08:35:34.682Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661329671-5480",
+      "ts": "2026-05-13T08:35:29.671Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661324664-e3b3",
+      "ts": "2026-05-13T08:35:24.664Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661319664-d7d7",
+      "ts": "2026-05-13T08:35:19.664Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661314657-99d4",
+      "ts": "2026-05-13T08:35:14.657Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661309651-9c6b",
+      "ts": "2026-05-13T08:35:09.651Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661304645-3a72",
+      "ts": "2026-05-13T08:35:04.645Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661299636-924f",
+      "ts": "2026-05-13T08:34:59.636Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661294632-f47b",
+      "ts": "2026-05-13T08:34:54.632Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661289625-e373",
+      "ts": "2026-05-13T08:34:49.625Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661284623-167e",
+      "ts": "2026-05-13T08:34:44.623Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661279616-4a54",
+      "ts": "2026-05-13T08:34:39.616Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661274610-813f",
+      "ts": "2026-05-13T08:34:34.610Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661269603-5de4",
+      "ts": "2026-05-13T08:34:29.603Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661264602-c617",
+      "ts": "2026-05-13T08:34:24.602Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661259596-da72",
+      "ts": "2026-05-13T08:34:19.596Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661254593-14b0",
+      "ts": "2026-05-13T08:34:14.593Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661249581-4225",
+      "ts": "2026-05-13T08:34:09.581Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661244575-31b5",
+      "ts": "2026-05-13T08:34:04.575Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661239573-e18f",
+      "ts": "2026-05-13T08:33:59.573Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
+      "resolved": false
+    },
+    {
+      "id": "ALT-1778661234560-bab2",
+      "ts": "2026-05-13T08:33:54.560Z",
+      "nodeId": "NODE10",
+      "gatewayId": "GW01",
+      "severity": "info",
+      "rule": "low_light",
+      "message": "Luminosidade muito baixa em NODE10: null%",
       "resolved": false
     }
   ],
@@ -2961,8 +3991,8 @@
     }
   ],
   "metrics": {
-    "ingested": 12100,
-    "alertsRaised": 7,
+    "ingested": 19376,
+    "alertsRaised": 7283,
     "commandsSent": 1,
     "commandAcks": 1
   }
