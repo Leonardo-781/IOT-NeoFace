@@ -43,12 +43,16 @@
 
         <form id="loginForm" class="login-form">
           <label>
-            Usuário
+            E-mail
             <input id="username" name="username" autocomplete="username" placeholder="seu.email@dominio.com" />
           </label>
           <label>
             Senha
             <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" />
+          </label>
+          <label class="toggle-mini" for="togglePassword">
+            <input id="togglePassword" type="checkbox" />
+            mostrar senha
           </label>
           <button type="submit" class="primary login-button">Entrar</button>
           <p id="loginFeedback" class="login-feedback"></p>
@@ -59,6 +63,12 @@
     <script>
       const form = document.getElementById('loginForm');
       const feedback = document.getElementById('loginFeedback');
+      const passwordField = document.getElementById('password');
+      const togglePassword = document.getElementById('togglePassword');
+
+      togglePassword.addEventListener('change', () => {
+        passwordField.type = togglePassword.checked ? 'text' : 'password';
+      });
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault();

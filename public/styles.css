@@ -1,22 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
   color-scheme: dark;
-  --bg: #070d17;
-  --bg-soft: #0c1728;
-  --panel: rgba(10, 18, 32, 0.86);
-  --panel-strong: #111f36;
-  --line: rgba(128, 161, 210, 0.2);
-  --text: #eaf2ff;
-  --muted: #9bb0cc;
-  --accent: #7aa4ff;
-  --accent-2: #5fe3d8;
+  --bg: #0d1216;
+  --bg-soft: #171e24;
+  --panel: rgba(20, 28, 36, 0.9);
+  --panel-strong: #1d2833;
+  --line: rgba(130, 154, 178, 0.22);
+  --text: #ecf2f9;
+  --muted: #9fb0c1;
+  --accent: #ff9f1c;
+  --accent-2: #2ec4b6;
   --danger: #ff6b6b;
   --success: #7be6ab;
   --shadow: 0 26px 72px rgba(0, 0, 0, 0.42);
-  --role-glow: rgba(122, 164, 255, 0.28);
+  --role-glow: rgba(255, 159, 28, 0.24);
   --radius: 4px;
-  font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 body[data-role='admin'] {
@@ -46,9 +46,9 @@ body {
   margin: 0;
   min-height: 100%;
   background:
-    radial-gradient(circle at 14% -6%, var(--role-glow), transparent 34%),
-    radial-gradient(circle at 92% 2%, rgba(242, 178, 77, 0.16), transparent 26%),
-    linear-gradient(180deg, #070d17 0%, #050912 100%);
+    radial-gradient(circle at 12% -10%, rgba(255, 159, 28, 0.2), transparent 36%),
+    radial-gradient(circle at 94% 8%, rgba(46, 196, 182, 0.16), transparent 28%),
+    linear-gradient(180deg, #0d1216 0%, #090e12 100%);
   color: var(--text);
 }
 
@@ -70,9 +70,10 @@ body {
   pointer-events: none;
   background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 38px 38px;
+  background-size: 44px 44px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.62), transparent 92%);
-  opacity: 0.35;
+  opacity: 0.3;
+  animation: drift-grid 20s linear infinite;
 }
 
 .shell {
@@ -89,8 +90,8 @@ body {
 .login-card {
   width: min(520px, 100%);
   padding: 28px;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(16, 29, 49, 0.98), rgba(10, 19, 33, 0.95));
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(24, 33, 42, 0.98), rgba(16, 23, 30, 0.95));
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow);
   backdrop-filter: blur(8px);
@@ -142,6 +143,20 @@ body {
   min-height: 1.2em;
   margin: 0;
   text-align: center;
+}
+
+.toggle-mini {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  user-select: none;
+}
+
+.toggle-mini input {
+  width: auto;
+  margin: 0;
 }
 
 .login-footer {
@@ -494,7 +509,7 @@ button:hover {
 
 .panel {
   background:
-    linear-gradient(180deg, rgba(16, 29, 49, 0.97), rgba(10, 19, 33, 0.94)),
+    linear-gradient(180deg, rgba(24, 33, 42, 0.97), rgba(16, 23, 30, 0.94)),
     radial-gradient(circle at top right, var(--role-glow), transparent 40%);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -1026,6 +1041,9 @@ textarea {
   gap: 18px;
   align-items: center;
   margin-bottom: 18px;
+  position: sticky;
+  top: 10px;
+  z-index: 20;
 }
 
 .brand-block {
@@ -1037,10 +1055,10 @@ textarea {
 .brand-mark {
   width: 52px;
   height: 52px;
-  border-radius: 16px;
+  border-radius: var(--radius);
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: linear-gradient(135deg, var(--accent), #ffbf69);
   color: #07111f;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -1062,7 +1080,7 @@ textarea {
   color: var(--text);
   text-decoration: none;
   padding: 10px 12px;
-  border-radius: 999px;
+  border-radius: var(--radius);
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.04);
 }
@@ -1145,7 +1163,7 @@ textarea {
 
 .hero-metric {
   padding: 14px;
-  border-radius: 16px;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -1265,9 +1283,21 @@ textarea {
 
 .login-highlights div {
   padding: 14px 16px;
-  border-radius: 16px;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@keyframes drift-grid {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-14px, -10px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .login-highlights strong,
