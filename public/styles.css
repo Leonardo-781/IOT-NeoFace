@@ -15,7 +15,7 @@
   --success: #7be6ab;
   --shadow: 0 26px 72px rgba(0, 0, 0, 0.42);
   --role-glow: rgba(122, 164, 255, 0.28);
-  --radius: 22px;
+  --radius: 4px;
   font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
@@ -1417,4 +1417,28 @@ textarea {
     animation: none !important;
     transition: none !important;
   }
+}
+
+.panel,
+.hero-card,
+.status-item,
+.metric,
+.card,
+.login-card,
+.admin-form,
+.brand-mark,
+.topbar-link,
+button,
+input,
+select,
+textarea,
+.chip,
+.badge,
+.pill,
+.hero-metric,
+.node-metric,
+.logout-link,
+.status-chip,
+.login-badge {
+  border-radius: 4px !important;
 }

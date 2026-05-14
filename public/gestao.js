@@ -12,6 +12,7 @@ const newUsername = document.getElementById('newUsername');
 const newDisplayName = document.getElementById('newDisplayName');
 const newPassword = document.getElementById('newPassword');
 const newRole = document.getElementById('newRole');
+const logoutLinks = document.querySelectorAll('.logout-link');
 
 let currentUser = null;
 let cachedUsers = [];
@@ -206,6 +207,13 @@ async function deleteUserFromCard(event) {
 }
 
 userCreateForm.addEventListener('submit', submitNewUser);
+
+logoutLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.assign('/logout');
+  });
+});
 
 (async function boot() {
   await fetchSession();

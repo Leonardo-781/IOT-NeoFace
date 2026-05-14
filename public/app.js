@@ -54,6 +54,7 @@ const dbEnabled = document.getElementById('dbEnabled');
 const dbSsl = document.getElementById('dbSsl');
 const dbConfigFeedback = document.getElementById('dbConfigFeedback');
 const ctx = chart.getContext('2d');
+const logoutLinks = document.querySelectorAll('.logout-link');
 
 let latestState = {
   summary: null,
@@ -950,6 +951,13 @@ if (dbConfigForm) {
     dbConfigFeedback.textContent = 'Configuração do banco salva';
   });
 }
+
+logoutLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.assign('/logout');
+  });
+});
 
 fetchSession().then(() => {
   fetchState().then(() => {
