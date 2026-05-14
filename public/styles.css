@@ -154,6 +154,56 @@ body {
   font-size: 0.84rem;
 }
 
+.management-link {
+  text-decoration: none;
+}
+
+.management-page .management-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.management-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.management-hero h1 {
+  margin-bottom: 10px;
+}
+
+.management-toolbar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.management-grid {
+  align-items: start;
+}
+
+.management-form {
+  min-height: 100%;
+}
+
+.management-list-panel {
+  min-height: 100%;
+}
+
+.access-denied {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.management-page .panel,
+.management-page .status-strip {
+  backdrop-filter: blur(12px);
+}
+
 .admin-panel {
   display: grid;
   gap: 18px;

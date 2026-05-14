@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trabalho Final | Gestão de contas</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body class="management-page">
+    <div class="backdrop"></div>
+    <main class="shell management-shell">
+      <header class="management-hero panel">
+        <div>
+          <p class="section-kicker">Acesso restrito</p>
+          <h1>Gestão de contas</h1>
+          <p id="managementIntro" class="lead">
+            Área de administração para criação, edição e remoção de usuários do sistema.
+          </p>
+        </div>
+        <div class="management-toolbar">
+          <a class="secondary" href="/">Voltar ao painel</a>
+          <a class="secondary" href="/logout">Sair</a>
+        </div>
+      </header>
+
+      <section class="status-strip panel">
+        <div class="status-item">
+          <span class="status-label">Usuário</span>
+          <strong id="managementUser">-</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Perfil</span>
+          <strong id="managementRole">-</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Permissão</span>
+          <strong id="managementAccess">-</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Total de contas</span>
+          <strong id="usersCount">0</strong>
+        </div>
+      </section>
+
+      <section id="accessDenied" class="panel access-denied" hidden>
+        <h2>Sem permissão para esta área</h2>
+        <p>Seu usuário atual não possui acesso à gestão de contas.</p>
+        <a class="primary" href="/">Voltar ao painel</a>
+      </section>
+
+      <section id="managementContent" class="grid-two management-grid" hidden>
+        <form id="userCreateForm" class="panel form-grid admin-form management-form">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Nova conta</p>
+              <h2>Criar usuário</h2>
+              <p>Cadastre uma nova conta com papel e senha inicial.</p>
+            </div>
+          </div>
+          <label>
+            Usuário
+            <input id="newUsername" name="username" placeholder="joao.silva" autocomplete="off" />
+          </label>
+          <label>
+            Nome exibido
+            <input id="newDisplayName" name="displayName" placeholder="João Silva" autocomplete="off" />
+          </label>
+          <label>
+            Senha
+            <input id="newPassword" name="password" type="password" placeholder="Senha inicial" />
+          </label>
+          <label>
+            Papel
+            <select id="newRole" name="role">
+              <option value="viewer">viewer</option>
+              <option value="operator">operator</option>
+              <option value="admin">admin</option>
+            </select>
+          </label>
+          <div class="full form-actions">
+            <button type="submit" class="primary">Cadastrar usuário</button>
+            <span id="userFormFeedback"></span>
+          </div>
+        </form>
+
+        <section class="panel management-list-panel">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Contas</p>
+              <h2>Usuários cadastrados</h2>
+              <p>Atualize papel, nome, senha e status de ativação.</p>
+            </div>
+          </div>
+          <div id="usersList" class="stack"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/public/gestao.js"></script>
+  </body>
+</html>

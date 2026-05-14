@@ -13,6 +13,7 @@ const chartMetric = document.getElementById('chartMetric');
 const chartSubtitle = document.getElementById('chartSubtitle');
 const btnRefresh = document.getElementById('btnRefresh');
 const btnSeed = document.getElementById('btnSeed');
+const managementLink = document.getElementById('managementLink');
 const heroNodes = document.getElementById('heroNodes');
 const heroActivity = document.getElementById('heroActivity');
 const heroLatency = document.getElementById('heroLatency');
@@ -160,7 +161,7 @@ function renderSummary(summary) {
   const onlineNodes = summary?.nodesOnline ?? 0;
   const totalNodes = summary?.nodesTotal ?? 0;
   const userLabel = currentUser ? `${currentUser.displayName || currentUser.username} (${currentUser.role})` : 'convidado';
-  heroNodes.textContent = `${onlineNodes}/${totalNodes} nós online`;
+  heroNodes.textContent = totalNodes > 0 ? `${onlineNodes}/${totalNodes} nós online` : 'Sem ESPs cadastrados';
   heroActivity.textContent = summary?.latestTimestamp
     ? `Última leitura recebida em ${formatTime(summary.latestTimestamp)}`
     : 'Nenhuma telemetria recebida ainda';
@@ -193,6 +194,13 @@ function renderSummary(summary) {
 }
 
 function renderNodes(nodes) {
+  if (!nodes.length) {
+    nodesList.innerHTML = '<article class="card"><div class="meta">Nenhum ESP cadastrado ou conectado.</div></article>';
+    nodeSelect.innerHTML = '';
+    commandNode.innerHTML = '';
+    return;
+  }
+
   if (!selectedNodeId && nodes.length) {
     selectedNodeId = nodes[0].nodeId;
   }
@@ -390,9 +398,13 @@ function renderDbConfig(config) {
 function applyPermissionState() {
   const role = currentUser?.role || 'viewer';
   const canWrite = role === 'admin' || role === 'operator';
-  const canAdmin = role === 'admin';
+  const canManageAccounts = Boolean(currentUser?.canManageAccounts);
 
   applyRoleVisualState(role);
+
+  if (managementLink) {
+    managementLink.hidden = !canManageAccounts;
+  }
 
   if (commandForm) {
     commandForm.querySelectorAll('input, select, textarea, button').forEach((element) => {
@@ -402,7 +414,7 @@ function applyPermissionState() {
   }
 
   if (adminPanel) {
-    adminPanel.hidden = !canAdmin;
+    adminPanel.hidden = !canManageAccounts;
   }
 }
 

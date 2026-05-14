@@ -25,6 +25,7 @@ const MAX_TELEMETRY_POINTS = Number(process.env.MAX_TELEMETRY_POINTS || 120);
 const AUTH_COOKIE_NAME = 'tf_session';
 const DEFAULT_ADMIN_USER = process.env.LOGIN_USER || 'admin';
 const DEFAULT_ADMIN_PASSWORD = process.env.LOGIN_PASSWORD || '123456';
+const MANAGEMENT_USER = process.env.MANAGEMENT_USER || DEFAULT_ADMIN_USER;
 const USER_ROLES = ['admin', 'operator', 'viewer'];
 
 const clients = new Set();
@@ -159,11 +160,13 @@ function getSafeUser(user) {
     return null;
   }
   const role = normalizeRole(user.role || (String(user.username || '').toLowerCase() === DEFAULT_ADMIN_USER.toLowerCase() ? 'admin' : 'viewer'));
+  const canManageAccounts = role === 'admin' || String(user.username || '').toLowerCase() === MANAGEMENT_USER.toLowerCase();
   return {
     id: user.id,
     username: user.username,
     displayName: user.displayName,
     role,
+    canManageAccounts,
     active: user.active,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt
@@ -1014,6 +1017,11 @@ async function handleRequest(req, res) {
 
   if (pathname === '/login') {
     serveFile(res, path.join(PUBLIC_DIR, 'login.html'));
+    return;
+  }
+
+  if (pathname === '/gestao') {
+    serveFile(res, path.join(PUBLIC_DIR, 'gestao.html'));
     return;
   }
 
