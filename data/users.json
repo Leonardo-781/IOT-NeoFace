@@ -1,12 +1,12 @@
 [
   {
     "id": "user-admin",
-    "username": "admin",
-    "displayName": "Administrador",
+    "username": "cardosoleonardo1327@gmail.com",
+    "displayName": "Leonardo Cardoso",
     "role": "admin",
     "active": true,
-    "salt": "522f1b8af90616d538bc7a1a24eaadaa",
-    "passwordHash": "519697f8452656ddb7333d51eee8412509c73b6bb7ae8cd93e99a31530675642",
+    "salt": "f1a0c9b7d3e84a12",
+    "passwordHash": "712b548984143496724decb2a6b12a3240d2b7eb5a03a44350532c591ca9733f",
     "createdAt": "2026-04-27T19:41:49.366Z",
     "updatedAt": "2026-04-27T19:41:49.366Z"
   }

@@ -23,8 +23,8 @@ const SIMULATION_INTERVAL_MS = Number(process.env.SIMULATION_INTERVAL_MS || 5000
 const COMMAND_ACK_DELAY_MS = Number(process.env.COMMAND_ACK_DELAY_MS || 1200);
 const MAX_TELEMETRY_POINTS = Number(process.env.MAX_TELEMETRY_POINTS || 120);
 const AUTH_COOKIE_NAME = 'tf_session';
-const DEFAULT_ADMIN_USER = process.env.LOGIN_USER || 'admin';
-const DEFAULT_ADMIN_PASSWORD = process.env.LOGIN_PASSWORD || '123456';
+const DEFAULT_ADMIN_USER = process.env.LOGIN_USER || 'cardosoleonardo1327@gmail.com';
+const DEFAULT_ADMIN_PASSWORD = process.env.LOGIN_PASSWORD || 'swordfish';
 const MANAGEMENT_USER = process.env.MANAGEMENT_USER || DEFAULT_ADMIN_USER;
 const USER_ROLES = ['admin', 'operator', 'viewer'];
 
