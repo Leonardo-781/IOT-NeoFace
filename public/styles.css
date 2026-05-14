@@ -1020,20 +1020,325 @@ textarea {
   }
 }
 
+.topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.brand-block {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.brand-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #07111f;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.eyebrow--compact {
+  margin-bottom: 6px;
+}
+
+.topbar-nav,
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.topbar-link {
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.topbar-link:hover {
+  border-color: var(--line);
+}
+
+.dashboard-shell,
+.management-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-grid,
+.workspace-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.9fr);
+}
+
+.workspace-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.hero-panel {
+  min-height: 100%;
+}
+
+.hero-panel--primary {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-panel--side {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.hero-side-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.hero-side-value {
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-weight: 800;
+}
+
+.hero-side-copy {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.status-chip--live {
+  background: rgba(123, 230, 171, 0.1);
+  color: var(--success);
+}
+
+.hero-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hero-metric {
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hero-metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.hero-metric strong {
+  font-size: 1.05rem;
+}
+
+.summary-band {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.summary-band .metric {
+  min-height: 160px;
+}
+
+.activity-panel,
+.control-panel,
+.feed-panel,
+.list-panel,
+.db-form {
+  min-height: 100%;
+}
+
+.activity-list {
+  display: grid;
+  gap: 12px;
+}
+
+.activity-list--spaced {
+  margin-top: 14px;
+}
+
+.node-title {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.node-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-size: 0.78rem;
+}
+
+.chip--soft {
+  color: var(--muted);
+}
+
+.management-page .management-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.management-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.toggle-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.login-page .login-shell {
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.login-hero {
+  display: grid;
+  gap: 18px;
+}
+
+.login-brand {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.login-copy {
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 52ch;
+}
+
+.login-highlights {
+  display: grid;
+  gap: 12px;
+}
+
+.login-highlights div {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.login-highlights strong,
+.login-highlights span {
+  display: block;
+}
+
+.login-highlights span {
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.login-card h2 {
+  margin-top: 12px;
+}
+
+.management-page .card,
+.login-page .panel,
+.management-page .panel {
+  backdrop-filter: blur(12px);
+}
+
+.management-page .status-strip {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.management-page .workspace-grid--two {
+  align-items: start;
+}
+
+.access-denied {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.topbar .secondary,
+.management-toolbar .secondary,
+.login-card .primary {
+  text-decoration: none;
+}
+
 @media (max-width: 1000px) {
-  .hero,
-  .summary-grid,
-  .grid-two,
-  .form-grid {
+  .topbar,
+  .hero-grid,
+  .workspace-grid,
+  .workspace-grid--two,
+  .summary-band,
+  .status-strip,
+  .form-grid,
+  .login-page .login-shell {
     grid-template-columns: 1fr;
   }
 
-  .status-strip {
-    grid-template-columns: 1fr 1fr;
+  .topbar {
+    justify-items: stretch;
   }
 
-  .hero-card-stats {
+  .topbar-actions,
+  .topbar-nav,
+  .management-toolbar {
+    justify-content: flex-start;
+  }
+
+  .hero-stack {
     grid-template-columns: 1fr;
+  }
+
+  .management-page .management-hero {
+    flex-direction: column;
   }
 }
 
@@ -1048,6 +1353,22 @@ textarea {
 
   .login-card {
     padding: 22px;
+  }
+
+  .topbar {
+    padding: 16px;
+  }
+
+  .topbar-nav,
+  .topbar-actions {
+    width: 100%;
+  }
+
+  .topbar-link,
+  .topbar-actions button,
+  .topbar-actions a {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 
   .status-strip {
@@ -1068,8 +1389,20 @@ textarea {
     font-size: 1.4rem;
   }
 
-  .hero-card-stats {
-    gap: 10px;
+  .summary-band {
+    gap: 12px;
+  }
+
+  .node-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .node-badges {
+    gap: 6px;
+  }
+
+  .chip {
+    width: fit-content;
   }
 
   .node-metrics {

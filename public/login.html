@@ -6,15 +6,40 @@
     <title>Trabalho Final | Login</title>
     <link rel="stylesheet" href="/public/styles.css" />
   </head>
-  <body>
+  <body class="login-page">
     <div class="backdrop"></div>
     <main class="shell login-shell">
-      <section class="login-card">
-        <div class="login-badge">Acesso ao sistema</div>
-        <h1>Entre para abrir o painel</h1>
-        <p>
-          O acesso foi protegido para evitar uso indevido da interface e dos comandos do sistema.
+      <section class="login-hero panel">
+        <div class="login-brand">
+          <div class="brand-mark">TF</div>
+          <div>
+            <p class="eyebrow eyebrow--compact">Acesso protegido</p>
+            <h1>Console IoT</h1>
+          </div>
+        </div>
+        <p class="login-copy">
+          Entre para ver a frota, telemetria e gestão das contas em uma interface única, clara e rápida.
         </p>
+        <div class="login-highlights">
+          <div>
+            <strong>Tempo real</strong>
+            <span>estado vivo do gateway e dos nós</span>
+          </div>
+          <div>
+            <strong>Gestão</strong>
+            <span>contas, ESPs e banco em um só lugar</span>
+          </div>
+          <div>
+            <strong>Operação</strong>
+            <span>comandos, alertas e persistência</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="login-card">
+        <div class="login-badge">Entrar</div>
+        <h2>Autentique para abrir o painel</h2>
+        <p>Usuário padrão: admin. Senha padrão: 123456.</p>
 
         <form id="loginForm" class="login-form">
           <label>
@@ -28,11 +53,6 @@
           <button type="submit" class="primary login-button">Entrar</button>
           <p id="loginFeedback" class="login-feedback"></p>
         </form>
-
-        <div class="login-footer">
-          <span>Usuário padrão: admin</span>
-          <span>Senha padrão: 123456</span>
-        </div>
       </section>
     </main>
 

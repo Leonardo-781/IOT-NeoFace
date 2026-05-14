@@ -87,6 +87,25 @@ function formatTime(value) {
   });
 }
 
+function getFreshnessLabel(value) {
+  if (!value) {
+    return 'Sem leitura';
+  }
+
+  const ageMs = Date.now() - new Date(value).getTime();
+  if (!Number.isFinite(ageMs) || ageMs < 0) {
+    return 'Atual';
+  }
+  const minutes = Math.floor(ageMs / 60000);
+  if (minutes < 1) {
+    return 'Agora';
+  }
+  if (minutes < 60) {
+    return `${minutes} min atrás`;
+  }
+  return `${Math.floor(minutes / 60)} h atrás`;
+}
+
 function getBmp280Sensor(sensors = {}) {
   return sensors.bmp280 || sensors.bme280 || {};
 }
@@ -161,7 +180,7 @@ function renderSummary(summary) {
   const onlineNodes = summary?.nodesOnline ?? 0;
   const totalNodes = summary?.nodesTotal ?? 0;
   const userLabel = currentUser ? `${currentUser.displayName || currentUser.username} (${currentUser.role})` : 'convidado';
-  heroNodes.textContent = totalNodes > 0 ? `${onlineNodes}/${totalNodes} nós online` : 'Sem ESPs cadastrados';
+  heroNodes.textContent = totalNodes > 0 ? `${onlineNodes}/${totalNodes} dispositivos ativos` : 'Sem ESPs cadastrados';
   heroActivity.textContent = summary?.latestTimestamp
     ? `Última leitura recebida em ${formatTime(summary.latestTimestamp)}`
     : 'Nenhuma telemetria recebida ainda';
@@ -173,10 +192,10 @@ function renderSummary(summary) {
   statusUpdated.textContent = summary?.latestTimestamp ? formatTime(summary.latestTimestamp) : '-';
 
   const items = [
-    { label: 'Nós online', value: onlineNodes, hint: `${totalNodes} nós cadastrados`, accent: 'online' },
-    { label: 'Telemetrias', value: summary?.telemetryCount ?? 0, hint: 'Mensagens armazenadas', accent: 'temp' },
-    { label: 'Alertas abertos', value: summary?.alertsOpen ?? 0, hint: 'Regras ativas', accent: 'warning' },
-    { label: 'Temp. média', value: summary?.avgTemperature == null ? '--' : `${summary.avgTemperature} °C`, hint: summary?.latestTimestamp ? `Última leitura: ${formatTime(summary.latestTimestamp)}` : 'Sem dados ainda', accent: 'light' }
+    { label: 'Ativos', value: onlineNodes, hint: `${totalNodes} nós cadastrados`, accent: 'online' },
+    { label: 'Pacotes', value: summary?.telemetryCount ?? 0, hint: 'Mensagens armazenadas', accent: 'temp' },
+    { label: 'Alertas', value: summary?.alertsOpen ?? 0, hint: 'Pendências abertas', accent: 'warning' },
+    { label: 'Média térmica', value: summary?.avgTemperature == null ? '--' : `${summary.avgTemperature} °C`, hint: summary?.latestTimestamp ? `Última leitura ${getFreshnessLabel(summary.latestTimestamp)}` : 'Sem dados ainda', accent: 'light' }
   ];
 
   summaryGrid.innerHTML = items
@@ -220,14 +239,20 @@ function renderNodes(nodes) {
       const latest = getLatestReading(node);
       const badgeClass = node.status === 'online' ? 'online' : 'offline';
       const sensorTiles = buildSensorTiles(latest);
+      const freshness = getFreshnessLabel(node.lastSeen);
       return `
         <article class="card node-card" data-status="${node.status}">
           <div class="card-top">
             <strong>${node.nodeId}</strong>
             <span class="badge ${badgeClass}">${node.status}</span>
           </div>
-          <div class="meta">${node.name} · ${node.location}</div>
-          <div class="meta">Gateway: ${node.gatewayId} · Seq: ${node.seq} · RSSI: ${node.rssi} dBm</div>
+          <div class="meta node-title">${node.name} · ${node.location}</div>
+          <div class="node-badges">
+            <span class="chip">Gateway ${node.gatewayId}</span>
+            <span class="chip">Seq ${node.seq}</span>
+            <span class="chip">RSSI ${node.rssi} dBm</span>
+            <span class="chip chip--soft">${freshness}</span>
+          </div>
           <div class="node-metrics">
             ${sensorTiles.length
               ? sensorTiles
@@ -242,7 +267,7 @@ function renderNodes(nodes) {
                   .join('')
               : '<div class="node-metric"><span>Leituras</span><strong>Sem dados</strong></div>'}
           </div>
-          <div class="meta">Bateria: ${node.battery} V · Último visto: ${formatTime(node.lastSeen)}</div>
+          <div class="meta">Bateria ${node.battery} V · Último visto ${formatTime(node.lastSeen)}</div>
         </article>
       `;
     })
@@ -261,7 +286,11 @@ function renderAlerts(alerts) {
             <span class="badge ${badgeClass}">${alert.severity}</span>
           </div>
           <div class="meta">${alert.message}</div>
-          <div class="meta">${alert.nodeId} · ${alert.gatewayId} · ${formatTime(alert.ts)}</div>
+          <div class="node-badges">
+            <span class="chip">${alert.nodeId}</span>
+            <span class="chip">${alert.gatewayId}</span>
+            <span class="chip chip--soft">${formatTime(alert.ts)}</span>
+          </div>
         </article>
       `;
     })
@@ -279,9 +308,12 @@ function renderCommands(commands) {
             <strong>${command.commandId || command.action}</strong>
             <span class="badge ${stateLabel === 'acked' ? 'online' : 'warning'}">${stateLabel}</span>
           </div>
-          <div class="meta">Nó: ${command.nodeId} · Ação: ${command.action || '-'}</div>
-          <div class="meta">Enviado: ${formatTime(command.ts)}</div>
-          <div class="meta">ACK: ${command.ack ? `${command.ack.result} · ${command.ack.detail}` : 'aguardando'}</div>
+          <div class="node-badges">
+            <span class="chip">Nó ${command.nodeId}</span>
+            <span class="chip">${command.action || '-'}</span>
+            <span class="chip chip--soft">${formatTime(command.ts)}</span>
+          </div>
+          <div class="meta">ACK ${command.ack ? `${command.ack.result} · ${command.ack.detail}` : 'aguardando'}</div>
         </article>
       `;
     })

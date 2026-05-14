@@ -3,138 +3,134 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Trabalho Final | Painel IoT</title>
+    <title>Trabalho Final | Operações</title>
     <link rel="stylesheet" href="/public/styles.css" />
   </head>
-  <body>
+  <body data-view="dashboard">
     <div class="backdrop"></div>
-    <header class="shell hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Sistema IoT distribuído em uma máquina</p>
-        <h1>Painel do Trabalho Final</h1>
-        <p class="lead">
-          Monitoramento de nós ESP32, telemetria, alertas e comandos em um backend único,
-          pronto para evoluir para MQTT e banco relacional.
-        </p>
-        <div class="hero-actions">
-          <button id="btnRefresh" class="primary">Atualizar agora</button>
-          <button id="btnSeed" class="secondary">Gerar amostras</button>
-          <a id="managementLink" class="secondary management-link" href="/gestao" hidden>Gestão de contas</a>
-          <a class="secondary logout-link" href="/logout">Sair</a>
+
+    <header class="topbar shell panel">
+      <div class="brand-block">
+        <div class="brand-mark">TF</div>
+        <div>
+          <p class="eyebrow eyebrow--compact">Console operacional</p>
+          <h1>Neoface IoT</h1>
         </div>
       </div>
 
-      <aside class="hero-card">
-        <div class="hero-card-top">
-          <span class="hero-dot"></span>
-          <span id="heroModeLabel">Operação ao vivo · modo viewer</span>
-        </div>
-        <div class="hero-card-value" id="heroNodes">5 nós online</div>
-        <div class="hero-card-detail" id="heroActivity">Telemetria e comandos ativos no backend local</div>
-        <div class="hero-card-stats">
-          <div>
-            <span>Latência</span>
-            <strong id="heroLatency">12 ms</strong>
-          </div>
-          <div>
-            <span>Alerts</span>
-            <strong id="heroAlerts">0</strong>
-          </div>
-          <div>
-            <span>Fonte</span>
-            <strong>ESP32</strong>
-          </div>
-        </div>
-      </aside>
+      <nav class="topbar-nav">
+        <a class="topbar-link" href="#overview">Visão geral</a>
+        <a class="topbar-link" href="#fleet">Frota</a>
+        <a class="topbar-link" href="#controls">Controle</a>
+        <a id="managementLink" class="topbar-link" href="/gestao" hidden>Gestão</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <button id="btnRefresh" class="primary">Sincronizar</button>
+        <button id="btnSeed" class="secondary">Gerar carga</button>
+        <a class="secondary logout-link" href="/logout">Sair</a>
+      </div>
     </header>
 
-    <main class="shell layout">
-      <section class="status-strip panel">
-        <div class="status-item">
-          <span class="status-label">Backend</span>
-          <strong id="statusBackend">Online</strong>
-        </div>
-        <div class="status-item">
-          <span class="status-label">Usuário</span>
-          <strong id="statusUser">admin</strong>
-        </div>
-        <div class="status-item">
-          <span class="status-label">Gateway</span>
-          <strong id="statusGateway">GW01</strong>
-        </div>
-        <div class="status-item">
-          <span class="status-label">Última atualização</span>
-          <strong id="statusUpdated">-</strong>
-        </div>
-        <div class="status-item">
-          <span class="status-label">Interface</span>
-          <strong id="statusInterface">Realtime · Dark</strong>
-        </div>
-      </section>
-
-      <section class="panel summary-grid" id="summaryGrid"></section>
-
-      <section class="panel chart-panel">
-        <div class="panel-heading panel-heading--tight">
-          <div>
-            <p class="section-kicker">Visão temporal</p>
-            <h2>Telemetria recente</h2>
-            <p id="chartSubtitle">Seleciona automaticamente o nó mais recente</p>
-          </div>
-          <div class="panel-controls">
-            <label class="control-label">
-              Nó
-              <select id="nodeSelect"></select>
-            </label>
-            <label class="control-label">
-              Métrica
-              <select id="chartMetric">
-                <option value="temperature">Temperatura</option>
-                <option value="pressure">Pressão</option>
-                <option value="humidity">Umidade</option>
-                <option value="light">Luz</option>
-                <option value="gas">CO</option>
-              </select>
-            </label>
-          </div>
-        </div>
-        <canvas id="chart" width="1100" height="360"></canvas>
-      </section>
-
-      <section class="grid-two">
-        <section class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="section-kicker">Rede</p>
-              <h2>Nós</h2>
-              <p>Status, bateria e RSSI</p>
+    <main class="shell dashboard-shell">
+      <section class="hero-grid" id="overview">
+        <article class="panel hero-panel hero-panel--primary">
+          <div class="eyebrow">Estado da operação</div>
+          <h2 id="heroModeLabel">Operação ao vivo · modo viewer</h2>
+          <p class="lead hero-lead" id="heroActivity">Nenhuma telemetria recebida ainda.</p>
+          <div class="hero-stack">
+            <div class="hero-metric">
+              <span>Frota</span>
+              <strong id="heroNodes">Sem ESPs cadastrados</strong>
+            </div>
+            <div class="hero-metric">
+              <span>Latência</span>
+              <strong id="heroLatency">-- ms</strong>
+            </div>
+            <div class="hero-metric">
+              <span>Alertas</span>
+              <strong id="heroAlerts">0</strong>
             </div>
           </div>
-          <div id="nodesList" class="stack"></div>
-        </section>
+        </article>
 
-        <section class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="section-kicker">Eventos</p>
-              <h2>Alertas</h2>
-              <p>Eventos recentes e regras ativadas</p>
+        <aside class="panel hero-panel hero-panel--side">
+          <div class="hero-side-header">
+            <span class="status-chip status-chip--live">Online</span>
+            <span id="statusInterface">Realtime · Dark</span>
+          </div>
+          <div class="hero-side-value" id="statusBackend">Backend online</div>
+          <p class="hero-side-copy">Painel desenhado para leitura rápida, alerta visual imediato e operação contínua.</p>
+          <div class="status-strip status-strip--compact">
+            <div class="status-item">
+              <span class="status-label">Usuário</span>
+              <strong id="statusUser">convidado</strong>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Gateway</span>
+              <strong id="statusGateway">GW01</strong>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Atualização</span>
+              <strong id="statusUpdated">-</strong>
             </div>
           </div>
-          <div id="alertsList" class="stack"></div>
-        </section>
+        </aside>
       </section>
 
-      <section class="grid-two">
-        <section class="panel">
-          <div class="panel-heading">
+      <section class="summary-band panel" aria-label="Resumo operacional" id="summaryGrid"></section>
+
+      <section class="workspace-grid">
+        <article class="panel chart-panel">
+          <div class="panel-heading panel-heading--tight">
             <div>
-              <p class="section-kicker">Controle</p>
-              <h2>Enviar comando</h2>
-              <p>Exemplo de controle operacional</p>
+              <p class="section-kicker">Série temporal</p>
+              <h2>Telemetria viva</h2>
+              <p id="chartSubtitle">Sem nós cadastrados</p>
+            </div>
+            <div class="panel-controls">
+              <label class="control-label">
+                Nó
+                <select id="nodeSelect"></select>
+              </label>
+              <label class="control-label">
+                Métrica
+                <select id="chartMetric">
+                  <option value="temperature">Temperatura</option>
+                  <option value="pressure">Pressão</option>
+                  <option value="humidity">Umidade</option>
+                  <option value="light">Luz</option>
+                  <option value="gas">CO</option>
+                </select>
+              </label>
             </div>
           </div>
-          <form id="commandForm" class="form-grid">
+          <canvas id="chart" width="1100" height="360"></canvas>
+        </article>
+
+        <aside class="panel activity-panel">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Leitura rápida</p>
+              <h2>Frota e alertas</h2>
+              <p>Cards enxutos para ver o estado sem ruído.</p>
+            </div>
+          </div>
+          <div class="activity-list" id="nodesList"></div>
+          <div class="activity-list activity-list--spaced" id="alertsList"></div>
+        </aside>
+      </section>
+
+      <section class="workspace-grid workspace-grid--two" id="controls">
+        <article class="panel control-panel">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Comando</p>
+              <h2>Enviar instrução</h2>
+              <p>Ação direta para nós da frota.</p>
+            </div>
+          </div>
+          <form id="commandForm" class="form-grid control-form">
             <label>
               Nó alvo
               <select id="commandNode"></select>
@@ -152,30 +148,31 @@
               <span id="commandFeedback"></span>
             </div>
           </form>
-        </section>
+        </article>
 
-        <section class="panel">
-          <div class="panel-heading">
+        <article class="panel feed-panel">
+          <div class="panel-heading panel-heading--tight">
             <div>
               <p class="section-kicker">Execução</p>
               <h2>Comandos e ACK</h2>
-              <p>Últimos comandos processados</p>
+              <p>Últimos comandos processados.</p>
             </div>
           </div>
           <div id="commandsList" class="stack"></div>
-        </section>
+        </article>
       </section>
+
       <section class="panel admin-panel" id="adminPanel" hidden>
-        <div class="panel-heading">
+        <div class="panel-heading panel-heading--tight">
           <div>
             <p class="section-kicker">Administração</p>
-            <h2>Usuários e permissões</h2>
-            <p>Cadastro de contas, ajuste de papéis e controle de acesso.</p>
+            <h2>Gestão integrada</h2>
+            <p>Usuários, ESPs e persistência para quem administra o sistema.</p>
           </div>
         </div>
 
-        <div class="grid-two admin-layout">
-          <form id="userForm" class="form-grid admin-form">
+        <div class="workspace-grid workspace-grid--two">
+          <form id="userForm" class="panel form-grid admin-form">
             <label>
               Usuário
               <input id="newUsername" name="username" placeholder="joao.silva" />
@@ -202,25 +199,21 @@
             </div>
           </form>
 
-          <div>
-            <div class="admin-list-header">
-              <strong>Contas cadastradas</strong>
-              <span id="usersCount">0 usuários</span>
+          <section class="panel list-panel">
+            <div class="panel-heading panel-heading--tight">
+              <div>
+                <p class="section-kicker">Contas</p>
+                <h2>Usuários cadastrados</h2>
+                <p>Altere papel, senha e ativação em linha.</p>
+              </div>
+              <span id="usersCount">0</span>
             </div>
             <div id="usersList" class="stack"></div>
-          </div>
+          </section>
         </div>
 
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">Inventário</p>
-            <h2>Cadastro de novos ESP</h2>
-            <p>Registro manual de nós ESP32 para organização e operação.</p>
-          </div>
-        </div>
-
-        <div class="grid-two admin-layout">
-          <form id="espForm" class="form-grid admin-form">
+        <div class="workspace-grid workspace-grid--two">
+          <form id="espForm" class="panel form-grid admin-form">
             <label>
               Node ID
               <input id="espNodeId" placeholder="NODE11" />
@@ -247,24 +240,27 @@
             </div>
           </form>
 
-          <div>
-            <div class="admin-list-header">
-              <strong>ESPs cadastrados</strong>
-              <span id="espCount">0 ESPs</span>
+          <section class="panel list-panel">
+            <div class="panel-heading panel-heading--tight">
+              <div>
+                <p class="section-kicker">Inventário</p>
+                <h2>ESPs cadastrados</h2>
+                <p>Cadastro manual para organização operacional.</p>
+              </div>
+              <span id="espCount">0</span>
             </div>
             <div id="espList" class="stack"></div>
-          </div>
+          </section>
         </div>
 
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">Persistência</p>
-            <h2>Configuração de banco de dados</h2>
-            <p>Defina conexão e estratégia de retenção para o banco do projeto.</p>
+        <form id="dbConfigForm" class="panel form-grid admin-form db-form">
+          <div class="panel-heading panel-heading--tight full">
+            <div>
+              <p class="section-kicker">Persistência</p>
+              <h2>Banco de dados</h2>
+              <p>Conexão, engine e retenção.</p>
+            </div>
           </div>
-        </div>
-
-        <form id="dbConfigForm" class="form-grid admin-form">
           <label>
             Engine
             <select id="dbEngine">
@@ -297,16 +293,16 @@
             Retenção (dias)
             <input id="dbRetention" type="number" placeholder="30" />
           </label>
-          <label class="meta" style="display:flex;align-items:center;gap:8px;">
+          <label class="toggle-line">
             <input id="dbEnabled" type="checkbox" />
             banco habilitado
           </label>
-          <label class="meta" style="display:flex;align-items:center;gap:8px;">
+          <label class="toggle-line">
             <input id="dbSsl" type="checkbox" />
             usar ssl
           </label>
           <div class="full form-actions">
-            <button type="submit" class="primary">Salvar configuração do banco</button>
+            <button type="submit" class="primary">Salvar configuração</button>
             <span id="dbConfigFeedback"></span>
           </div>
         </form>
