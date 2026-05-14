@@ -489,11 +489,23 @@ function requireRole(req, res, allowedRoles) {
   return user;
 }
 
+function requireManageAccounts(req, res) {
+  const user = requireSession(req, res);
+  if (!user) {
+    return null;
+  }
+  if (!user.canManageAccounts) {
+    sendForbidden(res);
+    return null;
+  }
+  return user;
+}
+
 function isPublicRoute(pathname, method) {
   if (pathname === '/api/health' || pathname === '/api/login' || pathname === '/api/me' || pathname === '/api/ingest') {
     return true;
   }
-  if (pathname === '/logout' || pathname === '/login' || pathname === '/gestao') {
+  if (pathname === '/logout' || pathname === '/login' || pathname === '/gestao' || pathname === '/home' || pathname === '/upload-esp') {
     return true;
   }
   if (pathname.startsWith('/public/')) {
@@ -1010,7 +1022,12 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (pathname === '/' || pathname === '/index.html') {
+  if (pathname === '/' || pathname === '/home') {
+    serveFile(res, path.join(PUBLIC_DIR, 'home.html'));
+    return;
+  }
+
+  if (pathname === '/dashboard' || pathname === '/index.html') {
     serveFile(res, path.join(PUBLIC_DIR, 'index.html'));
     return;
   }
@@ -1025,11 +1042,16 @@ async function handleRequest(req, res) {
     return;
   }
 
+  if (pathname === '/upload-esp') {
+    serveFile(res, path.join(PUBLIC_DIR, 'upload-esp.html'));
+    return;
+  }
+
   if (pathname === '/logout') {
     const session = getSession(req);
     clearSession(session.token);
     clearAuthCookie(res);
-    res.writeHead(302, { Location: '/' });
+    res.writeHead(302, { Location: '/home' });
     res.end();
     return;
   }
@@ -1158,14 +1180,14 @@ async function handleRequest(req, res) {
 
   if (pathname === '/api/users') {
     if (req.method === 'GET') {
-      if (!requireRole(req, res, ['admin'])) {
+      if (!requireManageAccounts(req, res)) {
         return;
       }
       sendJson(res, 200, { users: users.map(getSafeUser) });
       return;
     }
     if (req.method === 'POST') {
-      if (!requireRole(req, res, ['admin'])) {
+      if (!requireManageAccounts(req, res)) {
         return;
       }
       handlePostUser(req, res).catch((error) => {
@@ -1177,7 +1199,7 @@ async function handleRequest(req, res) {
   }
 
   if (pathname.startsWith('/api/users/') && req.method === 'PATCH') {
-    if (!requireRole(req, res, ['admin'])) {
+    if (!requireManageAccounts(req, res)) {
       return;
     }
     handlePatchUser(req, res, pathname.split('/').pop()).catch((error) => {
@@ -1188,7 +1210,7 @@ async function handleRequest(req, res) {
   }
 
   if (pathname.startsWith('/api/users/') && req.method === 'DELETE') {
-    if (!requireRole(req, res, ['admin'])) {
+    if (!requireManageAccounts(req, res)) {
       return;
     }
     handleDeleteUser(req, res, pathname.split('/').pop()).catch((error) => {
@@ -1361,13 +1383,12 @@ async function handlePostUser(req, res) {
     return;
   }
 
-  const username = String(body.username || '').trim();
+  const username = String(body.email || body.username || '').trim().toLowerCase();
   const password = String(body.password || '').trim();
-  const displayName = String(body.displayName || '').trim();
-  const role = normalizeRole(body.role);
+  const displayName = String(body.name || body.displayName || '').trim();
 
-  if (!username || !password) {
-    sendBadRequest(res, 'username e password sao obrigatorios');
+  if (!displayName || !username || !password) {
+    sendBadRequest(res, 'name, email e password sao obrigatorios');
     return;
   }
 
@@ -1376,7 +1397,7 @@ async function handlePostUser(req, res) {
     return;
   }
 
-  const user = createUser({ username, password, displayName, role });
+  const user = createUser({ username, password, displayName, role: 'viewer' });
   users.push(user);
   scheduleUsersSave();
   sendJson(res, 201, { user: getSafeUser(user) });

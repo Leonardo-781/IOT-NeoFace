@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NeoFace | Upload ESP</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body class="esp-page" data-view="upload-esp">
+    <div class="backdrop"></div>
+
+    <header class="topbar shell panel">
+      <div class="brand-block">
+        <div class="brand-mark">ESP</div>
+        <div>
+          <p class="eyebrow eyebrow--compact">Autoinstalacao</p>
+          <h1>Montar e subir firmware</h1>
+        </div>
+      </div>
+
+      <nav class="topbar-nav">
+        <a class="topbar-link" href="#pecas">Pecas</a>
+        <a class="topbar-link" href="#ligacao">Ligacao</a>
+        <a class="topbar-link" href="#upload">Upload</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <a class="secondary" href="/home">Home</a>
+        <a class="primary" href="/login">Login</a>
+      </div>
+    </header>
+
+    <main class="shell dashboard-shell">
+      <section class="workspace-grid workspace-grid--two">
+        <article class="panel" id="pecas">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Kit minimo</p>
+              <h2>Pecas necessarias</h2>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>1x ESP32 DevKit.</li>
+            <li>1x sensor BMP280 (temperatura/pressao).</li>
+            <li>1x sensor MQ-7 (gas/CO) opcional.</li>
+            <li>1x LDR + resistor (luminosidade) opcional.</li>
+            <li>Jumpers, protoboard e cabo USB.</li>
+          </ul>
+          <p class="meta">Firmware de referencia: pasta esp32 no repositorio oficial.</p>
+          <a class="secondary" href="https://github.com/Leonardo-781/IOT-NeoFace/tree/main/esp32" target="_blank" rel="noopener noreferrer">Abrir codigo ESP no GitHub</a>
+        </article>
+
+        <article class="panel" id="ligacao">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Guia visual</p>
+              <h2>Diagrama basico de ligacao</h2>
+            </div>
+          </div>
+          <pre class="wiring-diagram">ESP32 (3V3)  --------  VCC BMP280
+ESP32 (GND)  --------  GND BMP280
+ESP32 (GPIO21) ------  SDA BMP280
+ESP32 (GPIO22) ------  SCL BMP280
+
+ESP32 (GPIO34) ------  LDR (via divisor) [opcional]
+ESP32 (GPIO35) ------  MQ-7 analogico     [opcional]
+</pre>
+          <p class="meta">Ajuste os pinos no firmware conforme seu hardware real.</p>
+        </article>
+      </section>
+
+      <section class="panel" id="upload">
+        <div class="panel-heading panel-heading--tight">
+          <div>
+            <p class="section-kicker">Upload assistido</p>
+            <h2>Gerar comando para gravar o ESP</h2>
+            <p>Selecione a porta e gere o comando. Execute no seu computador com o ESP conectado por USB.</p>
+          </div>
+        </div>
+
+        <form id="uploadForm" class="form-grid">
+          <label>
+            Arquivo firmware (.bin)
+            <input id="firmwareFile" type="file" accept=".bin" required />
+          </label>
+          <label>
+            Porta serial
+            <input id="serialPort" type="text" placeholder="COM5 ou /dev/ttyUSB0" required />
+          </label>
+          <label>
+            Chip
+            <select id="chipType">
+              <option value="esp32">esp32</option>
+              <option value="esp32s3">esp32s3</option>
+              <option value="esp32c3">esp32c3</option>
+            </select>
+          </label>
+          <label>
+            Baud rate
+            <input id="baudRate" type="number" value="460800" />
+          </label>
+          <div class="full form-actions">
+            <button type="submit" class="primary">Gerar comando</button>
+            <a class="secondary" href="/login">Entrar no sistema</a>
+          </div>
+        </form>
+
+        <div class="panel upload-output" id="uploadOutput" hidden>
+          <p class="section-kicker">Comando sugerido</p>
+          <pre id="uploadCommand"></pre>
+          <p class="meta">Dica: instale o esptool com pip install esptool antes de executar.</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById('uploadForm');
+      const output = document.getElementById('uploadOutput');
+      const commandEl = document.getElementById('uploadCommand');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const firmwareInput = document.getElementById('firmwareFile');
+        const serialPort = document.getElementById('serialPort').value.trim();
+        const chip = document.getElementById('chipType').value;
+        const baud = document.getElementById('baudRate').value.trim() || '460800';
+        const fileName = firmwareInput.files && firmwareInput.files[0] ? firmwareInput.files[0].name : 'firmware.bin';
+
+        const command = `esptool.py --chip ${chip} --port ${serialPort} --baud ${baud} write_flash -z 0x1000 ${fileName}`;
+        commandEl.textContent = command;
+        output.hidden = false;
+      });
+    </script>
+  </body>
+</html>

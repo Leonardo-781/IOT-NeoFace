@@ -18,7 +18,8 @@
           </p>
         </div>
         <div class="management-toolbar">
-          <a class="secondary" href="/">Voltar ao painel</a>
+          <a class="secondary" href="/home">Home</a>
+          <a class="secondary" href="/dashboard">Voltar ao painel</a>
           <a class="secondary logout-link" href="/logout">Sair</a>
         </div>
       </header>
@@ -45,7 +46,7 @@
       <section id="accessDenied" class="panel access-denied" hidden>
         <h2>Sem permissão para esta área</h2>
         <p>Seu usuário autenticado não tem acesso à gestão de contas.</p>
-        <a class="primary" href="/">Voltar ao painel</a>
+        <a class="primary" href="/dashboard">Voltar ao painel</a>
       </section>
 
       <section id="managementContent" class="management-stack" hidden>
@@ -55,28 +56,20 @@
               <div>
                 <p class="section-kicker">Nova conta</p>
                 <h2>Criar novo usuário</h2>
-                <p>Defina nome, e-mail de acesso, perfil e senha inicial de forma rápida.</p>
+                <p>Defina nome, e-mail de acesso e senha inicial. O nível de acesso é definido depois.</p>
               </div>
             </div>
             <label>
-              Usuário
-              <input id="newUsername" name="username" placeholder="joao.silva" autocomplete="off" />
+              Nome
+              <input id="newDisplayName" name="displayName" placeholder="João Silva" autocomplete="off" />
             </label>
             <label>
-              Nome exibido
-              <input id="newDisplayName" name="displayName" placeholder="João Silva" autocomplete="off" />
+              E-mail
+              <input id="newUsername" name="username" placeholder="joao@dominio.com" autocomplete="off" />
             </label>
             <label>
               Senha
               <input id="newPassword" name="password" type="password" placeholder="Senha inicial" />
-            </label>
-            <label>
-              Papel
-              <select id="newRole" name="role">
-                <option value="viewer">viewer</option>
-                <option value="operator">operator</option>
-                <option value="admin">gestor</option>
-              </select>
             </label>
             <div class="full form-actions">
               <button type="submit" class="primary">Cadastrar usuário</button>

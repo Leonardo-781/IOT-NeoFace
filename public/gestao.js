@@ -11,7 +11,6 @@ const userFormFeedback = document.getElementById('userFormFeedback');
 const newUsername = document.getElementById('newUsername');
 const newDisplayName = document.getElementById('newDisplayName');
 const newPassword = document.getElementById('newPassword');
-const newRole = document.getElementById('newRole');
 const logoutLinks = document.querySelectorAll('.logout-link');
 
 let currentUser = null;
@@ -130,10 +129,9 @@ async function submitNewUser(event) {
   userFormFeedback.textContent = 'Criando...';
 
   const payload = {
-    username: newUsername.value.trim(),
-    displayName: newDisplayName.value.trim(),
-    password: newPassword.value,
-    role: newRole.value
+    name: newDisplayName.value.trim(),
+    email: newUsername.value.trim(),
+    password: newPassword.value
   };
 
   const response = await fetch('/api/users', {
@@ -149,7 +147,6 @@ async function submitNewUser(event) {
   }
 
   userCreateForm.reset();
-  newRole.value = 'viewer';
   userFormFeedback.textContent = 'Usuário cadastrado';
   await fetchUsers();
 }

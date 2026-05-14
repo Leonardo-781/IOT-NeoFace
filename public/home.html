@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NeoFace | Home</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body class="home-page" data-view="home">
+    <div class="backdrop"></div>
+
+    <header class="topbar shell panel">
+      <div class="brand-block">
+        <div class="brand-mark">NF</div>
+        <div>
+          <p class="eyebrow eyebrow--compact">Projeto distribuido</p>
+          <h1>NeoFace IoT</h1>
+        </div>
+      </div>
+
+      <nav class="topbar-nav">
+        <a class="topbar-link" href="#sobre">Sobre</a>
+        <a class="topbar-link" href="#arquitetura">Arquitetura</a>
+        <a class="topbar-link" href="#acesso">Acesso</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <a class="primary" href="/login">Entrar</a>
+        <a class="secondary" href="/upload-esp">Upload ESP</a>
+      </div>
+    </header>
+
+    <main class="shell dashboard-shell">
+      <section class="panel home-hero" id="sobre">
+        <p class="section-kicker">Plataforma</p>
+        <h2>Monitoramento IoT com gestão de contas, telemetria e comandos em tempo real</h2>
+        <p class="lead">
+          O NeoFace integra ESP32, broker MQTT, API e painel web para acompanhar sensores,
+          enviar comandos e organizar a operacao de forma simples.
+        </p>
+        <div class="home-cta-row">
+          <a class="primary" href="/login">Ir para login</a>
+          <a class="secondary" href="/upload-esp">Montar meu proprio NeoFace</a>
+          <a class="secondary" href="https://github.com/Leonardo-781/IOT-NeoFace" target="_blank" rel="noopener noreferrer">GitHub do projeto</a>
+        </div>
+      </section>
+
+      <section class="workspace-grid workspace-grid--two" id="arquitetura">
+        <article class="panel">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Como funciona</p>
+              <h2>Fluxo do sistema</h2>
+            </div>
+          </div>
+          <ol class="feature-list">
+            <li>ESP32 coleta sensores (temperatura, umidade, luz, gas).</li>
+            <li>Gateway/broker recebe e repassa dados em topicos MQTT.</li>
+            <li>API processa ingestao, alertas e persistencia.</li>
+            <li>Painel mostra estado da frota e permite comandos.</li>
+            <li>Gestor define permissoes dos usuarios cadastrados.</li>
+          </ol>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading panel-heading--tight">
+            <div>
+              <p class="section-kicker">Recursos</p>
+              <h2>Capacidades principais</h2>
+            </div>
+          </div>
+          <div class="home-cards">
+            <div class="mini-card">
+              <strong>Telemetria viva</strong>
+              <p>Leituras em tempo real por no, gateway e periodo.</p>
+            </div>
+            <div class="mini-card">
+              <strong>Alertas</strong>
+              <p>Deteccao de condicoes criticas com historico.</p>
+            </div>
+            <div class="mini-card">
+              <strong>Comandos</strong>
+              <p>Controle remoto de nos com ACK no painel.</p>
+            </div>
+            <div class="mini-card">
+              <strong>Gestao de acesso</strong>
+              <p>Permissoes administradas pelo gestor.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel" id="acesso">
+        <div class="panel-heading panel-heading--tight">
+          <div>
+            <p class="section-kicker">Acesso e montagem</p>
+            <h2>Comece por aqui</h2>
+            <p>Escolha entre entrar no sistema ou preparar seu ESP com o guia completo.</p>
+          </div>
+        </div>
+        <div class="home-cta-row">
+          <a class="primary" href="/login">Acessar painel</a>
+          <a class="secondary" href="/upload-esp">Ir para pagina de upload ESP</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

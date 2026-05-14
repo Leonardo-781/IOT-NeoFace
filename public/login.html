@@ -55,6 +55,7 @@
             mostrar senha
           </label>
           <button type="submit" class="primary login-button">Entrar</button>
+          <a class="secondary login-button" href="/upload-esp">Subir código do ESP</a>
           <p id="loginFeedback" class="login-feedback"></p>
         </form>
       </section>
@@ -92,7 +93,7 @@
         }
 
         const data = await response.json();
-        const target = data.user && data.user.canManageAccounts ? '/gestao' : '/';
+        const target = data.user && data.user.canManageAccounts ? '/gestao' : '/dashboard';
         setTimeout(() => {
           window.location.href = target;
         }, 150);

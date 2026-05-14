@@ -19,6 +19,8 @@
       </div>
 
       <nav class="topbar-nav">
+        <a class="topbar-link" href="/home">Home</a>
+        <a class="topbar-link" href="/upload-esp">Upload ESP</a>
         <a class="topbar-link" href="#overview">Visão geral</a>
         <a class="topbar-link" href="#fleet">Frota</a>
         <a class="topbar-link" href="#controls">Controle</a>
@@ -174,24 +176,16 @@
         <div class="workspace-grid workspace-grid--two">
           <form id="userForm" class="panel form-grid admin-form">
             <label>
-              Usuário
-              <input id="newUsername" name="username" placeholder="joao.silva" />
+              Nome
+              <input id="newDisplayName" name="displayName" placeholder="João Silva" />
             </label>
             <label>
-              Nome exibido
-              <input id="newDisplayName" name="displayName" placeholder="João Silva" />
+              E-mail
+              <input id="newUsername" name="username" placeholder="joao@dominio.com" />
             </label>
             <label>
               Senha
               <input id="newPassword" name="password" type="password" placeholder="Senha inicial" />
-            </label>
-            <label>
-              Papel
-              <select id="newRole" name="role">
-                <option value="viewer">viewer</option>
-                <option value="operator">operator</option>
-                <option value="admin">admin</option>
-              </select>
             </label>
             <div class="full form-actions">
               <button type="submit" class="primary">Cadastrar usuário</button>

@@ -30,7 +30,6 @@ const userFormFeedback = document.getElementById('userFormFeedback');
 const newUsername = document.getElementById('newUsername');
 const newDisplayName = document.getElementById('newDisplayName');
 const newPassword = document.getElementById('newPassword');
-const newRole = document.getElementById('newRole');
 const usersList = document.getElementById('usersList');
 const usersCount = document.getElementById('usersCount');
 const espForm = document.getElementById('espForm');
@@ -487,7 +486,7 @@ async function fetchSession() {
 }
 
 async function fetchUsers() {
-  if (!currentUser || currentUser.role !== 'admin') {
+  if (!currentUser || !currentUser.canManageAccounts) {
     renderUsers([]);
     return;
   }
@@ -520,7 +519,7 @@ async function fetchEspList() {
 }
 
 async function fetchDbConfig() {
-  if (!currentUser || currentUser.role !== 'admin') {
+  if (!currentUser || !currentUser.canManageAccounts) {
     return;
   }
 
@@ -764,7 +763,7 @@ async function fetchState() {
     commands: commandsData.commands || []
   });
 
-  if (currentUser?.role === 'admin') {
+  if (currentUser?.canManageAccounts) {
     await fetchUsers();
     await fetchEspList();
     await fetchDbConfig();
@@ -856,10 +855,9 @@ if (userForm) {
     userFormFeedback.textContent = 'Cadastrando...';
 
     const payload = {
-      username: newUsername.value.trim(),
-      displayName: newDisplayName.value.trim(),
-      password: newPassword.value,
-      role: newRole.value
+      name: newDisplayName.value.trim(),
+      email: newUsername.value.trim(),
+      password: newPassword.value
     };
 
     const response = await fetch('/api/users', {
@@ -876,7 +874,6 @@ if (userForm) {
 
     userFormFeedback.textContent = 'Usuário cadastrado';
     userForm.reset();
-    newRole.value = 'viewer';
     await fetchUsers();
   });
 }
